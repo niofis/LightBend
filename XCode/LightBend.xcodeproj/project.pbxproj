@@ -1,0 +1,208 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1203B7D514D912FC00319C07 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1203B7D414D912FC00319C07 /* main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1203B7BD14D911FD00319C07 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1203B7BF14D911FD00319C07 /* LightBend */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LightBend; sourceTree = BUILT_PRODUCTS_DIR; };
+		1203B7D314D912FC00319C07 /* LightBend.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = LightBend.1; sourceTree = "<group>"; };
+		1203B7D414D912FC00319C07 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1203B7BC14D911FD00319C07 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1203B7B414D911FC00319C07 = {
+			isa = PBXGroup;
+			children = (
+				1203B7D214D912FC00319C07 /* src */,
+				1203B7C014D911FD00319C07 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1203B7C014D911FD00319C07 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1203B7BF14D911FD00319C07 /* LightBend */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1203B7D214D912FC00319C07 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				1203B7D314D912FC00319C07 /* LightBend.1 */,
+				1203B7D414D912FC00319C07 /* main.cpp */,
+			);
+			name = src;
+			path = ../src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1203B7BE14D911FD00319C07 /* LightBend */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1203B7C914D911FD00319C07 /* Build configuration list for PBXNativeTarget "LightBend" */;
+			buildPhases = (
+				1203B7BB14D911FD00319C07 /* Sources */,
+				1203B7BC14D911FD00319C07 /* Frameworks */,
+				1203B7BD14D911FD00319C07 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LightBend;
+			productName = LightBend;
+			productReference = 1203B7BF14D911FD00319C07 /* LightBend */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1203B7B614D911FC00319C07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 1203B7B914D911FC00319C07 /* Build configuration list for PBXProject "LightBend" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 1203B7B414D911FC00319C07;
+			productRefGroup = 1203B7C014D911FD00319C07 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1203B7BE14D911FD00319C07 /* LightBend */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1203B7BB14D911FD00319C07 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1203B7D514D912FC00319C07 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1203B7C714D911FD00319C07 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		1203B7C814D911FD00319C07 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		1203B7CA14D911FD00319C07 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1203B7CB14D911FD00319C07 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1203B7B914D911FC00319C07 /* Build configuration list for PBXProject "LightBend" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1203B7C714D911FD00319C07 /* Debug */,
+				1203B7C814D911FD00319C07 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1203B7C914D911FD00319C07 /* Build configuration list for PBXNativeTarget "LightBend" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1203B7CA14D911FD00319C07 /* Debug */,
+				1203B7CB14D911FD00319C07 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1203B7B614D911FC00319C07 /* Project object */;
+}
