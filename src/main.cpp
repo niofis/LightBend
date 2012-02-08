@@ -1,38 +1,37 @@
 #include <iostream>
 #include <stdlib.h>
-#include "pez.h"
-#include <glew.h>
-#include <math.h>
+#include <GL/glew.h>
+#include <GL/freeglut.h>
 
-static float elapsed = 0;
-static int pressing = 0;
-static float speed = 0.01f;
-
-const char* PezInitialize(int width, int height)
+static int make_resources(void)
 {
-    return "Pez Intro";
+    return 1;
 }
 
-void PezRender()
+static void idle(void)
 {
-    if (pressing) {
-        glClearColor(1, 1, 0.75f, 1);
-    } else {
-        float blue = 0.5f * (1.0f + sinf(elapsed));
-        glClearColor(0, 0.25f, blue, 1);
-    }
+}
+
+static void render(void)
+{
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+    glutSwapBuffers();
 }
 
-void PezUpdate(unsigned int elapsedMilliseconds)
+int main(int argc, char** argv)
 {
-    elapsed += elapsedMilliseconds * speed;
-}
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
+    glutInitWindowSize(640, 480);
+    glutCreateWindow("LightBend");
+    glutDisplayFunc(&render);
+    glutIdleFunc(&idle);
+	if (!make_resources()) {
+        fprintf(stderr, "Failed to load resources\n");
+        return 1;
+    }
 
-void PezHandleMouse(int x, int y, int action)
-{
-    if (action == PEZ_DOWN)
-        pressing = 1;
-    else if (action == PEZ_UP)
-        pressing = 0;
+    glutMainLoop();
+    return 0;
 }
