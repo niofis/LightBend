@@ -15,27 +15,57 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\main.cpp">
+    <ClCompile Include="..\src\bvh.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\pez.windows.c">
+    <ClCompile Include="..\src\demos.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\glew.c">
+    <ClCompile Include="..\src\luabindings.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\memory.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MS3DFile.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\pez.h">
+    <ClInclude Include="..\src\bvh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\glew.h">
+    <ClInclude Include="..\src\demos.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\glxew.h">
+    <ClInclude Include="..\src\globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\wglew.h">
+    <ClInclude Include="..\src\luabindings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\memory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\MS3DFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\nbvh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
