@@ -27,6 +27,7 @@ int cpu_count=0;
 
 void reset_stats()
 {
+    last_frame=-1;
 	frame_count=0;
 	max_time=0.0;
 	min_time=99999999999.0;

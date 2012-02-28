@@ -764,7 +764,7 @@ void Demo9()
 	ms3d_vertex_t* ms3d_vertex;
 	ms3d_triangle_t* ms3d_triangle;
 
-	LoadSceneFromFile("D:/Enrique/Tesis/Modelos/f360/f360.ms3d");
+	LoadSceneFromFile("f360.ms3d");
 
 
 	num_camaras=1;

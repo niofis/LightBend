@@ -7,7 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1203B7D514D912FC00319C07 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1203B7D414D912FC00319C07 /* main.cpp */; };
+		12BC319314F982A900F4D3F9 /* libSDL_gfx.13.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319214F982A900F4D3F9 /* libSDL_gfx.13.dylib */; };
+		12BC319614F9836300F4D3F9 /* liblua.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319514F9836300F4D3F9 /* liblua.dylib */; };
+		12BC319814F9885B00F4D3F9 /* libSDL-1.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319714F9885B00F4D3F9 /* libSDL-1.2.0.dylib */; };
+		12BC319C14F988BC00F4D3F9 /* libSDLmain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319B14F988BC00F4D3F9 /* libSDLmain.a */; };
+		12BC319E14F9890B00F4D3F9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319D14F9890B00F4D3F9 /* Cocoa.framework */; };
+		12BC31A014F9891700F4D3F9 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319F14F9891700F4D3F9 /* OpenGL.framework */; };
+		12EAE60914F8C49900F0096F /* bvh.c in Sources */ = {isa = PBXBuildFile; fileRef = 12EAE5F814F8C49900F0096F /* bvh.c */; };
+		12EAE60A14F8C49900F0096F /* demos.c in Sources */ = {isa = PBXBuildFile; fileRef = 12EAE5FA14F8C49900F0096F /* demos.c */; };
+		12EAE60B14F8C49900F0096F /* luabindings.c in Sources */ = {isa = PBXBuildFile; fileRef = 12EAE5FD14F8C49900F0096F /* luabindings.c */; };
+		12EAE60C14F8C49900F0096F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 12EAE5FF14F8C49900F0096F /* main.c */; };
+		12EAE60D14F8C49900F0096F /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = 12EAE60014F8C49900F0096F /* memory.c */; };
+		12EAE60E14F8C49900F0096F /* MS3DFile.c in Sources */ = {isa = PBXBuildFile; fileRef = 12EAE60214F8C49900F0096F /* MS3DFile.c */; };
+		12EAE60F14F8C49900F0096F /* renderer.c in Sources */ = {isa = PBXBuildFile; fileRef = 12EAE60514F8C49900F0096F /* renderer.c */; };
+		12EAE61014F8C49900F0096F /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 12EAE60714F8C49900F0096F /* utils.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,8 +37,31 @@
 
 /* Begin PBXFileReference section */
 		1203B7BF14D911FD00319C07 /* LightBend */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LightBend; sourceTree = BUILT_PRODUCTS_DIR; };
-		1203B7D314D912FC00319C07 /* LightBend.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = LightBend.1; sourceTree = "<group>"; };
-		1203B7D414D912FC00319C07 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		122D5D5614F980AB009DC738 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = Library/Frameworks/SDL.framework; sourceTree = SDKROOT; };
+		12BC319214F982A900F4D3F9 /* libSDL_gfx.13.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSDL_gfx.13.dylib; path = ../../../../../../opt/local/lib/libSDL_gfx.13.dylib; sourceTree = "<group>"; };
+		12BC319514F9836300F4D3F9 /* liblua.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblua.dylib; path = ../../../../../../opt/local/lib/liblua.dylib; sourceTree = "<group>"; };
+		12BC319714F9885B00F4D3F9 /* libSDL-1.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL-1.2.0.dylib"; path = "../../../../../../opt/local/lib/libSDL-1.2.0.dylib"; sourceTree = "<group>"; };
+		12BC319914F988A600F4D3F9 /* libSDLmain.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libSDLmain.la; path = ../../../../../../opt/local/lib/libSDLmain.la; sourceTree = "<group>"; };
+		12BC319B14F988BC00F4D3F9 /* libSDLmain.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDLmain.a; path = ../../../../../../opt/local/lib/libSDLmain.a; sourceTree = "<group>"; };
+		12BC319D14F9890B00F4D3F9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		12BC319F14F9891700F4D3F9 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		12EAE5F814F8C49900F0096F /* bvh.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bvh.c; sourceTree = "<group>"; };
+		12EAE5F914F8C49900F0096F /* bvh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bvh.h; sourceTree = "<group>"; };
+		12EAE5FA14F8C49900F0096F /* demos.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = demos.c; sourceTree = "<group>"; };
+		12EAE5FB14F8C49900F0096F /* demos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = demos.h; sourceTree = "<group>"; };
+		12EAE5FC14F8C49900F0096F /* globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = globals.h; sourceTree = "<group>"; };
+		12EAE5FD14F8C49900F0096F /* luabindings.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luabindings.c; sourceTree = "<group>"; };
+		12EAE5FE14F8C49900F0096F /* luabindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luabindings.h; sourceTree = "<group>"; };
+		12EAE5FF14F8C49900F0096F /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		12EAE60014F8C49900F0096F /* memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = memory.c; sourceTree = "<group>"; };
+		12EAE60114F8C49900F0096F /* memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
+		12EAE60214F8C49900F0096F /* MS3DFile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MS3DFile.c; sourceTree = "<group>"; };
+		12EAE60314F8C49900F0096F /* MS3DFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MS3DFile.h; sourceTree = "<group>"; };
+		12EAE60414F8C49900F0096F /* nbvh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nbvh.h; sourceTree = "<group>"; };
+		12EAE60514F8C49900F0096F /* renderer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = renderer.c; sourceTree = "<group>"; };
+		12EAE60614F8C49900F0096F /* renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = renderer.h; sourceTree = "<group>"; };
+		12EAE60714F8C49900F0096F /* utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utils.c; sourceTree = "<group>"; };
+		12EAE60814F8C49900F0096F /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +69,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12BC31A014F9891700F4D3F9 /* OpenGL.framework in Frameworks */,
+				12BC319E14F9890B00F4D3F9 /* Cocoa.framework in Frameworks */,
+				12BC319C14F988BC00F4D3F9 /* libSDLmain.a in Frameworks */,
+				12BC319814F9885B00F4D3F9 /* libSDL-1.2.0.dylib in Frameworks */,
+				12BC319614F9836300F4D3F9 /* liblua.dylib in Frameworks */,
+				12BC319314F982A900F4D3F9 /* libSDL_gfx.13.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +84,14 @@
 		1203B7B414D911FC00319C07 = {
 			isa = PBXGroup;
 			children = (
+				12BC319F14F9891700F4D3F9 /* OpenGL.framework */,
+				12BC319D14F9890B00F4D3F9 /* Cocoa.framework */,
+				12BC319B14F988BC00F4D3F9 /* libSDLmain.a */,
+				12BC319914F988A600F4D3F9 /* libSDLmain.la */,
+				12BC319714F9885B00F4D3F9 /* libSDL-1.2.0.dylib */,
+				12BC319514F9836300F4D3F9 /* liblua.dylib */,
+				12BC319214F982A900F4D3F9 /* libSDL_gfx.13.dylib */,
+				122D5D5614F980AB009DC738 /* SDL.framework */,
 				1203B7D214D912FC00319C07 /* src */,
 				1203B7C014D911FD00319C07 /* Products */,
 			);
@@ -58,8 +108,23 @@
 		1203B7D214D912FC00319C07 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				1203B7D314D912FC00319C07 /* LightBend.1 */,
-				1203B7D414D912FC00319C07 /* main.cpp */,
+				12EAE5F814F8C49900F0096F /* bvh.c */,
+				12EAE5F914F8C49900F0096F /* bvh.h */,
+				12EAE5FA14F8C49900F0096F /* demos.c */,
+				12EAE5FB14F8C49900F0096F /* demos.h */,
+				12EAE5FC14F8C49900F0096F /* globals.h */,
+				12EAE5FD14F8C49900F0096F /* luabindings.c */,
+				12EAE5FE14F8C49900F0096F /* luabindings.h */,
+				12EAE5FF14F8C49900F0096F /* main.c */,
+				12EAE60014F8C49900F0096F /* memory.c */,
+				12EAE60114F8C49900F0096F /* memory.h */,
+				12EAE60214F8C49900F0096F /* MS3DFile.c */,
+				12EAE60314F8C49900F0096F /* MS3DFile.h */,
+				12EAE60414F8C49900F0096F /* nbvh.h */,
+				12EAE60514F8C49900F0096F /* renderer.c */,
+				12EAE60614F8C49900F0096F /* renderer.h */,
+				12EAE60714F8C49900F0096F /* utils.c */,
+				12EAE60814F8C49900F0096F /* utils.h */,
 			);
 			name = src;
 			path = ../src;
@@ -115,7 +180,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1203B7D514D912FC00319C07 /* main.cpp in Sources */,
+				12EAE60914F8C49900F0096F /* bvh.c in Sources */,
+				12EAE60A14F8C49900F0096F /* demos.c in Sources */,
+				12EAE60B14F8C49900F0096F /* luabindings.c in Sources */,
+				12EAE60C14F8C49900F0096F /* main.c in Sources */,
+				12EAE60D14F8C49900F0096F /* memory.c in Sources */,
+				12EAE60E14F8C49900F0096F /* MS3DFile.c in Sources */,
+				12EAE60F14F8C49900F0096F /* renderer.c in Sources */,
+				12EAE61014F8C49900F0096F /* utils.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,7 +209,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -157,7 +229,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -170,14 +242,81 @@
 		1203B7CA14D911FD00319C07 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_OPENMP_SUPPORT = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SRCROOT)/../inc/\"";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Programacion/Lua/jit/src\"",
+					"\"$(SRCROOT)/../../../Programacion/Lua/lib\"",
+					"\"$(SRCROOT)/../../../Programacion/Lua/libLua/Debug\"",
+					"\"$(SRCROOT)/../../../Programacion/Lua/libLua/Release\"",
+					"\"$(SRCROOT)/../../../Programacion/Lua/LuaJIT/X64\"",
+					"\"$(SRCROOT)/../../../Programacion/Lua/LuaJIT/X86\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL/Windows Mobile 2003 PocketPC\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL/Windows Mobile 5.0 PocketPC\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL/Windows Mobile 5.0 Smartphone\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL/Windows Mobile 6\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL/x64\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL/x86\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL_gfx/Windows Mobile 2003 PocketPC\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL_gfx/Windows Mobile 5.0 PocketPC\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL_gfx/Windows Mobile 5.0 Smartphone\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL_gfx/Windows Mobile 6\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL_gfx/x64\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL_gfx/x86\"",
+					"\"$(SRCROOT)/../../Lua/LuaRPT/modules/.libs\"",
+					"\"$(SRCROOT)/../lib/amd64\"",
+					"\"$(SRCROOT)/../lib/x86\"",
+					/opt/local/lib,
+				);
+				LLVM_LTO = NO;
+				MACH_O_TYPE = mh_execute;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../inc/\"";
 			};
 			name = Debug;
 		};
 		1203B7CB14D911FD00319C07 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_OPENMP_SUPPORT = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SRCROOT)/../inc/\"";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Programacion/Lua/jit/src\"",
+					"\"$(SRCROOT)/../../../Programacion/Lua/lib\"",
+					"\"$(SRCROOT)/../../../Programacion/Lua/libLua/Debug\"",
+					"\"$(SRCROOT)/../../../Programacion/Lua/libLua/Release\"",
+					"\"$(SRCROOT)/../../../Programacion/Lua/LuaJIT/X64\"",
+					"\"$(SRCROOT)/../../../Programacion/Lua/LuaJIT/X86\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL/Windows Mobile 2003 PocketPC\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL/Windows Mobile 5.0 PocketPC\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL/Windows Mobile 5.0 Smartphone\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL/Windows Mobile 6\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL/x64\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL/x86\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL_gfx/Windows Mobile 2003 PocketPC\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL_gfx/Windows Mobile 5.0 PocketPC\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL_gfx/Windows Mobile 5.0 Smartphone\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL_gfx/Windows Mobile 6\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL_gfx/x64\"",
+					"\"$(SRCROOT)/../../../Programacion/SDL/SDL_gfx/x86\"",
+					"\"$(SRCROOT)/../../Lua/LuaRPT/modules/.libs\"",
+					"\"$(SRCROOT)/../lib/amd64\"",
+					"\"$(SRCROOT)/../lib/x86\"",
+					/opt/local/lib,
+				);
+				LLVM_LTO = NO;
+				MACH_O_TYPE = mh_execute;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../inc/\"";
 			};
 			name = Release;
 		};

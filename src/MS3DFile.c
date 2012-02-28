@@ -32,10 +32,10 @@ word ms3d_numMaterials;
 //	delete _i;
 //}
 
-void LoadSceneFromFile(const char* file)
+int LoadSceneFromFile(const char* file)
 {
 	if(!MS3DLoadFromFile(file))
-		return;
+		return 0;
 }
 
 int MS3DLoadFromFile(const char* lpszFileName)

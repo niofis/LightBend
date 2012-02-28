@@ -93,7 +93,7 @@ typedef struct
 
 //#include <poppack.h>
 
-void LoadSceneFromFile(const char* file);
+int LoadSceneFromFile(const char* file);
 int MS3DLoadFromFile(const char* lpszFileName);
 void MS3DClean();
 int MS3DGetNumVertices();
