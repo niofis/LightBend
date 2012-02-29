@@ -6,7 +6,7 @@
 # Macros
 
 CC = gcc
-CFLAGS = -g -Wall -O3 -lSDL -lSDL_gfx -pthread --openmp  -ffunction-sections -z muldefs -DLINUX -lluajit-5.1 -lm
+CFLAGS = -g -Wall -O3 -lSDL -lSDL_gfx -pthread --openmp  -ffunction-sections -z muldefs -DLINUX -llua -lm
 SRC = demos.c demos.h main.c renderer.c memory.c luabindings.c MS3DFile.c bvh.c bvh.h MS3DFile.h luabindings.h memory.h renderer.h utils.c utils.h globals.h
 OBJ = main.o demos.o renderer.o utils.o memory.o luabindings.o MS3DFile.o bvh.o
 
@@ -14,7 +14,7 @@ OBJ = main.o demos.o renderer.o utils.o memory.o luabindings.o MS3DFile.o bvh.o
 # Reglas explicitas
 
 all: $(OBJ)
-	$(CC) $(CFLAGS) -o crtu $(OBJ)
+	$(CC) $(CFLAGS) -o ../bin/ligthbend.run $(OBJ)
 
 clean:
 	$(RM) $(OBJ) crtu

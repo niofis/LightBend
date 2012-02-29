@@ -4,8 +4,16 @@
 #include "bvh.h"
 #include "demos.h"
 
-//#include <luajit-2.0/lua.hpp>
-#include <lua.hpp>
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "lua.h"
+#include "lauxlib.h"
+#include "lualib.h"
+//#include "luajit.h"
+#ifdef __cplusplus
+}
+#endif
 
 //Para no cambiar la forma en que lua maneja los indices en las tablas
 //cada vez que un indice es cargado a cRT se resta 1, para cambiarlo a base cero
