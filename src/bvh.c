@@ -109,26 +109,26 @@ int Partition(int p, int r,int eje)
 	//t=numeros[r];
 	//numeros[r]=numeros[k];
 	//numeros[k]=t;
-	memcpy(&t,&objetos[r],sizeof(Objeto3D));
-	memcpy(&objetos[r],&objetos[k],sizeof(Objeto3D));
-	memcpy(&objetos[k],&t,sizeof(Objeto3D));
+	memcpy(&t,&escena.objetos[r],sizeof(Objeto3D));
+	memcpy(&escena.objetos[r],&escena.objetos[k],sizeof(Objeto3D));
+	memcpy(&escena.objetos[k],&t,sizeof(Objeto3D));
 	/////////////
-	x=objetos[r].v1[eje];
+	x=escena.objetos[r].v1[eje];
 	i=p-1;
 	for(j=p;j<r;j++)
 	{
-		if(objetos[j].v1[eje]<x)
+		if(escena.objetos[j].v1[eje]<x)
 		{
 			i++;
-			memcpy(&t,&objetos[i],sizeof(Objeto3D));
-			memcpy(&objetos[i],&objetos[j],sizeof(Objeto3D));
-			memcpy(&objetos[j],&t,sizeof(Objeto3D));
+			memcpy(&t,&escena.objetos[i],sizeof(Objeto3D));
+			memcpy(&escena.objetos[i],&escena.objetos[j],sizeof(Objeto3D));
+			memcpy(&escena.objetos[j],&t,sizeof(Objeto3D));
 		}
 	}
 	i++;
-	memcpy(&t,&objetos[i],sizeof(Objeto3D));
-	memcpy(&objetos[i],&objetos[j],sizeof(Objeto3D));
-	memcpy(&objetos[j],&t,sizeof(Objeto3D));
+	memcpy(&t,&escena.objetos[i],sizeof(Objeto3D));
+	memcpy(&escena.objetos[i],&escena.objetos[j],sizeof(Objeto3D));
+	memcpy(&escena.objetos[j],&t,sizeof(Objeto3D));
 	return i;
 }
 
@@ -145,19 +145,19 @@ void QuickS(int p, int r,int eje)
 
 void QuickSort(int eje)
 {
-	QuickS(0,num_objetos-1,eje);
+	QuickS(0,escena.num_objetos-1,eje);
 }
 
 void GetDistances()
 {
 	int i;
 	float centroide[4];
-	for(i=0;i<num_objetos;i++)
+	for(i=0;i<escena.num_objetos;i++)
 	{
 		//obtener el centroide
-		centroide[0]=(objetos[i].v1[0] + objetos[i].v2[0] +objetos[i].v3[0])/3;
-		centroide[1]=(objetos[i].v1[1] + objetos[i].v2[1] +objetos[i].v3[1])/3;
-		centroide[2]=(objetos[i].v1[2] + objetos[i].v2[2] +objetos[i].v3[2])/3;
+		centroide[0]=(escena.objetos[i].v1[0] + escena.objetos[i].v2[0] + escena.objetos[i].v3[0])/3;
+		centroide[1]=(escena.objetos[i].v1[1] + escena.objetos[i].v2[1] + escena.objetos[i].v3[1])/3;
+		centroide[2]=(escena.objetos[i].v1[2] + escena.objetos[i].v2[2] + escena.objetos[i].v3[2])/3;
 	}
 }
 
@@ -185,7 +185,7 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 	//Ir metiendo los objetos a las hojas e ir aumentando el tamaño de las raicez
 	for(x=0;x<num_leaves;x++)
 	{
-		if(obj_id>=num_objetos)
+		if(obj_id>=escena.num_objetos)
 		{
 			//si ya no hay objetos para las cajas, se deshabilita para que no 
 			//se gaste tiempo revisando un hit en ella
@@ -195,12 +195,12 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 		}
 		hierarchy[l_id].tipo=NODO_HOJA;
 		for(i=0;i<3;i++)
-			cajas[l_id].min[i]=cajas[l_id].max[i]=objetos[obj_id].v1[i];
+			cajas[l_id].min[i]=cajas[l_id].max[i]=escena.objetos[obj_id].v1[i];
 
-		for(y=0;y<CANT_OBJ_CAJA && obj_id<num_objetos;y++)
+		for(y=0;y<CANT_OBJ_CAJA && obj_id<escena.num_objetos;y++)
 		{
 			for(i=0;i<3;i++){
-				objeto=&objetos[obj_id];
+				objeto=&escena.objetos[obj_id];
 				if(objeto->tipo==OBJ_TRIANGULO)
 				{
 					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v1[i]);
@@ -300,25 +300,25 @@ void BuildBVH()
 
 	CleanBVH();
 
-	num_hojas=num_objetos/CANT_OBJ_CAJA;
-	if(num_objetos%CANT_OBJ_CAJA)
+	num_hojas=escena.num_objetos/CANT_OBJ_CAJA;
+	if(escena.num_objetos%CANT_OBJ_CAJA)
 		num_hojas++;
-
-	a=log(num_hojas);
-	b=log(2);
+	
+	a=log((float)num_hojas);
+	b=log((float)2);
 	depth=(a/b);
 	if((a/b)-(float)depth)
 		depth++;
 	depth++;
-	num_cajas=pow(2,depth)-1;
-	num_hojas=pow(2,depth-1);
+	num_cajas=pow((float)2,depth)-1;
+	num_hojas=pow((float)2,depth-1);
 
 	//se obtiene el espacio de memoria y se inicializa a ceros
 
-	hierarchy=aligned_malloc(16,num_cajas*sizeof(BoundingVolume));
-	cajas=aligned_malloc(16,num_cajas*sizeof(Caja));
-	v_traverse=aligned_malloc(16,num_cajas*sizeof(int));
-	skip_ptrs=aligned_malloc(16,num_cajas*sizeof(int));
+	hierarchy=(BoundingVolume*)aligned_malloc(16,num_cajas*sizeof(BoundingVolume));
+	cajas=(Caja*)aligned_malloc(16,num_cajas*sizeof(Caja));
+	v_traverse=(int*)aligned_malloc(16,num_cajas*sizeof(int));
+	skip_ptrs=(int*)aligned_malloc(16,num_cajas*sizeof(int));
 
 	memset(hierarchy,0,num_cajas*sizeof(BoundingVolume));
 	memset(cajas,0,num_cajas*sizeof(Caja));
@@ -354,9 +354,6 @@ void BuildBVH()
 		else
 			skip_ptrs[i]=-1;
 	}
-
-	printf("num_objetos:%d\n",num_objetos);
-	printf("num_cajas:%d\n",num_cajas);
 
 	//Imprimir los vectores de traverse y de skip pointers
 	//for(i=0;i<num_cajas;i++)

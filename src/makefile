@@ -6,9 +6,9 @@
 # Macros
 
 CC = gcc
-CFLAGS = -g -Wall -O3 -lSDL -lSDL_gfx -pthread --openmp  -ffunction-sections -z muldefs -DLINUX -llua -lm
-SRC = demos.c demos.h main.c renderer.c memory.c luabindings.c MS3DFile.c bvh.c bvh.h MS3DFile.h luabindings.h memory.h renderer.h utils.c utils.h globals.h
-OBJ = main.o demos.o renderer.o utils.o memory.o luabindings.o MS3DFile.o bvh.o
+CFLAGS = -g -Wall -O3 -lSDL -lSDL_gfx -pthread --openmp  -ffunction-sections -z muldefs -DLINUX -llua -lm -lpng
+SRC = demos.c demos.h main.c renderer.c memory.c luabindings.c MS3DFile.c bvh.c image.c image.h bvh.h MS3DFile.h luabindings.h memory.h renderer.h utils.c utils.h globals.h
+OBJ = main.o demos.o renderer.o utils.o memory.o luabindings.o MS3DFile.o bvh.o image.o
 
 
 # Reglas explicitas
@@ -27,5 +27,6 @@ memory.o: memory.c memory.h
 renderer.o: renderer.c renderer.h globals.h memory.h luabindings.h
 demos.o: demos.c demos.h globals.h MS3DFile.h bvh.h
 utils.o: utils.c utils.h globals.h 
-main.o: main.c renderer.h demos.h utils.h globals.h memory.h luabindings.h MS3DFile.h bvh.h
+image.o: image.c image.h
+main.o: main.c renderer.h demos.h utils.h globals.h memory.h luabindings.h MS3DFile.h bvh.h image.h
 

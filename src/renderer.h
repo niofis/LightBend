@@ -99,8 +99,6 @@ typedef struct
 	int pad2;
 } Grupo;
 
-
-
 align(16)
 typedef struct
 {
@@ -113,10 +111,6 @@ typedef struct
 	float v3[3];
 	float normal[3];
 } Objeto3D;
-//float *v1_x,*v1_y,*v1_z;
-//float *v2_x,*v2_y,*v2_z;
-//float *v3_x,*v3_y,*v3_z;
-//float *normal_x,*normal_y,*normal_z;
 
 align(16)
 typedef struct
@@ -139,45 +133,45 @@ align(16)
 typedef struct
 {
 	Grupo *grupos;
-	int num_grupos;
 	Material *materiales;
-	int num_materiales;
 	Objeto3D *objetos;
-	int num_objetos;
 	Luz *luces;
+	Camara* camaras;
+	int num_grupos;
+	int num_materiales;
+	int num_objetos;
+	int num_camaras;
 	int num_luces;
+} Escena;
+
+align(16)
+typedef struct
+{
 	int *buffer;
 	int width;
 	int height;
 	int num_threads;
 	int num_blocks;
 	int sector_y;
+	int sector_x;
 	int sector_height;
+	int sector_width;
+	int interactive;
+	int verbose;
+	int path_samples;
+	int threads;
+	char* img_file;
+	char* lua_script;
 } RenderJob;
 
 void RenderFrame(int* buffer, int threads);
 void CleanRenderer();
-void Initialize();
 void PreprocessObjects();
 void CreateObjects(int qty);
 
-align(16) extern Grupo *grupos;
-align(16) extern int num_grupos;
-align(16) extern Material *materiales;
-align(16) extern int num_materiales;
-align(16) extern Objeto3D *objetos;
-align(16) extern int num_objetos;
-align(16) extern Luz *luces;
-align(16) extern int num_luces;
-align(16) extern Camara* camaras;
-align(16) extern int num_camaras;
-
-
-
 align(16) extern int *buffer;
-align(16) extern int width;
-align(16) extern int height;
 align(16) extern int bpp;
-
+align(16) extern RenderJob job;
+align(16) extern Escena escena;
 
 #endif

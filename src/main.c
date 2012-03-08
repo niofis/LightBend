@@ -1,16 +1,17 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include <math.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_gfxPrimitives.h>
 #include <SDL/SDL_rotozoom.h>
+#include "image.h"
 #include "globals.h"
 #include "renderer.h"
 #include "demos.h"
 #include "utils.h"
 #include "bvh.h"
 #include "luabindings.h"
-
-int threads=1;
 
 
 long long inicio;
@@ -24,6 +25,7 @@ double min_time=99999999999.0;
 double acc_time=0.0;
 char text[256];
 int cpu_count=0;
+
 
 void reset_stats()
 {
@@ -49,53 +51,114 @@ void stats(SDL_Surface* screen,double time, int showhelp)
 	}
 
 	sprintf(text,"Fps: %8.4f Spf: %8.4f",1/time,time);
-	stringColor(screen,0,y,text,~0);
+	stringColor(screen,0,y,text,0xFFFFFFFF);
 
 	y+=8;
 	sprintf(text,"Avg: %8.4f Max fps: %8.4f Min fps: %8.4f",1/(acc_time/frame_count),1/min_time,1/max_time);
-	stringColor(screen,0,y,text,~0);
+	stringColor(screen,0,y,text,0xFFFFFFFF);
 
 	y+=8;
 	sprintf(text,"Avg: %8.4f Max spf: %8.4f Min spf: %8.4f",acc_time/frame_count,max_time,min_time);
-	stringColor(screen,0,y,text,~0);
+	stringColor(screen,0,y,text,0xFFFFFFFF);
 
 	y+=8;
-	sprintf(text,"Res: %dx%dx%d",width,height,bpp);
-	stringColor(screen,0,y,text,~0);
+	sprintf(text,"Res: %dx%dx%d",job.width,job.height,bpp);
+	stringColor(screen,0,y,text,0xFFFFFFFF);
 
 	y+=8;
-	sprintf(text,"CPUs: %d Threads: %d",cpu_count,threads);
-	stringColor(screen,0,y,text,~0);
+	sprintf(text,"CPUs: %d Threads: %d",cpu_count,job.threads);
+	stringColor(screen,0,y,text,0xFFFFFFFF);
 
 	y+=8;
 	sprintf(text,"Help (h to toggle)");
-	stringColor(screen,0,y,text,~0);	
+	stringColor(screen,0,y,text,0xFFFFFFFF);	
 		
 	if(showhelp)
 	{
-
-
 		y+=8;
 		sprintf(text,"Numbers 1-9 load demos");
-		stringColor(screen,0,y,text,~0);
+		stringColor(screen,0,y,text,0xFFFFFFFF);
 		
 		y+=8;
 		sprintf(text,"Number 0 runs lua script");
-		stringColor(screen,0,y,text,~0);
+		stringColor(screen,0,y,text,0xFFFFFFFF);
 
 		
 		y+=8;
 		sprintf(text,"c key toggles continuous rendering");
-		stringColor(screen,0,y,text,~0);
+		stringColor(screen,0,y,text,0xFFFFFFFF);
 
 		y+=8;
 		sprintf(text,"n key renders next frame");
-		stringColor(screen,0,y,text,~0);
+		stringColor(screen,0,y,text,0xFFFFFFFF);
+
+		y+=8;
+		sprintf(text,"i key saves current image.png");
+		stringColor(screen,0,y,text,0xFFFFFFFF);
+
+		y+=8;
+		sprintf(text,"o key saves current image.png with frame info");
+		stringColor(screen,0,y,text,0xFFFFFFFF);
 	}
 }
 
+void process_args(int argc, char* args[])
+{
+	int i=0;
 
-int main(int argc, char* args[])
+	job.width=640;
+	job.height=480;
+	job.sector_y=0;
+	job.sector_x=0;
+	job.sector_width=job.width;
+	job.sector_height=job.height;
+	job.interactive=0;
+	job.img_file="image.png";
+	job.lua_script="script.lua";
+	job.verbose=0;
+	job.threads=0;
+
+
+	for(i=0;i<argc;++i)
+	{
+		if(strcmp("-width",args[i])==0)
+			job.width=abs(atoi(args[++i]));
+		else if(strcmp("-height",args[i])==0)
+			job.height=abs(atoi(args[++i]));
+		else if(strcmp("-s ",args[i])==0)
+		{
+			job.sector_x=abs(atoi(args[++i]));
+			job.sector_y=abs(atoi(args[++i]));
+			job.sector_width=abs(atoi(args[++i]));
+			job.sector_height=abs(atoi(args[++i]));
+		}
+		else if(strcmp("-i",args[i])==0)
+			job.interactive=1;
+		else if(strcmp("-v",args[i])==0)
+			job.verbose=1;
+		else if(strcmp("-png",args[i])==0)
+			job.img_file=args[++i];
+		else if(strcmp("-script",args[i])==0)
+			job.lua_script=args[++i];
+		else if(strcmp("-threads",args[i])==0)
+			job.threads=abs(atoi(args[++i]));
+	}
+
+	if(job.width==0)
+		job.width=640;
+	if(job.height==0)
+		job.height=480;
+	if(job.sector_width==0)
+		job.sector_width=job.width-job.sector_x;
+	if(job.sector_height==0)
+		job.sector_height=job.height-job.sector_y;
+
+	//default to interactive mode when no parameters
+	if(argc==1)
+		job.interactive=1;
+}
+
+void interactive_mode()
 {
 	int videoflags=SDL_HWACCEL | SDL_HWSURFACE;
 	SDL_Surface* screen;
@@ -112,15 +175,6 @@ int main(int argc, char* args[])
 	int continuous=0;
 	int render_next=1;
 
-	width=640;
-	height=480;
-	bpp=32;
-
-	threads=cpu_count=omp_get_num_procs();
-	omp_set_dynamic(0);
-	omp_set_num_threads(threads);
-	omp_set_nested(1);
-
 	q=freq=CLOCKS_PER_SEC;
 
 
@@ -136,16 +190,14 @@ int main(int argc, char* args[])
 	info = SDL_GetVideoInfo();
 
 
-	surface = SDL_CreateRGBSurface(videoflags, width, height, bpp, 0, 0, 0, 0);
+	surface = SDL_CreateRGBSurface(videoflags, job.width, job.height, bpp, 0, 0, 0, 0);
 
-	screen = SDL_SetVideoMode(width, height,bpp, videoflags);
+	screen = SDL_SetVideoMode(job.width, job.height,bpp, videoflags);
 	if(!screen)
 	{
 		printf("Error: SDL_SetVideoMode");
 		return 2;
 	}
-
-	Initialize();
 
 	Demo1();
 
@@ -164,7 +216,7 @@ int main(int argc, char* args[])
 
 						videoflags ^= SDL_FULLSCREEN;
 						SDL_FreeSurface(screen);
-						screen = SDL_SetVideoMode(width, height, bpp, videoflags);
+						screen = SDL_SetVideoMode(job.width, job.height, bpp, videoflags);
 						if(!screen)
 							done = 1;
 						break;
@@ -173,13 +225,13 @@ int main(int argc, char* args[])
 						done=1;
 					if(event.key.keysym.sym == SDLK_HOME)
 					{
-						threads++;
+						job.threads++;
 						reset_stats();
 					}
 					if(event.key.keysym.sym == SDLK_END)
 					{
-						if(threads>1)
-							threads--;
+						if(job.threads>1)
+							job.threads--;
 						reset_stats();
 					}
 					if(event.key.keysym.sym == SDLK_1)
@@ -229,7 +281,7 @@ int main(int argc, char* args[])
 					{
 						CleanRenderer();
 						//run lua script
-						runluascript();
+						runluascript(job.lua_script);
 						reset_stats();
 						render_next=1;
 					}
@@ -251,6 +303,20 @@ int main(int argc, char* args[])
 					{
 						continuous^=1;
 					}
+					if(event.key.keysym.sym == SDLK_o)
+					{
+						//save image with info
+						SDL_LockSurface(screen);
+						save_image(job.img_file,job.width,job.height,(unsigned char*)screen->pixels);
+						SDL_UnlockSurface(screen);
+					}
+					if(event.key.keysym.sym == SDLK_i)
+					{
+						//save image without info
+						SDL_LockSurface(surface);
+						save_image(job.img_file,job.width,job.height,(unsigned char*)surface->pixels);
+						SDL_UnlockSurface(surface);
+					}
 					
 					break;
 				case SDL_QUIT:
@@ -265,7 +331,7 @@ int main(int argc, char* args[])
 			//scene.cameras[0]->Rotate(0.017452 * 2.5,2);
 			
 			keys=SDL_GetKeyState(NULL); 
-			cam = &camaras[0];
+			cam = &escena.camaras[0];
 			//scene.cameras[0]->Rotate(0.017452 * 2.5,2);
 			if(keys[SDLK_UP])
 				RotateCamera(cam,0.017452 * 2.5,1);
@@ -289,8 +355,6 @@ int main(int argc, char* args[])
 			if(keys[SDLK_e])
 				MoveCamera(cam,0.0f,-1.0f,0.0f);
 
-
-
 		}
 
 		//Render
@@ -301,7 +365,7 @@ int main(int argc, char* args[])
 			i=clock();
 
 			SDL_LockSurface(surface);
-			RenderFrame(surface->pixels,threads);
+			RenderFrame((int*)surface->pixels,job.threads);
 			SDL_UnlockSurface(surface);
 
 			f=clock();
@@ -309,7 +373,7 @@ int main(int argc, char* args[])
 			frame_count++;
 		}
 
-SDL_BlitSurface(surface, NULL, screen, NULL);
+		SDL_BlitSurface(surface, NULL, screen, NULL);
 		stats(screen,(double)((double)(f-i)/(double)q),showhelp);
 
 		SDL_Flip(screen);
@@ -322,6 +386,51 @@ SDL_BlitSurface(surface, NULL, screen, NULL);
 
 	CleanBVH();
 	CleanRenderer();
+}
+
+void offline_mode()
+{
+	long long  i,f,q;
+	int* buffer=(int*) malloc(job.width*job.height*4);
+	q=CLOCKS_PER_SEC;
+	
+	runluascript(job.lua_script);
+	
+	printf("Rendering...\n\r");
+	
+	i=clock();
+	RenderFrame(buffer,job.threads);
+	f=clock();
+	
+	printf("Done in %8.4f s\n\r",(double)((double)(f-i)/(double)q));
+		
+	save_image(job.img_file,job.width,job.height,(unsigned char*)buffer);
+	CleanBVH();
+	CleanRenderer();
+	free(buffer);
+}
+
+int main(int argc, char* args[])
+{
+
+	bpp=32;
+
+	cpu_count=omp_get_num_procs();
+	
+	process_args(argc, args);
+
+	if(job.threads==0)
+		job.threads=cpu_count;
+	
+	omp_set_dynamic(0);
+	omp_set_num_threads(job.threads);
+	omp_set_nested(1);
+	
+	if(job.interactive==1)
+		interactive_mode();
+	else
+		offline_mode();
+
 
 	return 0;
 }

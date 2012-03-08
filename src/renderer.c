@@ -7,21 +7,12 @@
 
 long done_threads;
 
-align(16) Grupo *grupos;
-align(16) int num_grupos;
-align(16) Material *materiales;
-align(16) int num_materiales;
-align(16) Objeto3D *objetos;
-align(16) int num_objetos;
-align(16) Luz *luces;
-align(16) int num_luces;
-align(16) Camara* camaras;
-align(16) int num_camaras;
+align(16) Escena escena;
 
 align(16) int *buffer;
-align(16) int width;
-align(16) int height;
 align(16) int bpp;
+
+align(16) RenderJob job;
 
 #define BOX 50
 
@@ -68,7 +59,7 @@ int ShadowRay(Ray *ray,float max_dist)
 
 		for(i=0;i<bv->cant_objs;i++)
 		{
-			objeto=&objetos[bv->objs[i]];
+			objeto=&escena.objetos[bv->objs[i]];
 	#else
 		for(i=0;i<num_objetos;i++)
 		{
@@ -166,9 +157,9 @@ void Shading(float* punto, float* direccion, float* normal,Material* material, f
 	ray.origen[2]=punto[2];
 
 
-	for(z=0;z<num_luces;z++)
+	for(z=0;z<escena.num_luces;z++)
 	{
-		luz=&luces[z];
+		luz=&escena.luces[z];
 
 		V_SUB(ray.direccion,luz->posicion,ray.origen);
 		norm=V_SIZE(ray.direccion);
@@ -297,7 +288,7 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 		}
 		for(i=0;i<bv->cant_objs;i++)
 		{
-			objeto=&objetos[bv->objs[i]];
+			objeto=&escena.objetos[bv->objs[i]];
 			if(objeto->tipo==OBJ_ESFERA)
 			{
 				//Vector *c=sphere->center;
@@ -380,8 +371,8 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 	if(!result->hit)
 		return;
 	
-	objeto=&objetos[result->id_objeto];
-	material=&materiales[grupos[objeto->id_grupo].id_material];
+	objeto=&escena.objetos[result->id_objeto];
+	material=&escena.materiales[escena.grupos[objeto->id_grupo].id_material];
 
 	result->color[0]=material->color[0];
 	result->color[1]=material->color[1];
@@ -536,25 +527,25 @@ THREAD Render(int param)
 	float rf_stack[MAX_DEPTH];
 
 
-	V_SUB(dt,camaras[0].righttop,camaras[0].lefttop);
-	V_SUB(dl,camaras[0].leftbottom,camaras[0].lefttop);
+	V_SUB(dt,escena.camaras[0].righttop,escena.camaras[0].lefttop);
+	V_SUB(dl,escena.camaras[0].leftbottom,escena.camaras[0].lefttop);
 
 	step = ((int)param)>>16;
 	i=((int)param) & 0xFFFF;
 
 
-	for(y=i;y<height;y+=step)
-	for(x=0;x<width;x++)
+	for(y=i;y<job.height;y+=step)
+	for(x=0;x<job.width;x++)
 	{
-		dx=(x+0.5f)/width;
-		dy=(y+0.5f)/height;
+		dx=(x+0.5f)/job.width;
+		dy=(y+0.5f)/job.height;
 
-		ray.origen[0]=(dt[0]*dx  + dl[0]*dy + camaras[0].lefttop[0]);//camaras[0].eye[0];
-		ray.origen[1]=(dt[1]*dx  + dl[1]*dy + camaras[0].lefttop[1]);//camaras[0].eye[1];
-		ray.origen[2]=(dt[2]*dx  + dl[2]*dy + camaras[0].lefttop[2]);//camaras[0].eye[2];
-		ray.direccion[0]= ray.origen[0] - camaras[0].eye[0];//ray.origen[0];
-		ray.direccion[1]= ray.origen[1] - camaras[0].eye[1];//ray.origen[1];
-		ray.direccion[2]= ray.origen[2] - camaras[0].eye[2];//ray.origen[2];
+		ray.origen[0]=(dt[0]*dx  + dl[0]*dy + escena.camaras[0].lefttop[0]);//camaras[0].eye[0];
+		ray.origen[1]=(dt[1]*dx  + dl[1]*dy + escena.camaras[0].lefttop[1]);//camaras[0].eye[1];
+		ray.origen[2]=(dt[2]*dx  + dl[2]*dy + escena.camaras[0].lefttop[2]);//camaras[0].eye[2];
+		ray.direccion[0]= ray.origen[0] - escena.camaras[0].eye[0];//ray.origen[0];
+		ray.direccion[1]= ray.origen[1] - escena.camaras[0].eye[1];//ray.origen[1];
+		ray.direccion[2]= ray.origen[2] - escena.camaras[0].eye[2];//ray.origen[2];
 
 		norm=V_SIZE(ray.direccion);
 		V_DIV(ray.direccion,norm);
@@ -578,9 +569,7 @@ THREAD Render(int param)
 
 		if(result.hit)
 		{
-
-
-			rgb=(int)(result.color[0]*255.0f);
+			rgb=255;
 			rgb<<=8;
 			rgb+=min((int)(result.color[1]*255.0f),255);
 			rgb<<=8;
@@ -588,12 +577,13 @@ THREAD Render(int param)
 			rgb<<=8;
 			rgb+=min((int)(result.color[3]*255.0f),255);
 
-			buffer[y*width + x]=rgb;
+			buffer[y*job.width + x]=rgb;
 			//buffer[y*width + x]=0;
 		}
 		else
 		{
-			buffer[y*width + x]=0;
+			//buffer[y*job.width + x]=0;
+			buffer[y*job.width + x]=255<<24;
 		}
 			
 
@@ -629,22 +619,22 @@ void RenderFrame(int* pixels, int threads)
 	}
 	else
 	{
-		//for(x=0;x<threads-1;x++)
-		//{
-		//	param=(threads<<16) | x; //step,start
-		//	CreateThread(Render,param);
-		//}
+		for(x=0;x<threads-1;x++)
+		{
+			param=(threads<<16) | x; //step,start
+			CreateThread(Render,param);
+		}
 
-		//param=(threads<<16) | x; //step,start
-		//	CreateThread(Render,param);
+		param=(threads<<16) | x; //step,start
+			CreateThread(Render,param);
 
-		//while(done_threads<threads)
-		//	Sleep(1);
+		while(done_threads<threads)
+			Sleep(1);
 	
-		#pragma omp parallel
+		/*#pragma omp parallel
 			{
 				Render(omp_get_num_threads()<<16 | omp_get_thread_num());
-			}
+			}*/
 	}
 
 }
@@ -653,50 +643,46 @@ void RenderFrame(int* pixels, int threads)
 
 void CleanRenderer()
 {
-	if(grupos)
-		aligned_free(grupos);
-	if(materiales)
-		aligned_free(materiales);
-	if(objetos)
-		aligned_free(objetos);
-	if(luces)
-		aligned_free(luces);
-	if(camaras)
-		aligned_free(camaras);
+	if(escena.grupos)
+		aligned_free(escena.grupos);
+	if(escena.materiales)
+		aligned_free(escena.materiales);
+	if(escena.objetos)
+		aligned_free(escena.objetos);
+	if(escena.luces)
+		aligned_free(escena.luces);
+	if(escena.camaras)
+		aligned_free(escena.camaras);
 
 
-	grupos=0;
-	materiales=0;
-	objetos=0;
-	luces=0;
-	camaras=0;
-	num_grupos=0;
-	num_materiales=0;
-	num_objetos=0;
-	num_luces=0;
-	num_camaras=0;
-}
-
-void Initialize()
-{
+	escena.grupos=0;
+	escena.materiales=0;
+	escena.objetos=0;
+	escena.luces=0;
+	escena.camaras=0;
+	escena.num_grupos=0;
+	escena.num_materiales=0;
+	escena.num_objetos=0;
+	escena.num_luces=0;
+	escena.num_camaras=0;
 }
 
 void PreprocessObjects()
 {
 	int i;
 	float n;
-	for(i=0;i<num_objetos;i++)
+	for(i=0;i<escena.num_objetos;i++)
 	{
-		V_SUB(objetos[i].v2,objetos[i].v2,objetos[i].v1);
-		V_SUB(objetos[i].v3,objetos[i].v3,objetos[i].v1);
-		V_CROSS(objetos[i].normal,objetos[i].v3,objetos[i].v2);
-		n=V_SIZE(objetos[i].normal);
-		V_DIV(objetos[i].normal,n);
+		V_SUB(escena.objetos[i].v2,escena.objetos[i].v2,escena.objetos[i].v1);
+		V_SUB(escena.objetos[i].v3,escena.objetos[i].v3,escena.objetos[i].v1);
+		V_CROSS(escena.objetos[i].normal,escena.objetos[i].v3,escena.objetos[i].v2);
+		n=V_SIZE(escena.objetos[i].normal);
+		V_DIV(escena.objetos[i].normal,n);
 	}
 }
 
 void CreateObjects(int qty)
 {
-	num_objetos=qty;
-	objetos=(Objeto3D*)aligned_malloc(16,sizeof(Objeto3D)*num_objetos);
+	escena.num_objetos=qty;
+	escena.objetos=(Objeto3D*)aligned_malloc(16,sizeof(Objeto3D)*escena.num_objetos);
 }
