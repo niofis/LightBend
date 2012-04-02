@@ -412,6 +412,9 @@ void offline_mode()
 
 int main(int argc, char* args[])
 {
+	#ifdef SSE
+	//_MM_SET_FLUSH_ZERO_MOD(_MM_FLUSH_ZERO_ON);
+	#endif
 
 	bpp=32;
 

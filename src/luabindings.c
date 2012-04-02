@@ -139,6 +139,13 @@ static int initScene(lua_State *L)
 	return 0;
 }
 
+static int loadModel(lua_State *L)
+{
+
+	lua_pushnumber(L,1); //return number of triangles
+	return 1;
+}
+
 static const luaL_reg cRTlib[] = {
 {"initScene",   initScene},
 {"setTriangle",   setTriangle},

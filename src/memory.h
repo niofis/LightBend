@@ -10,5 +10,6 @@
 
 extern void* aligned_malloc(int aligment, int size);
 extern void aligned_free(void* mem);
+extern void* aligned_realloc(void* mem, int aligment, int size);
 
 #endif

@@ -31,6 +31,10 @@ void* aligned_malloc(int aligment, int size)
 	return (void*)final;
 }
 
+//void* aligned_malloc(int aligment, int size)
+//{
+//	return aligned_realloc(NULL,aligment,size);
+//}
 
 void aligned_free(void* mem)
 {
@@ -44,4 +48,39 @@ void aligned_free(void* mem)
 	free(original);
 #endif
 	
+}
+
+void* aligned_realloc(void* mem, int aligment, int size)
+{
+	void* original;
+	int total;
+	void* ptr;
+	int pad;
+	void* final;
+	int t;
+	
+	pad=aligment+sizeof(size_t);
+	total=size+pad;
+
+	if(mem!=NULL)
+		original=(void*)*((size_t*)mem-1);
+	else
+		original=NULL;
+
+#ifdef WIN32
+	ptr=HeapReAlloc(GetProcessHeap(),HEAP_NO_SERIALIZE | HEAP_ZERO_MEMORY,original,size);
+#else
+	ptr=realloc(original,size);
+#endif
+
+	if(ptr==NULL)
+		return NULL;
+
+	t=aligment - (size_t)ptr%aligment;
+	final= (void*)((size_t)ptr + t);
+
+	*((size_t*)final-1)=(size_t)ptr;
+
+	return (void*)final;
+
 }

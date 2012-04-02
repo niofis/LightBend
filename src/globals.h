@@ -8,8 +8,16 @@
 
 	#include "memory.h"
 
+	#define ALIGMENT 16
+
+	
+
 	#if defined(WIN32)
 		#include <windows.h>
+		#define SSE
+		#include <mmintrin.h>
+		#include <xmmintrin.h>
+		#include <intrin.h>
 		#define THREAD DWORD __stdcall
 		#define CreateThread(f,p) CreateThread(NULL,0,f,p,0,NULL)
 		#define align(x) __declspec(align(x))

@@ -2,6 +2,7 @@
 #define RENDERER
 
 #include "globals.h"
+#include "list.h"
 
 #define OBJ_NULO		0
 #define OBJ_ESFERA		1
@@ -143,6 +144,16 @@ typedef struct
 	int num_camaras;
 	int num_luces;
 } Escena;
+
+align(16)
+typedef struct
+{
+	List *groups;
+	List *meterials;
+	List *objects;
+	List *lights;
+	List *cameras;
+} Scene;
 
 align(16)
 typedef struct
