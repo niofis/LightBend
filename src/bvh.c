@@ -102,33 +102,33 @@ int Partition(int p, int r,int eje)
 {
 	int i,j,k;
 	float x;
-	Objeto3D t;
+	Object3D t;
 	//Randomized Partition
 	k=rand()%(r-p);
 	k+=p;
 	//t=numeros[r];
 	//numeros[r]=numeros[k];
 	//numeros[k]=t;
-	memcpy(&t,&escena.objetos[r],sizeof(Objeto3D));
-	memcpy(&escena.objetos[r],&escena.objetos[k],sizeof(Objeto3D));
-	memcpy(&escena.objetos[k],&t,sizeof(Objeto3D));
+	memcpy(&t,&escena.objects[r],sizeof(Object3D));
+	memcpy(&escena.objects[r],&escena.objects[k],sizeof(Object3D));
+	memcpy(&escena.objects[k],&t,sizeof(Object3D));
 	/////////////
-	x=escena.objetos[r].v1[eje];
+	x=escena.objects[r].v1[eje];
 	i=p-1;
 	for(j=p;j<r;j++)
 	{
-		if(escena.objetos[j].v1[eje]<x)
+		if(escena.objects[j].v1[eje]<x)
 		{
 			i++;
-			memcpy(&t,&escena.objetos[i],sizeof(Objeto3D));
-			memcpy(&escena.objetos[i],&escena.objetos[j],sizeof(Objeto3D));
-			memcpy(&escena.objetos[j],&t,sizeof(Objeto3D));
+			memcpy(&t,&escena.objects[i],sizeof(Object3D));
+			memcpy(&escena.objects[i],&escena.objects[j],sizeof(Object3D));
+			memcpy(&escena.objects[j],&t,sizeof(Object3D));
 		}
 	}
 	i++;
-	memcpy(&t,&escena.objetos[i],sizeof(Objeto3D));
-	memcpy(&escena.objetos[i],&escena.objetos[j],sizeof(Objeto3D));
-	memcpy(&escena.objetos[j],&t,sizeof(Objeto3D));
+	memcpy(&t,&escena.objects[i],sizeof(Object3D));
+	memcpy(&escena.objects[i],&escena.objects[j],sizeof(Object3D));
+	memcpy(&escena.objects[j],&t,sizeof(Object3D));
 	return i;
 }
 
@@ -145,19 +145,19 @@ void QuickS(int p, int r,int eje)
 
 void QuickSort(int eje)
 {
-	QuickS(0,escena.num_objetos-1,eje);
+	QuickS(0,escena.num_objects-1,eje);
 }
 
 void GetDistances()
 {
 	int i;
 	float centroide[4];
-	for(i=0;i<escena.num_objetos;i++)
+	for(i=0;i<escena.num_objects;i++)
 	{
 		//obtener el centroide
-		centroide[0]=(escena.objetos[i].v1[0] + escena.objetos[i].v2[0] + escena.objetos[i].v3[0])/3;
-		centroide[1]=(escena.objetos[i].v1[1] + escena.objetos[i].v2[1] + escena.objetos[i].v3[1])/3;
-		centroide[2]=(escena.objetos[i].v1[2] + escena.objetos[i].v2[2] + escena.objetos[i].v3[2])/3;
+		centroide[0]=(escena.objects[i].v1[0] + escena.objects[i].v2[0] + escena.objects[i].v3[0])/3;
+		centroide[1]=(escena.objects[i].v1[1] + escena.objects[i].v2[1] + escena.objects[i].v3[1])/3;
+		centroide[2]=(escena.objects[i].v1[2] + escena.objects[i].v2[2] + escena.objects[i].v3[2])/3;
 	}
 }
 
@@ -173,21 +173,21 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 	int x, y, i;
 	int obj_id=0;
 	int l_id=0;
-	Objeto3D *objeto;
+	Object3D *objeto;
 
 	//GetDistances();
-	//ordenar los objetos, por el eje x, luego el y y por ultimo el z
+	//ordenar los objects, por el eje x, luego el y y por ultimo el z
 	//QuickSort(0);
 	//QuickSort(1);
 	//QuickSort(2);
 
 	l_id=num_boxes-num_leaves;
-	//Ir metiendo los objetos a las hojas e ir aumentando el tamaño de las raicez
+	//Ir metiendo los objects a las hojas e ir aumentando el tamao de las raicez
 	for(x=0;x<num_leaves;x++)
 	{
-		if(obj_id>=escena.num_objetos)
+		if(obj_id>=escena.num_objects)
 		{
-			//si ya no hay objetos para las cajas, se deshabilita para que no 
+			//si ya no hay objects para las cajas, se deshabilita para que no 
 			//se gaste tiempo revisando un hit en ella
 			hierarchy[l_id].tipo=NODO_INVALIDO;
 			l_id++;
@@ -195,13 +195,13 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 		}
 		hierarchy[l_id].tipo=NODO_HOJA;
 		for(i=0;i<3;i++)
-			cajas[l_id].min[i]=cajas[l_id].max[i]=escena.objetos[obj_id].v1[i];
+			cajas[l_id].min[i]=cajas[l_id].max[i]=escena.objects[obj_id].v1[i];
 
-		for(y=0;y<CANT_OBJ_CAJA && obj_id<escena.num_objetos;y++)
+		for(y=0;y<CANT_OBJ_CAJA && obj_id<escena.num_objects;y++)
 		{
 			for(i=0;i<3;i++){
-				objeto=&escena.objetos[obj_id];
-				if(objeto->tipo==OBJ_TRIANGULO)
+				objeto=&escena.objects[obj_id];
+				if(objeto->tipo==OBJ_TRIANGLE)
 				{
 					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v1[i]);
 					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v1[i]);
@@ -212,7 +212,7 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v3[i]);
 					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v3[i]);
 				}
-				else if(objeto->tipo==OBJ_ESFERA)
+				else if(objeto->tipo==OBJ_SPHERE)
 				{
 					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v1[i]-objeto->radio);
 					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v1[i]+objeto->radio);
@@ -287,9 +287,9 @@ void GrowHierarchy(int node_id)
 
 void BuildBVH()
 {
-	//calcular la profuncidad del arbol, creo que es log2 de la cantidad de objetos.
-	//cada hoja puede contener hasta 4 objetos, por lo tanto la cantidad de cajas se calcularia como
-	//Log2(objetos/cant_x_caja)+1 = Profundidad del arbol
+	//calcular la profuncidad del arbol, creo que es log2 de la cantidad de objects.
+	//cada hoja puede contener hasta 4 objects, por lo tanto la cantidad de cajas se calcularia como
+	//Log2(objects/cant_x_caja)+1 = Profundidad del arbol
 	//cantidad de cajas=(2^profundidad) -1;
 	
 	int num_hojas;
@@ -300,8 +300,8 @@ void BuildBVH()
 
 	CleanBVH();
 
-	num_hojas=escena.num_objetos/CANT_OBJ_CAJA;
-	if(escena.num_objetos%CANT_OBJ_CAJA)
+	num_hojas=escena.num_objects/CANT_OBJ_CAJA;
+	if(escena.num_objects%CANT_OBJ_CAJA)
 		num_hojas++;
 	
 	a=log((float)num_hojas);

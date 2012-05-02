@@ -23,7 +23,7 @@ int ShadowRay(Ray *ray,float max_dist)
 	
 	int i,si;
 	int k,u,v;
-	Objeto3D* objeto;
+    Object3D* objeto;
 	float edge[3]={0,0,0};
 	float normal[3]={0,0,0};
 	float temp[3]={0,0,0};
@@ -35,7 +35,7 @@ int ShadowRay(Ray *ray,float max_dist)
 	//Recorrer el v_traverse, he ir checando con cada BoundingBox si tiene un hit
 	//Si no hace hit, saltar al nodo indicado en el skip_ptrs
 	//Si hace hit, revisar si es raiz u hoja, en el primer caso, continuar con el
-	//recorrido, si es hoja, probar algun hit con los objetos contenidos
+    //recorrido, si es hoja, probar algun hit con los objects contenidos
 	//Continua el recorrido hasta que el skip_ptrs nos indique un-1
 	
 	for(si=0;si<num_cajas && si!=-1 ;si++) //si se llego al final del vector traverse o se encontro con un nodo terminal, cancela el ciclo
@@ -59,14 +59,14 @@ int ShadowRay(Ray *ray,float max_dist)
 
 		for(i=0;i<bv->cant_objs;i++)
 		{
-			objeto=&escena.objetos[bv->objs[i]];
+            objeto=&escena.objects[bv->objs[i]];
 	#else
-		for(i=0;i<num_objetos;i++)
+        for(i=0;i<num_objects;i++)
 		{
-			objeto=&objetos[i];
+            objeto=&objects[i];
 	#endif
 
-			if(objeto->tipo==OBJ_ESFERA)
+            if(objeto->tipo==OBJ_SPHERE)
 			{
 				//Vector *c=sphere->center;
 				V_SUB(edge,ray->origen,objeto->v1);//Vector *f= (*e)-c;
@@ -75,10 +75,10 @@ int ShadowRay(Ray *ray,float max_dist)
 				C=(V_DOT(edge,edge)) - (objeto->radio*objeto->radio);// C=((*f) * f) - r2;
 				I=B2 - 4.0f*C;
 
-				if(I<0)					//No hay intersección
+				if(I<0)					//No hay interseccin
 					continue;
 
-				t0=sqrtf(I);		//Cálculos para obtener el(los) punto(s) de intersección
+				t0=sqrtf(I);		//Clculos para obtener el(los) punto(s) de interseccin
 
 				t=(B - t0)/2.0f;
 
@@ -90,7 +90,7 @@ int ShadowRay(Ray *ray,float max_dist)
 				if(t<=max_dist)
 					return 1;
 			}
-			else if(objeto->tipo==OBJ_TRIANGULO)
+            else if(objeto->tipo==OBJ_TRIANGLE)
 			{
 				//http://ompf.org/forum/viewtopic.php?f=4&t=1383
 
@@ -141,7 +141,7 @@ int ShadowRay(Ray *ray,float max_dist)
 
 void Shading(float* punto, float* direccion, float* normal,Material* material, float* color)
 {
-	Luz*	luz;
+    Light*	luz;
 	Ray ray;
 	float norm;
 	float t;
@@ -157,9 +157,9 @@ void Shading(float* punto, float* direccion, float* normal,Material* material, f
 	ray.origen[2]=punto[2];
 
 
-	for(z=0;z<escena.num_luces;z++)
+    for(z=0;z<escena.num_lights;z++)
 	{
-		luz=&escena.luces[z];
+        luz=&escena.lights[z];
 
 		V_SUB(ray.direccion,luz->posicion,ray.origen);
 		norm=V_SIZE(ray.direccion);
@@ -176,7 +176,7 @@ void Shading(float* punto, float* direccion, float* normal,Material* material, f
 				{
 					//a la intensidad hay que multiplicarla por el porcentaje entre la intensidad de la luz
 					//y el producto punto de la normal y el angulo (guardado en la variable intensidad)
-					//intensidad*=(luces[z].intensidad-norm)/luces[z].intensidad;
+                    //intensidad*=(lights[z].intensidad-norm)/lights[z].intensidad;
 					t=intensidad*(luz->intensidad-norm)/luz->intensidad;
 					int_luz[1]+=luz->color[1]*t;
 					int_luz[2]+=luz->color[2]*t;
@@ -236,7 +236,7 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 	
 	int i,si;
 	int k,u,v;
-	Objeto3D* objeto;
+    Object3D* objeto;
 	Material* material;
 	BoundingVolume *bv;
 	Ray nray;
@@ -250,8 +250,8 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 	float norm;
 	int id_obj_ant;
 	//borrar estas dos variables pues solo las puse de prueba
-	//int num_objetos=0;
-	//Objeto3D *objetos=NULL;
+    //int num_objects=0;
+    //Object3D *objects=NULL;
 
 	ta=0;
 	id_obj_ant=result->id_objeto;
@@ -265,7 +265,7 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 	//Recorrer el v_traverse, he ir checando con cada BoundingBox si tiene un hit
 	//Si no hace hit, saltar al nodo indicado en el skip_ptrs
 	//Si hace hit, revisar si es raiz u hoja, en el primer caso, continuar con el
-	//recorrido, si es hoja, probar algun hit con los objetos contenidos
+    //recorrido, si es hoja, probar algun hit con los objects contenidos
 	//Continua el recorrido hasta que el skip_ptrs nos indique un-1
 	
 	for(si=0;si<num_cajas && si!=-1 ;si++) //si se llego al final del vector traverse o se encontro con un nodo terminal, cancela el ciclo
@@ -288,8 +288,8 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 		}
 		for(i=0;i<bv->cant_objs;i++)
 		{
-			objeto=&escena.objetos[bv->objs[i]];
-			if(objeto->tipo==OBJ_ESFERA)
+            objeto=&escena.objects[bv->objs[i]];
+            if(objeto->tipo==OBJ_SPHERE)
 			{
 				//Vector *c=sphere->center;
 				V_SUB(edge,ray->origen,objeto->v1);//Vector *f= (*e)-c;
@@ -298,10 +298,10 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 				C=(V_DOT(edge,edge)) - (objeto->radio*objeto->radio);// C=((*f) * f) - r2;
 				I=B2 - 4.0f*C;
 
-				if(I<0)					//No hay intersección
+				if(I<0)					//No hay interseccin
 					continue;
 
-				t0=sqrtf(I);		//Cálculos para obtener el(los) punto(s) de intersección
+				t0=sqrtf(I);		//Clculos para obtener el(los) punto(s) de interseccin
 
 				t=(B - t0)/2.0f;
 
@@ -318,7 +318,7 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 					result->dist=ta;
 				}
 			}
-			else if(objeto->tipo==OBJ_TRIANGULO)
+            else if(objeto->tipo==OBJ_TRIANGLE)
 			{
 				//http://ompf.org/forum/viewtopic.php?f=4&t=1383
 
@@ -371,8 +371,8 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 	if(!result->hit)
 		return;
 	
-	objeto=&escena.objetos[result->id_objeto];
-	material=&escena.materiales[escena.grupos[objeto->id_grupo].id_material];
+    objeto=&escena.objects[result->id_objeto];
+    material=&escena.materials[escena.groups[objeto->group_id].material_id];
 
 	result->color[0]=material->color[0];
 	result->color[1]=material->color[1];
@@ -385,13 +385,13 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 	nray.origen[2]=ray->origen[2]+ray->direccion[2]*result->dist;
 
 	//Obtener la normal del objeto detectado
-	if(objeto->tipo==OBJ_ESFERA)
+    if(objeto->tipo==OBJ_SPHERE)
 	{
 		V_SUB(normal,nray.origen,objeto->v1);
 		norm=V_SIZE(normal);
 		V_DIV(normal,norm);
 	}
-	else if(objeto->tipo==OBJ_TRIANGULO)
+    else if(objeto->tipo==OBJ_TRIANGLE)
 	{
 		//V_CROSS(normal,objeto->v3,objeto->v2);
 		//norm=V_SIZE(normal);
@@ -410,13 +410,13 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 		return;
 	//Habiendo aun mas pasos para recursion, se puede probar por reflexion y refraccion
 
-	//Prueba Reflexión
+	//Prueba Reflexin
 	if(material->reflexion>0.0f)
 	{
 		//vert0=(float*)(&(ray->direction->u)); //V
 		//vert1=(float*)(&(pt->normal->u));	//N
 		t=(V_DOT(ray->direccion,normal)) * 2 ;
-		//R = V – 2 * ( V . N ) * N;
+		//R = V  2 * ( V . N ) * N;
 
 		nray.direccion[0]=ray->direccion[0] - t * normal[0];
 		nray.direccion[1]=ray->direccion[1] - t * normal[1];
@@ -519,7 +519,7 @@ THREAD Render(int param)
 
 	float color[4];
 
-	Objeto3D* objeto;
+    Object3D* objeto;
 	Material* material;
 
 	TraceResult result;
@@ -527,8 +527,8 @@ THREAD Render(int param)
 	float rf_stack[MAX_DEPTH];
 
 
-	V_SUB(dt,escena.camaras[0].righttop,escena.camaras[0].lefttop);
-	V_SUB(dl,escena.camaras[0].leftbottom,escena.camaras[0].lefttop);
+	V_SUB(dt,escena.cameras[0].righttop,escena.cameras[0].lefttop);
+	V_SUB(dl,escena.cameras[0].leftbottom,escena.cameras[0].lefttop);
 
 	step = ((int)param)>>16;
 	i=((int)param) & 0xFFFF;
@@ -540,12 +540,12 @@ THREAD Render(int param)
 		dx=(x+0.5f)/job.width;
 		dy=(y+0.5f)/job.height;
 
-		ray.origen[0]=(dt[0]*dx  + dl[0]*dy + escena.camaras[0].lefttop[0]);//camaras[0].eye[0];
-		ray.origen[1]=(dt[1]*dx  + dl[1]*dy + escena.camaras[0].lefttop[1]);//camaras[0].eye[1];
-		ray.origen[2]=(dt[2]*dx  + dl[2]*dy + escena.camaras[0].lefttop[2]);//camaras[0].eye[2];
-		ray.direccion[0]= ray.origen[0] - escena.camaras[0].eye[0];//ray.origen[0];
-		ray.direccion[1]= ray.origen[1] - escena.camaras[0].eye[1];//ray.origen[1];
-		ray.direccion[2]= ray.origen[2] - escena.camaras[0].eye[2];//ray.origen[2];
+		ray.origen[0]=(dt[0]*dx  + dl[0]*dy + escena.cameras[0].lefttop[0]);//cameras[0].eye[0];
+		ray.origen[1]=(dt[1]*dx  + dl[1]*dy + escena.cameras[0].lefttop[1]);//cameras[0].eye[1];
+		ray.origen[2]=(dt[2]*dx  + dl[2]*dy + escena.cameras[0].lefttop[2]);//cameras[0].eye[2];
+		ray.direccion[0]= ray.origen[0] - escena.cameras[0].eye[0];//ray.origen[0];
+		ray.direccion[1]= ray.origen[1] - escena.cameras[0].eye[1];//ray.origen[1];
+		ray.direccion[2]= ray.origen[2] - escena.cameras[0].eye[2];//ray.origen[2];
 
 		norm=V_SIZE(ray.direccion);
 		V_DIV(ray.direccion,norm);
@@ -643,46 +643,46 @@ void RenderFrame(int* pixels, int threads)
 
 void CleanRenderer()
 {
-	if(escena.grupos)
-		aligned_free(escena.grupos);
-	if(escena.materiales)
-		aligned_free(escena.materiales);
-	if(escena.objetos)
-		aligned_free(escena.objetos);
-	if(escena.luces)
-		aligned_free(escena.luces);
-	if(escena.camaras)
-		aligned_free(escena.camaras);
+    if(escena.groups)
+        aligned_free(escena.groups);
+    if(escena.materials)
+        aligned_free(escena.materials);
+    if(escena.objects)
+        aligned_free(escena.objects);
+    if(escena.lights)
+        aligned_free(escena.lights);
+	if(escena.cameras)
+		aligned_free(escena.cameras);
 
 
-	escena.grupos=0;
-	escena.materiales=0;
-	escena.objetos=0;
-	escena.luces=0;
-	escena.camaras=0;
-	escena.num_grupos=0;
-	escena.num_materiales=0;
-	escena.num_objetos=0;
-	escena.num_luces=0;
-	escena.num_camaras=0;
+    escena.groups=0;
+    escena.materials=0;
+    escena.objects=0;
+    escena.lights=0;
+	escena.cameras=0;
+    escena.num_groups=0;
+    escena.num_materials=0;
+    escena.num_objects=0;
+    escena.num_lights=0;
+	escena.num_cameras=0;
 }
 
 void PreprocessObjects()
 {
 	int i;
 	float n;
-	for(i=0;i<escena.num_objetos;i++)
+    for(i=0;i<escena.num_objects;i++)
 	{
-		V_SUB(escena.objetos[i].v2,escena.objetos[i].v2,escena.objetos[i].v1);
-		V_SUB(escena.objetos[i].v3,escena.objetos[i].v3,escena.objetos[i].v1);
-		V_CROSS(escena.objetos[i].normal,escena.objetos[i].v3,escena.objetos[i].v2);
-		n=V_SIZE(escena.objetos[i].normal);
-		V_DIV(escena.objetos[i].normal,n);
+        V_SUB(escena.objects[i].v2,escena.objects[i].v2,escena.objects[i].v1);
+        V_SUB(escena.objects[i].v3,escena.objects[i].v3,escena.objects[i].v1);
+        V_CROSS(escena.objects[i].normal,escena.objects[i].v3,escena.objects[i].v2);
+        n=V_SIZE(escena.objects[i].normal);
+        V_DIV(escena.objects[i].normal,n);
 	}
 }
 
 void CreateObjects(int qty)
 {
-	escena.num_objetos=qty;
-	escena.objetos=(Objeto3D*)aligned_malloc(16,sizeof(Objeto3D)*escena.num_objetos);
+    escena.num_objects=qty;
+    escena.objects=(Object3D*)aligned_malloc(16,sizeof(Object3D)*escena.num_objects);
 }

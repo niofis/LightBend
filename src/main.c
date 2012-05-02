@@ -117,6 +117,7 @@ void process_args(int argc, char* args[])
 	job.lua_script="script.lua";
 	job.verbose=0;
 	job.threads=0;
+    job.run_script=0;
 
 
 	for(i=0;i<argc;++i)
@@ -139,7 +140,10 @@ void process_args(int argc, char* args[])
 		else if(strcmp("-png",args[i])==0)
 			job.img_file=args[++i];
 		else if(strcmp("-script",args[i])==0)
+        {
 			job.lua_script=args[++i];
+            job.run_script=1;
+        }
 		else if(strcmp("-threads",args[i])==0)
 			job.threads=abs(atoi(args[++i]));
 	}
@@ -170,7 +174,7 @@ void interactive_mode()
 	int mouse_y;
 	const SDL_VideoInfo *info;
 	Uint8 * keys;
-	Camara* cam;
+	Camera* cam;
 	int showhelp=0;
 	int continuous=0;
 	int render_next=1;
@@ -199,7 +203,16 @@ void interactive_mode()
 		return 2;
 	}
 
-	Demo1();
+    if(job.run_script==1)
+    {
+        runluascript(job.lua_script);
+        Demo1();
+    } else
+    {
+        Demo1();
+    }
+
+
 
 	while(!done)
 	{
@@ -284,6 +297,8 @@ void interactive_mode()
 						runluascript(job.lua_script);
 						reset_stats();
 						render_next=1;
+                        CleanRenderer();
+                        Demo1();
 					}
 					if(event.key.keysym.sym == SDLK_n)
 					{
@@ -331,7 +346,7 @@ void interactive_mode()
 			//scene.cameras[0]->Rotate(0.017452 * 2.5,2);
 			
 			keys=SDL_GetKeyState(NULL); 
-			cam = &escena.camaras[0];
+			cam = &escena.cameras[0];
 			//scene.cameras[0]->Rotate(0.017452 * 2.5,2);
 			if(keys[SDLK_UP])
 				RotateCamera(cam,0.017452 * 2.5,1);

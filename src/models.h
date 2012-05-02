@@ -5,6 +5,7 @@
 #include <assimp/aiPostProcess.h>
 
 
-extern importmodel(const char* file);
+extern struct aiScene* importmodel(const char* file);
+extern void freemodel(struct aiScene* scene);
 
 #endif // MODELS_H

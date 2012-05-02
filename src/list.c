@@ -12,7 +12,7 @@ List* list_create()
 	return list;
 }
 
-void list_append(List* list,void* aligned_data)
+void list_add(List* list,void* aligned_data)
 {
 	struct ListElement* el;
 	if(list!=NULL)

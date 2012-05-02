@@ -1,6 +1,6 @@
 #include "models.h"
 
-int importmodel( const char* file)
+struct aiScene* importmodel( const char* file)
 {
   // Start the import on the given file with some example postprocessing
   // Usually - if speed is not the most important aspect for you - you'll t
@@ -22,6 +22,11 @@ int importmodel( const char* file)
   //DoTheSceneProcessing( scene);
 
   // We're done. Release all resources associated with this import
-  aiReleaseImport(scene);
-  return 1;
+
+  return scene;
+}
+
+void freemodel(struct aiScene* scene)
+{
+    aiReleaseImport(scene);
 }

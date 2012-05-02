@@ -4,9 +4,9 @@
 #include "globals.h"
 #include "list.h"
 
-#define OBJ_NULO		0
-#define OBJ_ESFERA		1
-#define OBJ_TRIANGULO	2
+#define OBJ_NULL		0
+#define OBJ_SPHERE		1
+#define OBJ_TRIANGLE	2
 #define OBJ_SKYDOME		3
 
 #define MAX_DEPTH	10
@@ -64,7 +64,7 @@ typedef struct
 	int pad1;
 	int pad2;
 	int pad3;
-} Camara;
+} Camera;
 
 align(16)
 typedef struct
@@ -75,7 +75,7 @@ typedef struct
     int id;
     int pad1;
 	int pad2;
-} Luz;
+} Light;
 
 align(16)
 typedef struct
@@ -95,23 +95,23 @@ align(16)
 typedef struct
 {
 	int id;
-	int id_material;
+    int material_id;
 	int pad1;
 	int pad2;
-} Grupo;
+} Group;
 
 align(16)
 typedef struct
 {
     int tipo;
-    int id_grupo;
+    int group_id;
     float radio;
     int id;
 	float v1[3];//x,y,z
 	float v2[3];
 	float v3[3];
 	float normal[3];
-} Objeto3D;
+} Object3D;
 
 align(16)
 typedef struct
@@ -133,16 +133,16 @@ typedef struct
 align(16)
 typedef struct
 {
-	Grupo *grupos;
-	Material *materiales;
-	Objeto3D *objetos;
-	Luz *luces;
-	Camara* camaras;
-	int num_grupos;
-	int num_materiales;
-	int num_objetos;
-	int num_camaras;
-	int num_luces;
+    Group *groups;
+    Material *materials;
+    Object3D *objects;
+    Light *lights;
+    Camera* cameras;
+    int num_groups;
+    int num_materials;
+    int num_objects;
+    int num_cameras;
+    int num_lights;
 } Escena;
 
 align(16)
@@ -171,8 +171,10 @@ typedef struct
 	int verbose;
 	int path_samples;
 	int threads;
-	char* img_file;
+    int run_script;
+    char* img_file;
 	char* lua_script;
+
 } RenderJob;
 
 void RenderFrame(int* buffer, int threads);
