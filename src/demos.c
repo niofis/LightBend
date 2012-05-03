@@ -34,11 +34,11 @@ void Demo1()
 	escena.lights[i].color[1]=1.0f;
 	escena.lights[i].color[2]=1.0f;
 	escena.lights[i].color[3]=1.0f;
-	escena.lights[i].intensidad=100.0f;
+	escena.lights[i].intensity=100.0f;
 	escena.lights[i].id=i;
-	escena.lights[i].posicion[0]=0.0f;
-	escena.lights[i].posicion[1]=2.0f;
-	escena.lights[i].posicion[2]=-5.0f;
+	escena.lights[i].position[0]=0.0f;
+	escena.lights[i].position[1]=2.0f;
+	escena.lights[i].position[2]=-5.0f;
 
 
 	//Crear Material
@@ -111,7 +111,7 @@ void Demo1()
 	escena.objects[i].group_id=0;
 	escena.objects[i].id=0;
 	escena.objects[i].radio=1.0f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=0;
 	escena.objects[i].v1[1]=0;
 	escena.objects[i].v1[2]=0;
@@ -119,7 +119,7 @@ void Demo1()
 	escena.objects[i].group_id=1;
 	escena.objects[i].id=i;
 	escena.objects[i].radio=1.0f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=0;
 	escena.objects[i].v1[1]=2.12132f;
 	escena.objects[i].v1[2]=0;
@@ -127,7 +127,7 @@ void Demo1()
 	escena.objects[i].group_id=2;
 	escena.objects[i].id=i;
 	escena.objects[i].radio=1.0f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=0;
 	escena.objects[i].v1[1]=-2.12132f;
 	escena.objects[i].v1[2]=0;
@@ -135,7 +135,7 @@ void Demo1()
 		
 	//objects[i].group_id=0;
 	//objects[i].id=i;
-    //objects[i].tipo=OBJ_TRIANGLE;
+    //objects[i].type=OBJ_TRIANGLE;
 	//V_INIT(objects[i].v1,-2.0f-2.0f,0-2.5f,0);
 	//V_INIT(objects[i].v2,2.0f-2.0f,0-2.5f,0);
 	//V_INIT(objects[i].v3,0.0f-2.0f,3.0f-2.5f,0);
@@ -143,7 +143,7 @@ void Demo1()
 
 	//objects[i].group_id=1;
 	//objects[i].id=i;
-    //objects[i].tipo=OBJ_TRIANGLE;
+    //objects[i].type=OBJ_TRIANGLE;
 	//V_INIT(objects[i].v1,-2.0f,0+3.0f-2.5f,0);
 	//V_INIT(objects[i].v2,2.0f,0+3.0f-2.5f,0);
 	//V_INIT(objects[i].v3,0.0f,3.0f+3.0f-2.5f,0);
@@ -151,7 +151,7 @@ void Demo1()
 
 	//objects[i].group_id=2;
 	//objects[i].id=i;
-    //objects[i].tipo=OBJ_TRIANGLE;
+    //objects[i].type=OBJ_TRIANGLE;
 	//V_INIT(objects[i].v1,-2.0f+2.0f,0-2.5f,0);
 	//V_INIT(objects[i].v2,2.0f+2.0f,0-2.5f,0);
 	//V_INIT(objects[i].v3,0.0f+2.0f,3.0f-2.5f,0);
@@ -194,11 +194,11 @@ void Demo2()
 	escena.lights[i].color[1]=1.0f;
 	escena.lights[i].color[2]=1.0f;
 	escena.lights[i].color[3]=1.0f;
-	escena.lights[i].intensidad=100.0f;
+	escena.lights[i].intensity=100.0f;
 	escena.lights[i].id=i;
-	escena.lights[i].posicion[0]=0.0f;
-	escena.lights[i].posicion[1]=2.0f;
-	escena.lights[i].posicion[2]=-5.0f;
+	escena.lights[i].position[0]=0.0f;
+	escena.lights[i].position[1]=2.0f;
+	escena.lights[i].position[2]=-5.0f;
 
 
 	//Crear Material
@@ -250,7 +250,7 @@ void Demo2()
 	escena.objects[i].group_id=0;
 	escena.objects[i].id=i;
 	escena.objects[i].radio=10000.0f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=0.0f;
 	escena.objects[i].v1[1]=-10000.0f;
 	escena.objects[i].v1[2]=0.0f;
@@ -259,7 +259,7 @@ void Demo2()
 	i++; 
 	escena.objects[i].group_id=1;
 	escena.objects[i].id=i;
-    escena.objects[i].tipo=OBJ_TRIANGLE;
+    escena.objects[i].type=OBJ_TRIANGLE;
 	V_INIT(escena.objects[i].v1,-2.0f,0,0);
 	V_INIT(escena.objects[i].v2,2.0f,0,0);
 	V_INIT(escena.objects[i].v3,0.0f,3.0f,0);
@@ -304,11 +304,11 @@ void Demo3()
 	escena.lights[i].color[1]=1.0f;
 	escena.lights[i].color[2]=1.0f;
 	escena.lights[i].color[3]=1.0f;
-	escena.lights[i].intensidad=100.0f;
+	escena.lights[i].intensity=100.0f;
 	escena.lights[i].id=i;
-	escena.lights[i].posicion[0]=0.0f;
-	escena.lights[i].posicion[1]=2.0f;
-	escena.lights[i].posicion[2]=-1.0f;
+	escena.lights[i].position[0]=0.0f;
+	escena.lights[i].position[1]=2.0f;
+	escena.lights[i].position[2]=-1.0f;
 
 	//Crear Material
 	escena.num_materials=6;
@@ -434,7 +434,7 @@ void Demo3()
 	escena.objects[i].group_id=0;
 	escena.objects[i].id=0;
 	escena.objects[i].radio=10000.0f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=-10004.0f;
 	escena.objects[i].v1[1]=0.0f;
 	escena.objects[i].v1[2]=0.0f;
@@ -442,7 +442,7 @@ void Demo3()
 	escena.objects[i].group_id=1;
 	escena.objects[i].id=i;
 	escena.objects[i].radio=10000.0f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=0.0f;
 	escena.objects[i].v1[1]=0.0f;
 	escena.objects[i].v1[2]=10004.0f;
@@ -450,7 +450,7 @@ void Demo3()
 	escena.objects[i].group_id=1;
 	escena.objects[i].id=i;
 	escena.objects[i].radio=10000.0f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=0.0f;
 	escena.objects[i].v1[1]=10004.0f;
 	escena.objects[i].v1[2]=0.0f;
@@ -458,7 +458,7 @@ void Demo3()
 	escena.objects[i].group_id=1;
 	escena.objects[i].id=i;
 	escena.objects[i].radio=10000.0f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=0.0f;
 	escena.objects[i].v1[1]=-10004.0f;
 	escena.objects[i].v1[2]=0.0f;
@@ -466,7 +466,7 @@ void Demo3()
 	escena.objects[i].group_id=2;
 	escena.objects[i].id=i;
 	escena.objects[i].radio=10000.0f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=10004.0f;
 	escena.objects[i].v1[1]=0.0f;
 	escena.objects[i].v1[2]=0.0f;
@@ -474,7 +474,7 @@ void Demo3()
 	escena.objects[i].group_id=3;
 	escena.objects[i].id=i;
 	escena.objects[i].radio=1.0f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=-2.0f;
 	escena.objects[i].v1[1]=-3.0f;
 	escena.objects[i].v1[2]=1.0f;
@@ -482,7 +482,7 @@ void Demo3()
 	escena.objects[i].group_id=4;
 	escena.objects[i].id=i;
 	escena.objects[i].radio=1.5f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=2.0f;
 	escena.objects[i].v1[1]=-2.0f;
 	escena.objects[i].v1[2]=-2.0f;
@@ -490,7 +490,7 @@ void Demo3()
 	escena.objects[i].group_id=5;
 	escena.objects[i].id=i;
 	escena.objects[i].radio=0.2f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=2.0f;
 	escena.objects[i].v1[1]=-2.0f;
 	escena.objects[i].v1[2]=-2.0f;
@@ -498,7 +498,7 @@ void Demo3()
 	escena.objects[i].group_id=2;
 	escena.objects[i].id=i;
 	escena.objects[i].radio=0.5f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=-3.0f;
 	escena.objects[i].v1[1]=-3.5f;
 	escena.objects[i].v1[2]=-2.0f;
@@ -543,11 +543,11 @@ void Demo4()
 	escena.lights[i].color[1]=1.0f;
 	escena.lights[i].color[2]=1.0f;
 	escena.lights[i].color[3]=1.0f;
-	escena.lights[i].intensidad=100.0f;
+	escena.lights[i].intensity=100.0f;
 	escena.lights[i].id=i;
-	escena.lights[i].posicion[0]=0.0f;
-	escena.lights[i].posicion[1]=2.0f;
-	escena.lights[i].posicion[2]=-5.0f;
+	escena.lights[i].position[0]=0.0f;
+	escena.lights[i].position[1]=2.0f;
+	escena.lights[i].position[2]=-5.0f;
 
 
 	//Crear Material
@@ -619,20 +619,20 @@ void Demo4()
 	escena.objects[i].group_id=0;
 	escena.objects[i].id=0;
 	escena.objects[i].radio=10.0f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	V_INIT(escena.objects[i].v1,0.0f,0.0f,14.0f);
 	i++;
 	escena.objects[i].group_id=1;
 	escena.objects[i].id=0;
 	escena.objects[i].radio=2.0f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	V_INIT(escena.objects[i].v1,-2.5f,2.0f,6.0f);
 
 	i++;
 	escena.objects[i].group_id=1;
 	escena.objects[i].id=0;
 	escena.objects[i].radio=2.0f;
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
 	V_INIT(escena.objects[i].v1,2.5f,2.0f,6.0f);
 
 	for(x=0;x<20;x++)
@@ -641,7 +641,7 @@ void Demo4()
 		escena.objects[i].group_id=1;
 		escena.objects[i].id=0;
 		escena.objects[i].radio=2.0f;
-        escena.objects[i].tipo=OBJ_SPHERE;
+        escena.objects[i].type=OBJ_SPHERE;
 		V_INIT(escena.objects[i].v1,-2.5f + (x*0.25f),-2.0f,6.0f);
 	}
 	BuildBVH();
@@ -685,11 +685,11 @@ void Demo7()
 	escena.lights[i].color[1]=1.0f;
 	escena.lights[i].color[2]=1.0f;
 	escena.lights[i].color[3]=1.0f;
-	escena.lights[i].intensidad=100.0f;
+	escena.lights[i].intensity=100.0f;
 	escena.lights[i].id=i;
-	escena.lights[i].posicion[0]=0.0f;
-	escena.lights[i].posicion[1]=2.0f;
-	escena.lights[i].posicion[2]=-5.0f;
+	escena.lights[i].position[0]=0.0f;
+	escena.lights[i].position[1]=2.0f;
+	escena.lights[i].position[2]=-5.0f;
 
 
 	//Crear Material
@@ -731,7 +731,7 @@ void Demo7()
 				escena.objects[i].group_id=0;
 				escena.objects[i].id=i;
 				//objects[i].radio=0.5f;
-                escena.objects[i].tipo=OBJ_TRIANGLE;
+                escena.objects[i].type=OBJ_TRIANGLE;
 				//objects[i].v1[3]=0;
 				//objects[i].v1[0]=fx;
 				//objects[i].v1[1]=fy;
@@ -794,11 +794,11 @@ void Demo9()
 	escena.lights[i].color[1]=1.0f;
 	escena.lights[i].color[2]=1.0f;
 	escena.lights[i].color[3]=1.0f;
-	escena.lights[i].intensidad=100.0f;
+	escena.lights[i].intensity=100.0f;
 	escena.lights[i].id=i;
-	escena.lights[i].posicion[0]=0.0f;
-	escena.lights[i].posicion[1]=2.0f;
-	escena.lights[i].posicion[2]=-5.0f;
+	escena.lights[i].position[0]=0.0f;
+	escena.lights[i].position[1]=2.0f;
+	escena.lights[i].position[2]=-5.0f;
 
 
 	//Crear Material
@@ -839,7 +839,7 @@ void Demo9()
 		ms3d_triangle=MS3DGetTriangleAt(i);
 		escena.objects[i].group_id=ms3d_triangle->groupIndex;
 		escena.objects[i].id=i;
-        escena.objects[i].tipo=OBJ_TRIANGLE;
+        escena.objects[i].type=OBJ_TRIANGLE;
 
 		ms3d_vertex=MS3DGetVertexAt(ms3d_triangle->vertexIndices[0]);
 		V_INIT(escena.objects[i].v1,ms3d_vertex->vertex[0],ms3d_vertex->vertex[1],-ms3d_vertex->vertex[2]);

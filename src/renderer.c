@@ -41,13 +41,13 @@ int ShadowRay(Ray *ray,float max_dist)
 	for(si=0;si<num_cajas && si!=-1 ;si++) //si se llego al final del vector traverse o se encontro con un nodo terminal, cancela el ciclo
 	{
 		bv=&hierarchy[v_traverse[si]];
-		if(bv->tipo==NODO_INVALIDO)	//no debe pasar, pero lo dejo igual
+		if(bv->type==NODO_INVALIDO)	//no debe pasar, pero lo dejo igual
 			continue;
 
 		if(BoxHit(v_traverse[si],ray))
 		{
 			//Si el rayo toca la caja, y es raiz, se pasa a la siguiente caja
-			if(bv->tipo==NODO_RAIZ)
+			if(bv->type==NODO_RAIZ)
 				continue;
 		}
 		else
@@ -66,7 +66,7 @@ int ShadowRay(Ray *ray,float max_dist)
             objeto=&objects[i];
 	#endif
 
-            if(objeto->tipo==OBJ_SPHERE)
+            if(objeto->type==OBJ_SPHERE)
 			{
 				//Vector *c=sphere->center;
 				V_SUB(edge,ray->origen,objeto->v1);//Vector *f= (*e)-c;
@@ -90,7 +90,7 @@ int ShadowRay(Ray *ray,float max_dist)
 				if(t<=max_dist)
 					return 1;
 			}
-            else if(objeto->tipo==OBJ_TRIANGLE)
+            else if(objeto->type==OBJ_TRIANGLE)
 			{
 				//http://ompf.org/forum/viewtopic.php?f=4&t=1383
 
@@ -145,7 +145,7 @@ void Shading(float* punto, float* direccion, float* normal,Material* material, f
 	Ray ray;
 	float norm;
 	float t;
-	float intensidad;
+	float intensity;
 	float vr[3];
 	float int_luz[4]={0,0,0,0};
 	float specular[4]={0,0,0,0};
@@ -161,23 +161,23 @@ void Shading(float* punto, float* direccion, float* normal,Material* material, f
 	{
         luz=&escena.lights[z];
 
-		V_SUB(ray.direccion,luz->posicion,ray.origen);
+		V_SUB(ray.direccion,luz->position,ray.origen);
 		norm=V_SIZE(ray.direccion);
 		V_DIV(ray.direccion,norm);
 
 
-		if(norm<luz->intensidad)
+		if(norm<luz->intensity)
 		{
 			if(!ShadowRay(&ray,norm))
 			{
 				//i= producto punto de la normal del objeto con la direccion del rayo
-				intensidad=V_DOT(normal,ray.direccion);
-				if(intensidad>0)
+				intensity=V_DOT(normal,ray.direccion);
+				if(intensity>0)
 				{
-					//a la intensidad hay que multiplicarla por el porcentaje entre la intensidad de la luz
-					//y el producto punto de la normal y el angulo (guardado en la variable intensidad)
-                    //intensidad*=(lights[z].intensidad-norm)/lights[z].intensidad;
-					t=intensidad*(luz->intensidad-norm)/luz->intensidad;
+					//a la intensity hay que multiplicarla por el porcentaje entre la intensity de la luz
+					//y el producto punto de la normal y el angulo (guardado en la variable intensity)
+                    //intensity*=(lights[z].intensity-norm)/lights[z].intensity;
+					t=intensity*(luz->intensity-norm)/luz->intensity;
 					int_luz[1]+=luz->color[1]*t;
 					int_luz[2]+=luz->color[2]*t;
 					int_luz[3]+=luz->color[3]*t;
@@ -197,23 +197,23 @@ void Shading(float* punto, float* direccion, float* normal,Material* material, f
 					//}
 					if(material->specular>0.0f)
 					{
-						intensidad*=2.0f;
-						vr[0]=ray.direccion[0] - (intensidad * normal[0]);
-						vr[1]=ray.direccion[1] - (intensidad * normal[1]);
-						vr[2]=ray.direccion[2] - (intensidad * normal[2]);
+						intensity*=2.0f;
+						vr[0]=ray.direccion[0] - (intensity * normal[0]);
+						vr[1]=ray.direccion[1] - (intensity * normal[1]);
+						vr[2]=ray.direccion[2] - (intensity * normal[2]);
 
 
-						//intensidad=ray.direccion[0]o*vr[0] + ray.direccion[1]o*vr[1]+ray.direccion[2]o*vr[2];
-						intensidad=V_DOT(vr,direccion);
-						if(intensidad>0)
+						//intensity=ray.direccion[0]o*vr[0] + ray.direccion[1]o*vr[1]+ray.direccion[2]o*vr[2];
+						intensity=V_DOT(vr,direccion);
+						if(intensity>0)
 						{
-							t=intensidad;
+							t=intensity;
 							for(i=0;i<19;i++)
-								intensidad*=t;
-							intensidad*=material->specular;
-							specular[1]+=luz->color[1]*intensidad;
-							specular[2]+=luz->color[2]*intensidad;
-							specular[3]+=luz->color[3]*intensidad;
+								intensity*=t;
+							intensity*=material->specular;
+							specular[1]+=luz->color[1]*intensity;
+							specular[2]+=luz->color[2]*intensity;
+							specular[3]+=luz->color[3]*intensity;
 						}
 					}
 				}
@@ -272,12 +272,12 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 	{
 
 		bv=&hierarchy[v_traverse[si]];
-		if(bv->tipo==NODO_INVALIDO)	//no debe pasar, pero lo dejo igual
+		if(bv->type==NODO_INVALIDO)	//no debe pasar, pero lo dejo igual
 			continue;
 		if(BoxHit(v_traverse[si],ray))
 		{
 			//Si el rayo toca la caja, y es raiz, se pasa a la siguiente caja
-			if(bv->tipo==NODO_RAIZ)
+			if(bv->type==NODO_RAIZ)
 				continue;
 		}
 		else
@@ -289,7 +289,7 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 		for(i=0;i<bv->cant_objs;i++)
 		{
             objeto=&escena.objects[bv->objs[i]];
-            if(objeto->tipo==OBJ_SPHERE)
+            if(objeto->type==OBJ_SPHERE)
 			{
 				//Vector *c=sphere->center;
 				V_SUB(edge,ray->origen,objeto->v1);//Vector *f= (*e)-c;
@@ -318,7 +318,7 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 					result->dist=ta;
 				}
 			}
-            else if(objeto->tipo==OBJ_TRIANGLE)
+            else if(objeto->type==OBJ_TRIANGLE)
 			{
 				//http://ompf.org/forum/viewtopic.php?f=4&t=1383
 
@@ -385,13 +385,13 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 	nray.origen[2]=ray->origen[2]+ray->direccion[2]*result->dist;
 
 	//Obtener la normal del objeto detectado
-    if(objeto->tipo==OBJ_SPHERE)
+    if(objeto->type==OBJ_SPHERE)
 	{
 		V_SUB(normal,nray.origen,objeto->v1);
 		norm=V_SIZE(normal);
 		V_DIV(normal,norm);
 	}
-    else if(objeto->tipo==OBJ_TRIANGLE)
+    else if(objeto->type==OBJ_TRIANGLE)
 	{
 		//V_CROSS(normal,objeto->v3,objeto->v2);
 		//norm=V_SIZE(normal);

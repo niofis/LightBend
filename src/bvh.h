@@ -26,7 +26,7 @@ float *cajas_max_x,*cajas_max_y,*cajas_max_z;
 align(16)
 typedef struct
 {
-	int tipo;//0 nodo raiz, 1 nodo hoja, 2 nodo deshabilitado
+	int type;//0 nodo raiz, 1 nodo hoja, 2 nodo deshabilitado
 	int cant_objs;
 	int objs[CANT_OBJ_CAJA];
 } BoundingVolume;
@@ -36,7 +36,7 @@ typedef struct
 {
 	Caja caja;
 	int objs[CANT_OBJ_CAJA];
-	int tipo;//0 nodo raiz, 1 nodo hoja, 2 nodo deshabilitado
+	int type;//0 nodo raiz, 1 nodo hoja, 2 nodo deshabilitado
 	int cant_objs;
 	int hijos[CANT_HIJOS];
 	

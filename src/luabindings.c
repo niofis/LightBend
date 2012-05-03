@@ -58,7 +58,7 @@ static int setMaterial(lua_State *L)
 	return 0;
 }
 
-//lua: setLight(id_light,color_a,color_r,color_g,color_b,intensidad,x,y,z)
+//lua: setLight(id_light,color_a,color_r,color_g,color_b,intensity,x,y,z)
 static int setLight(lua_State *L)
 {
 	int i=lua_tonumber(L, 1)-1;
@@ -67,10 +67,10 @@ static int setLight(lua_State *L)
     escena.lights[i].color[1]=lua_tonumber(L, 3);
     escena.lights[i].color[2]=lua_tonumber(L, 4);
     escena.lights[i].color[3]=lua_tonumber(L, 5);
-    escena.lights[i].intensidad=lua_tonumber(L, 6);
-    escena.lights[i].posicion[0]=lua_tonumber(L, 7);
-    escena.lights[i].posicion[1]=lua_tonumber(L, 8);
-    escena.lights[i].posicion[2]=lua_tonumber(L, 9);
+    escena.lights[i].intensity=lua_tonumber(L, 6);
+    escena.lights[i].position[0]=lua_tonumber(L, 7);
+    escena.lights[i].position[1]=lua_tonumber(L, 8);
+    escena.lights[i].position[2]=lua_tonumber(L, 9);
 	return 0;
 }
 
@@ -103,7 +103,7 @@ static int setSphere(lua_State *L)
     escena.objects[i].id=i;
     escena.objects[i].group_id=lua_tonumber(L, 2)-1;
     escena.objects[i].radio=lua_tonumber(L, 3);
-    escena.objects[i].tipo=OBJ_SPHERE;
+    escena.objects[i].type=OBJ_SPHERE;
     escena.objects[i].v1[0]=lua_tonumber(L, 4);
     escena.objects[i].v1[1]=lua_tonumber(L, 5);
     escena.objects[i].v1[2]=lua_tonumber(L, 6);
@@ -116,7 +116,7 @@ static int setTriangle(lua_State *L)
 	int i=lua_tonumber(L, 1)-1;
     escena.objects[i].group_id=lua_tonumber(L, 2)-1;
     escena.objects[i].id=i;
-    escena.objects[i].tipo=OBJ_TRIANGLE;
+    escena.objects[i].type=OBJ_TRIANGLE;
     V_INIT(escena.objects[i].v1,lua_tonumber(L, 3),lua_tonumber(L, 4),lua_tonumber(L, 5));
     V_INIT(escena.objects[i].v2,lua_tonumber(L, 6),lua_tonumber(L, 7),lua_tonumber(L, 8));
     V_INIT(escena.objects[i].v3,lua_tonumber(L, 9),lua_tonumber(L,10),lua_tonumber(L,11));
@@ -144,7 +144,7 @@ static int initScene(lua_State *L)
     lua_scene.cameras=list_create();
     lua_scene.groups=list_create();
     lua_scene.lights=list_create();
-    lua_scene.meterials=list_create();
+    lua_scene.materials=list_create();
     lua_scene.objects=list_create();
 
 
@@ -164,7 +164,7 @@ static int loadModel(lua_State *L)
     lua_scene.cameras=list_create();
     lua_scene.groups=list_create();
     lua_scene.lights=list_create();
-    lua_scene.meterials=list_create();
+    lua_scene.materials=list_create();
     lua_scene.objects=list_create();
 
     //get model into scene
@@ -172,27 +172,64 @@ static int loadModel(lua_State *L)
     //model->
     if(model)
     {
-        printf("Num Meshes: %d\n",model->mNumMeshes);
+        //printf("Num Meshes: %d\n",model->mNumMeshes);
+		printf("Num Materials: %d\n",model->mNumMaterials);
+		for(i=0;i<model->mNumMaterials;++i)
+		{
+			Material *m=(Material *) aligned_malloc(ALIGMENT,sizeof(Material));
+			struct aiMaterial *ma=model->mMaterials[i];
+			struct aiColor4D color;
+			aiGetMaterialColor(ma,AI_MATKEY_COLOR_DIFFUSE,&color);
+			m->id=i;
+			m->color[0]=color.a;
+			m->color[1]=color.r;
+			m->color[2]=color.g;
+			m->color[3]=color.b;
+			list_add(lua_scene.materials,m);
+			//printf("Material %d (%f,%f,%f,%f)\n",m->id,m->color[0],m->color[1],m->color[2],m->color[3]);
+		}
         for(i=0;i<model->mNumMeshes;++i)
         {
             struct aiMesh* m=model->mMeshes[i];
             Group *g=(Group *) aligned_malloc(ALIGMENT,sizeof(Group));
-            g->id=1;
+            g->id=i;
             list_add(lua_scene.groups,g);
 
-            printf("Mesh %d Faces: %d\n",i,m->mNumFaces );
+            //printf("Mesh %d Faces: %d\n",i,m->mNumFaces );
             for(j=0;j<m->mNumFaces;++j)
             {
                 struct aiFace f=m->mFaces[j];
-                Object3D *obj=aligned_malloc(ALIGMENT,sizeof(Object3D));
-                printf("Face %d Vertices: %d\n",j,f.mNumIndices);
-            }
+                Object3D *obj=(Object3D *)aligned_malloc(ALIGMENT,sizeof(Object3D));
+				obj->group_id=i;
+				obj->id=j;
+				obj->type=OBJ_TRIANGLE;
+				V_INIT(obj->v1,m->mVertices[f.mIndices[0]].x,m->mVertices[f.mIndices[0]].y,m->mVertices[f.mIndices[0]].z);
+				V_INIT(obj->v2,m->mVertices[f.mIndices[1]].x,m->mVertices[f.mIndices[1]].y,m->mVertices[f.mIndices[1]].z);
+				V_INIT(obj->v3,m->mVertices[f.mIndices[2]].x,m->mVertices[f.mIndices[2]].y,m->mVertices[f.mIndices[2]].z);
+                //printf("Face %d Vertices: %d\n",j,f.mNumIndices);
+				list_add(lua_scene.objects,obj);
+			}
         }
+		for(i=0;i<model->mNumLights;++i)
+		{
+			struct aiLight* l=model->mLights[i];
+			Light *li=(Light *) aligned_malloc(ALIGMENT,sizeof(Light));
+			li->id=i;
+			V_INIT(li->position,l->mPosition.x,l->mPosition.y,l->mPosition.z);
+			li->color[0]=1.0f;
+			li->color[1]=l->mColorDiffuse.r;
+			li->color[2]=l->mColorDiffuse.g;
+			li->color[3]=l->mColorDiffuse.b;
+			list_add(lua_scene.lights,li);
+		}
     }
-
-
-
     freemodel(model);
+
+	printf("Cameras: %d\n",lua_scene.cameras->count);
+	printf("Groups: %d\n",lua_scene.groups->count);
+	printf("Lights: %d\n",lua_scene.lights->count);
+	printf("Materials: %d\n",lua_scene.materials->count);
+	printf("Objects: %d\n",lua_scene.objects->count);
 
     return 0;
 }

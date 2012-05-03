@@ -69,9 +69,9 @@ typedef struct
 align(16)
 typedef struct
 {
-    float posicion[3];
+    float position[3];
     float color[4];
-    float intensidad;
+    float intensity;
     int id;
     int pad1;
 	int pad2;
@@ -103,7 +103,7 @@ typedef struct
 align(16)
 typedef struct
 {
-    int tipo;
+    int type;
     int group_id;
     float radio;
     int id;
@@ -149,7 +149,7 @@ align(16)
 typedef struct
 {
 	List *groups;
-	List *meterials;
+	List *materials;
 	List *objects;
 	List *lights;
 	List *cameras;

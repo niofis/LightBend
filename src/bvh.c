@@ -66,9 +66,9 @@ void BuildTraverseVector(int node)
 	v_traverse[idx_traverse]=node;
 	idx_traverse++;
 
-	if(l<num_cajas && hierarchy[l].tipo!=NODO_INVALIDO)
+	if(l<num_cajas && hierarchy[l].type!=NODO_INVALIDO)
 		BuildTraverseVector(l);
-	if(r<num_cajas && hierarchy[r].tipo!=NODO_INVALIDO)
+	if(r<num_cajas && hierarchy[r].type!=NODO_INVALIDO)
 		BuildTraverseVector(r);	
 }
 
@@ -85,9 +85,9 @@ void TraverseStop(int node)
 
 	if(!stop)
 	{
-		if(l<num_cajas && hierarchy[l].tipo!=NODO_INVALIDO)
+		if(l<num_cajas && hierarchy[l].type!=NODO_INVALIDO)
 			TraverseStop(l);
-		if(r<num_cajas && hierarchy[r].tipo!=NODO_INVALIDO)
+		if(r<num_cajas && hierarchy[r].type!=NODO_INVALIDO)
 			TraverseStop(r);	
 	}
 	else
@@ -189,11 +189,11 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 		{
 			//si ya no hay objects para las cajas, se deshabilita para que no 
 			//se gaste tiempo revisando un hit en ella
-			hierarchy[l_id].tipo=NODO_INVALIDO;
+			hierarchy[l_id].type=NODO_INVALIDO;
 			l_id++;
 			continue;
 		}
-		hierarchy[l_id].tipo=NODO_HOJA;
+		hierarchy[l_id].type=NODO_HOJA;
 		for(i=0;i<3;i++)
 			cajas[l_id].min[i]=cajas[l_id].max[i]=escena.objects[obj_id].v1[i];
 
@@ -201,7 +201,7 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 		{
 			for(i=0;i<3;i++){
 				objeto=&escena.objects[obj_id];
-				if(objeto->tipo==OBJ_TRIANGLE)
+				if(objeto->type==OBJ_TRIANGLE)
 				{
 					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v1[i]);
 					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v1[i]);
@@ -212,7 +212,7 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v3[i]);
 					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v3[i]);
 				}
-				else if(objeto->tipo==OBJ_SPHERE)
+				else if(objeto->type==OBJ_SPHERE)
 				{
 					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v1[i]-objeto->radio);
 					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v1[i]+objeto->radio);
@@ -241,7 +241,7 @@ void GrowHierarchy(int node_id)
 	int l,r;
 
 	//Si no es un nodo raiz, no hay que crecerlo
-	if(hierarchy[node_id].tipo!=NODO_RAIZ)
+	if(hierarchy[node_id].type!=NODO_RAIZ)
 		return;
 
 	l=LEFT(node_id);
@@ -252,7 +252,7 @@ void GrowHierarchy(int node_id)
 	//Revisa si alguno de los nodos hijos esta deshabilitado
 	//si es el caso, utiliza las dimensiones del nodo que si esta habilitado
 	//si ambos estan deshabilitados, deshabilita el nodo actual
-	if(hierarchy[l].tipo!=NODO_INVALIDO && hierarchy[r].tipo==NODO_INVALIDO)
+	if(hierarchy[l].type!=NODO_INVALIDO && hierarchy[r].type==NODO_INVALIDO)
 	{
 		cajas[node_id].min[0]=cajas[l].min[0];
 		cajas[node_id].min[1]=cajas[l].min[1];
@@ -261,7 +261,7 @@ void GrowHierarchy(int node_id)
 		cajas[node_id].max[1]=cajas[l].max[1];
 		cajas[node_id].max[2]=cajas[l].max[2];
 	}
-	else if(hierarchy[l].tipo==NODO_INVALIDO && hierarchy[r].tipo!=NODO_INVALIDO)
+	else if(hierarchy[l].type==NODO_INVALIDO && hierarchy[r].type!=NODO_INVALIDO)
 	{
 		cajas[node_id].min[0]=cajas[r].min[0];
 		cajas[node_id].min[1]=cajas[r].min[1];
@@ -270,7 +270,7 @@ void GrowHierarchy(int node_id)
 		cajas[node_id].max[1]=cajas[r].max[1];
 		cajas[node_id].max[2]=cajas[r].max[2];
 	}
-	else if(hierarchy[l].tipo!=NODO_INVALIDO && hierarchy[r].tipo!=NODO_INVALIDO)
+	else if(hierarchy[l].type!=NODO_INVALIDO && hierarchy[r].type!=NODO_INVALIDO)
 	{
 		cajas[node_id].min[0]=min(cajas[l].min[0],cajas[r].min[0]);
 		cajas[node_id].min[1]=min(cajas[l].min[1],cajas[r].min[1]);
@@ -281,7 +281,7 @@ void GrowHierarchy(int node_id)
 		cajas[node_id].max[2]=max(cajas[l].max[2],cajas[r].max[2]);
 	}
 	else
-		hierarchy[node_id].tipo=NODO_INVALIDO;
+		hierarchy[node_id].type=NODO_INVALIDO;
 
 }
 

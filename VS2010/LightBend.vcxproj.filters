@@ -45,6 +45,9 @@
     <ClCompile Include="..\src\list.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\models.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\bvh.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\models.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
