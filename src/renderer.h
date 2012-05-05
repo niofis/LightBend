@@ -186,5 +186,6 @@ align(16) extern int *buffer;
 align(16) extern int bpp;
 align(16) extern RenderJob job;
 align(16) extern Escena escena;
+align(16) extern void convertscene(Scene *scene, Escena *nscene);
 
 #endif

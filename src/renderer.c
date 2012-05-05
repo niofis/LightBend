@@ -684,5 +684,100 @@ void PreprocessObjects()
 void CreateObjects(int qty)
 {
     escena.num_objects=qty;
-    escena.objects=(Object3D*)aligned_malloc(16,sizeof(Object3D)*escena.num_objects);
+    escena.objects=(Object3D*)aligned_malloc(ALIGMENT,sizeof(Object3D)*escena.num_objects);
+}
+
+void convertscene(Scene *scene, Escena *nscene)
+{
+	int i=0;
+	CleanRenderer();
+
+	escena.num_cameras=1;
+	escena.cameras=(Camera*)aligned_malloc(ALIGMENT,sizeof(Camera)*escena.num_cameras);
+	i=0;
+	escena.cameras[0].eye[0]=0.0f;
+	escena.cameras[0].eye[1]=0.0f;
+	escena.cameras[0].eye[2]=-10.0f;
+
+	escena.cameras[0].lefttop[0]=-3.2f;
+	escena.cameras[0].lefttop[1]=2.4f;
+	escena.cameras[0].lefttop[2]=-5.0f;
+
+	escena.cameras[0].righttop[0]=3.2f;
+	escena.cameras[0].righttop[1]=2.4f;
+	escena.cameras[0].righttop[2]=-5.0f;
+
+	escena.cameras[0].leftbottom[0]=-3.2f;
+	escena.cameras[0].leftbottom[1]=-2.4f;
+	escena.cameras[0].leftbottom[2]=-5.0f;
+	for(i=0;i<scene->cameras->count;++i)
+	{
+		//TODO
+	}
+
+	//Crear Light
+	escena.num_lights=1;
+	escena.lights=(Light*)aligned_malloc(ALIGMENT,sizeof(Light)*escena.num_lights);
+	i=0;
+	escena.lights[i].color[0]=1.0f;
+	escena.lights[i].color[1]=1.0f;
+	escena.lights[i].color[2]=1.0f;
+	escena.lights[i].color[3]=1.0f;
+	escena.lights[i].intensity=1000.0f;
+	escena.lights[i].id=i;
+	escena.lights[i].position[0]=0.0f;
+	escena.lights[i].position[1]=2.0f;
+	escena.lights[i].position[2]=-5.0f;
+
+	for(i=0;i<scene->lights->count;++i)
+	{
+		//TODO
+	}
+
+	escena.num_materials=scene->materials->count;
+	escena.materials=(Material*)aligned_malloc(ALIGMENT,sizeof(Material)*escena.num_materials);
+	for(i=0;i<scene->materials->count;++i)
+	{
+		Material* m=(Material*)list_get(scene->materials,i);
+		escena.materials[i].color[0]=m->color[0];
+		escena.materials[i].color[1]=m->color[1];
+		escena.materials[i].color[2]=m->color[2];
+		escena.materials[i].color[3]=m->color[3];
+		escena.materials[i].id=i;
+		escena.materials[i].ptr_textura=0;
+		escena.materials[i].reflexion=0;
+		escena.materials[i].refraccion=0;
+		escena.materials[i].specular=1.0f;
+		escena.materials[i].textura=0;
+		escena.materials[i].txt_height=0;
+		escena.materials[i].txt_width=0;
+	}
+
+	escena.num_groups=scene->groups->count;
+    escena.groups=(Group*)aligned_malloc(16,sizeof(Group)*escena.num_groups);
+	for(i=0;i<scene->groups->count;++i)
+	{
+		Group *g=(Group*)list_get(scene->groups,i);
+		escena.groups[i].id=i;
+		escena.groups[i].material_id=g->material_id;
+	}
+
+	escena.num_objects=scene->objects->count;
+	escena.objects=(Object3D*)aligned_malloc(16,sizeof(Object3D)*escena.num_objects);
+
+	for(i=0;i<scene->objects->count;++i)
+	{
+		Object3D *obj=(Object3D*)list_get(scene->objects,i);
+		escena.objects[i].group_id=obj->group_id;
+		escena.objects[i].id=i;
+		escena.objects[i].type=OBJ_TRIANGLE;
+		
+		V_INIT(escena.objects[i].v1,obj->v1[0],obj->v1[1],-obj->v1[2]);
+		V_INIT(escena.objects[i].v2,obj->v2[0],obj->v2[1],-obj->v2[2]);
+		V_INIT(escena.objects[i].v3,obj->v3[0],obj->v3[1],-obj->v3[2]);
+	}
+
+	BuildBVH();
+	PreprocessObjects();
+
 }

@@ -162,7 +162,7 @@ void process_args(int argc, char* args[])
 		job.interactive=1;
 }
 
-void interactive_mode()
+int interactive_mode()
 {
 	int videoflags=SDL_HWACCEL | SDL_HWSURFACE;
 	SDL_Surface* screen;
@@ -206,7 +206,6 @@ void interactive_mode()
     if(job.run_script==1)
     {
         runluascript(job.lua_script);
-        Demo1();
     } else
     {
         Demo1();

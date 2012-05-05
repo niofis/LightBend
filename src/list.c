@@ -18,11 +18,11 @@ void list_add(List* list,void* aligned_data)
 	if(list!=NULL)
 	{
 		el=(struct ListElement*)aligned_malloc(ALIGMENT,sizeof(struct ListElement));
+		el->data=aligned_data;
 		if(list->head==NULL)
 		{
 			list->head=el;
 			list->tail=el;
-			el->data=aligned_data;
 			el->previous=NULL;
 			el->next=NULL;
 		}

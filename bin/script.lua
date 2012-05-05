@@ -5,4 +5,5 @@ for i,v in pairs(lb) do
 end
 
 --lb.loadModel("/home/niofis/Raytracing/models/testplatonicsolids.nff")
-lb.loadModel("J:\\docs\\Raytracing\\models\\testplatonicsolids.nff")
+--lb.loadModel("D:/Enrique/Raytracing/models/testplatonicsolids.nff")
+lb.loadModel("D:/Enrique/Raytracing/models/Arbor/Arbor/Arbor.3DS")

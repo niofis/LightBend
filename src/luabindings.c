@@ -193,6 +193,7 @@ static int loadModel(lua_State *L)
             struct aiMesh* m=model->mMeshes[i];
             Group *g=(Group *) aligned_malloc(ALIGMENT,sizeof(Group));
             g->id=i;
+			g->material_id=m->mMaterialIndex;
             list_add(lua_scene.groups,g);
 
             //printf("Mesh %d Faces: %d\n",i,m->mNumFaces );
@@ -222,7 +223,6 @@ static int loadModel(lua_State *L)
 			li->color[3]=l->mColorDiffuse.b;
 			list_add(lua_scene.lights,li);
 		}
-    }
     freemodel(model);
 
 	printf("Cameras: %d\n",lua_scene.cameras->count);
@@ -230,6 +230,14 @@ static int loadModel(lua_State *L)
 	printf("Lights: %d\n",lua_scene.lights->count);
 	printf("Materials: %d\n",lua_scene.materials->count);
 	printf("Objects: %d\n",lua_scene.objects->count);
+
+	convertscene(&lua_scene, NULL);
+    }
+	else
+	{
+		CleanRenderer();
+		Demo1();
+	}
 
     return 0;
 }
