@@ -72,7 +72,7 @@ int ShadowRay(Ray *ray,float max_dist)
 				V_SUB(edge,ray->origen,objeto->v1);//Vector *f= (*e)-c;
 				B=-2.0f*V_DOT(edge,ray->direccion);//B=((*f) * d)*2;
 				B2=B*B;
-				C=(V_DOT(edge,edge)) - (objeto->radio*objeto->radio);// C=((*f) * f) - r2;
+				C=(V_DOT(edge,edge)) - (objeto->radious*objeto->radious);// C=((*f) * f) - r2;
 				I=B2 - 4.0f*C;
 
 				if(I<0)					//No hay interseccin
@@ -295,7 +295,7 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 				V_SUB(edge,ray->origen,objeto->v1);//Vector *f= (*e)-c;
 				B=-2.0f*V_DOT(edge,ray->direccion);//B=((*f) * d)*2;
 				B2=B*B;
-				C=(V_DOT(edge,edge)) - (objeto->radio*objeto->radio);// C=((*f) * f) - r2;
+				C=(V_DOT(edge,edge)) - (objeto->radious*objeto->radious);// C=((*f) * f) - r2;
 				I=B2 - 4.0f*C;
 
 				if(I<0)					//No hay interseccin
@@ -692,6 +692,7 @@ void convertscene(Scene *scene, Escena *nscene)
 	int i=0;
 	CleanRenderer();
 
+        /*
 	escena.num_cameras=1;
 	escena.cameras=(Camera*)aligned_malloc(ALIGMENT,sizeof(Camera)*escena.num_cameras);
 	i=0;
@@ -710,12 +711,10 @@ void convertscene(Scene *scene, Escena *nscene)
 	escena.cameras[0].leftbottom[0]=-3.2f;
 	escena.cameras[0].leftbottom[1]=-2.4f;
 	escena.cameras[0].leftbottom[2]=-5.0f;
-	for(i=0;i<scene->cameras->count;++i)
-	{
-		//TODO
-	}
 
-	//Crear Light
+
+    //Crear Light
+
 	escena.num_lights=1;
 	escena.lights=(Light*)aligned_malloc(ALIGMENT,sizeof(Light)*escena.num_lights);
 	i=0;
@@ -728,10 +727,44 @@ void convertscene(Scene *scene, Escena *nscene)
 	escena.lights[i].position[0]=0.0f;
 	escena.lights[i].position[1]=2.0f;
 	escena.lights[i].position[2]=-5.0f;
+    */
 
+    escena.num_cameras=scene->lights->count;
+    escena.cameras=(Camera*)aligned_malloc(ALIGMENT,sizeof(Camera)*escena.num_cameras);
+    for(i=0;i<scene->cameras->count;++i)
+    {
+        Camera* c=(Camera*)list_get(scene->cameras,i);
+        escena.cameras[0].eye[0]=c->eye[0];
+        escena.cameras[0].eye[1]=c->eye[1];
+        escena.cameras[0].eye[2]=c->eye[2];
+
+        escena.cameras[0].lefttop[0]=c->lefttop[0];
+        escena.cameras[0].lefttop[1]=c->lefttop[1];
+        escena.cameras[0].lefttop[2]=c->lefttop[2];
+
+        escena.cameras[0].righttop[0]=c->righttop[0];
+        escena.cameras[0].righttop[1]=c->righttop[1];
+        escena.cameras[0].righttop[2]=c->righttop[2];
+
+        escena.cameras[0].leftbottom[0]=c->leftbottom[0];
+        escena.cameras[0].leftbottom[1]=c->leftbottom[1];
+        escena.cameras[0].leftbottom[2]=c->leftbottom[2];
+    }
+
+    escena.num_lights=scene->lights->count;
+    escena.lights=(Light*)aligned_malloc(ALIGMENT,sizeof(Light)*escena.num_lights);
 	for(i=0;i<scene->lights->count;++i)
 	{
-		//TODO
+        Light* l=(Light*)list_get(scene->lights,i);
+        escena.lights[i].color[0]=l->color[0];
+        escena.lights[i].color[1]=l->color[1];
+        escena.lights[i].color[2]=l->color[2];
+        escena.lights[i].color[3]=l->color[3];
+        escena.lights[i].intensity=l->intensity;
+        escena.lights[i].id=i;
+        escena.lights[i].position[0]=l->position[0];
+        escena.lights[i].position[1]=l->position[1];
+        escena.lights[i].position[2]=l->position[2];
 	}
 
 	escena.num_materials=scene->materials->count;
@@ -770,14 +803,15 @@ void convertscene(Scene *scene, Escena *nscene)
 		Object3D *obj=(Object3D*)list_get(scene->objects,i);
 		escena.objects[i].group_id=obj->group_id;
 		escena.objects[i].id=i;
-		escena.objects[i].type=OBJ_TRIANGLE;
+        escena.objects[i].type=obj->type;
+        escena.objects[i].radious=obj->radious;
 		
-		V_INIT(escena.objects[i].v1,obj->v1[0],obj->v1[1],-obj->v1[2]);
-		V_INIT(escena.objects[i].v2,obj->v2[0],obj->v2[1],-obj->v2[2]);
-		V_INIT(escena.objects[i].v3,obj->v3[0],obj->v3[1],-obj->v3[2]);
+        V_INIT(escena.objects[i].v1,obj->v1[0],obj->v1[1],obj->v1[2]);
+        V_INIT(escena.objects[i].v2,obj->v2[0],obj->v2[1],obj->v2[2]);
+        V_INIT(escena.objects[i].v3,obj->v3[0],obj->v3[1],obj->v3[2]);
 	}
 
-	BuildBVH();
-	PreprocessObjects();
+    //BuildBVH();
+    //PreprocessObjects();
 
 }

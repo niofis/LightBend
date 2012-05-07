@@ -1,10 +1,24 @@
---lua: cRT.setGroup(id_group,id_material)
---lua: cRT.setMaterial(id_material,color_a,color_r,color_g,color_b,reflexion,refraccion,specular)
---lua: cRT.setLight(id_light,color_a,color_r,color_g,color_b,intensidad,x,y,z)
---lua: cRT.setCamera(id_camera,eye_x,eye_y,eye_z,lt_x,lt_y,lt_z,rt_x,rt_y,rt_z,lb_x,lb_y,lb_z)
---lua: cRT.setSphere(id_object,id_group,radio,x,y,z)
---lua: cRT.setTriangle(id_object,id_group,radio,x1,y1,z1,x2,y2,z2,x3,y3,z3)
---lua: cRT.initScene(num_camaras,num_luces,num_materiales,num_grupos,num_objetos)
+local lb=require("lightbend")
+
+--[[
+for i,v in pairs(lb) do
+    print(i,v)
+end
+]]
+
+--lb.initScene()
+
+--lb.loadModel("/home/niofis/Raytracing/models/tree.ms3d")
+--lb.loadModel("D:/Enrique/Raytracing/models/testplatonicsolids.nff")
+--lb.loadModel("D:/Enrique/Raytracing/models/Arbor/Arbor/Arbor.3DS")
+
+--lua: lb.setGroup(id_group,id_material)
+--lua: lb.setMaterial(id_material,color_a,color_r,color_g,color_b,reflexion,refraccion,specular)
+--lua: lb.setLight(id_light,color_a,color_r,color_g,color_b,intensidad,x,y,z)
+--lua: lb.setCamera(id_camera,eye_x,eye_y,eye_z,lt_x,lt_y,lt_z,rt_x,rt_y,rt_z,lb_x,lb_y,lb_z)
+--lua: lb.setSphere(id_object,id_group,radio,x,y,z)
+--lua: lb.setTriangle(id_object,id_group,radio,x1,y1,z1,x2,y2,z2,x3,y3,z3)
+--lua: lb.initScene(num_camaras,num_luces,num_materiales,num_grupos,num_objetos)
 
 local prm= require("primitives")
 local tb=require("table")
@@ -112,11 +126,12 @@ function addLevel(parent,level)
 
 end
 
+--[[
 local o=prm.Sphere:new{radius=2, center=prm.Vector3:new{x=0,y=0,z=0}, group=g}
 o.bottom=1
 tb.insert(scene.objects,o)
 addLevel(o,1)
-
+]]
 
 local l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=0,y=2,z=-50}}
 tb.insert(scene.lights,l)
@@ -124,8 +139,8 @@ tb.insert(scene.lights,l)
 l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=0,y=2,z=50}}
 tb.insert(scene.lights,l)
 
+tb.insert(scene.models,"/home/niofis/Raytracing/models/tree.ms3d")
 
 
-
-tr.sendScene(cRT,scene)
+tr.sendScene(lb,scene)
 

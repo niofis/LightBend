@@ -105,7 +105,7 @@ typedef struct
 {
     int type;
     int group_id;
-    float radio;
+    float radious;
     int id;
 	float v1[3];//x,y,z
 	float v2[3];

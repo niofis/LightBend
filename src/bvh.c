@@ -214,14 +214,14 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 				}
 				else if(objeto->type==OBJ_SPHERE)
 				{
-					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v1[i]-objeto->radio);
-					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v1[i]+objeto->radio);
+					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v1[i]-objeto->radious);
+					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v1[i]+objeto->radious);
 
-					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v2[i]-objeto->radio);
-					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v2[i]+objeto->radio);
+					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v2[i]-objeto->radious);
+					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v2[i]+objeto->radious);
 
-					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v3[i]-objeto->radio);
-					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v3[i]+objeto->radio);
+					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v3[i]-objeto->radious);
+					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v3[i]+objeto->radious);
 				}
 			}
 

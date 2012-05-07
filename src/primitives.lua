@@ -141,6 +141,7 @@ function Scene:new(o)
 	o.camera=o.camera or Camera:new{}
 	o.materials=o.materials or {}
 	o.groups=o.groups or {}
+	o.models=o.models or {}
 	return o
 end
 

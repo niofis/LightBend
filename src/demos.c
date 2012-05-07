@@ -110,7 +110,7 @@ void Demo1()
 	i=0; 
 	escena.objects[i].group_id=0;
 	escena.objects[i].id=0;
-	escena.objects[i].radio=1.0f;
+	escena.objects[i].radious=1.0f;
     escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=0;
 	escena.objects[i].v1[1]=0;
@@ -118,7 +118,7 @@ void Demo1()
 	i++;//1
 	escena.objects[i].group_id=1;
 	escena.objects[i].id=i;
-	escena.objects[i].radio=1.0f;
+	escena.objects[i].radious=1.0f;
     escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=0;
 	escena.objects[i].v1[1]=2.12132f;
@@ -126,7 +126,7 @@ void Demo1()
 	i++;//2
 	escena.objects[i].group_id=2;
 	escena.objects[i].id=i;
-	escena.objects[i].radio=1.0f;
+	escena.objects[i].radious=1.0f;
     escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=0;
 	escena.objects[i].v1[1]=-2.12132f;
@@ -249,7 +249,7 @@ void Demo2()
 	i=0; 
 	escena.objects[i].group_id=0;
 	escena.objects[i].id=i;
-	escena.objects[i].radio=10000.0f;
+	escena.objects[i].radious=10000.0f;
     escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=0.0f;
 	escena.objects[i].v1[1]=-10000.0f;
@@ -433,7 +433,7 @@ void Demo3()
 	i=0; 
 	escena.objects[i].group_id=0;
 	escena.objects[i].id=0;
-	escena.objects[i].radio=10000.0f;
+	escena.objects[i].radious=10000.0f;
     escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=-10004.0f;
 	escena.objects[i].v1[1]=0.0f;
@@ -441,7 +441,7 @@ void Demo3()
 	i++;//1
 	escena.objects[i].group_id=1;
 	escena.objects[i].id=i;
-	escena.objects[i].radio=10000.0f;
+	escena.objects[i].radious=10000.0f;
     escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=0.0f;
 	escena.objects[i].v1[1]=0.0f;
@@ -449,7 +449,7 @@ void Demo3()
 	i++;
 	escena.objects[i].group_id=1;
 	escena.objects[i].id=i;
-	escena.objects[i].radio=10000.0f;
+	escena.objects[i].radious=10000.0f;
     escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=0.0f;
 	escena.objects[i].v1[1]=10004.0f;
@@ -457,7 +457,7 @@ void Demo3()
 	i++;
 	escena.objects[i].group_id=1;
 	escena.objects[i].id=i;
-	escena.objects[i].radio=10000.0f;
+	escena.objects[i].radious=10000.0f;
     escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=0.0f;
 	escena.objects[i].v1[1]=-10004.0f;
@@ -465,7 +465,7 @@ void Demo3()
 	i++;
 	escena.objects[i].group_id=2;
 	escena.objects[i].id=i;
-	escena.objects[i].radio=10000.0f;
+	escena.objects[i].radious=10000.0f;
     escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=10004.0f;
 	escena.objects[i].v1[1]=0.0f;
@@ -473,7 +473,7 @@ void Demo3()
 	i++;
 	escena.objects[i].group_id=3;
 	escena.objects[i].id=i;
-	escena.objects[i].radio=1.0f;
+	escena.objects[i].radious=1.0f;
     escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=-2.0f;
 	escena.objects[i].v1[1]=-3.0f;
@@ -481,7 +481,7 @@ void Demo3()
 	i++;
 	escena.objects[i].group_id=4;
 	escena.objects[i].id=i;
-	escena.objects[i].radio=1.5f;
+	escena.objects[i].radious=1.5f;
     escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=2.0f;
 	escena.objects[i].v1[1]=-2.0f;
@@ -489,7 +489,7 @@ void Demo3()
 	i++;
 	escena.objects[i].group_id=5;
 	escena.objects[i].id=i;
-	escena.objects[i].radio=0.2f;
+	escena.objects[i].radious=0.2f;
     escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=2.0f;
 	escena.objects[i].v1[1]=-2.0f;
@@ -497,7 +497,7 @@ void Demo3()
 	i++;
 	escena.objects[i].group_id=2;
 	escena.objects[i].id=i;
-	escena.objects[i].radio=0.5f;
+	escena.objects[i].radious=0.5f;
     escena.objects[i].type=OBJ_SPHERE;
 	escena.objects[i].v1[0]=-3.0f;
 	escena.objects[i].v1[1]=-3.5f;
@@ -618,20 +618,20 @@ void Demo4()
 	i=0; 
 	escena.objects[i].group_id=0;
 	escena.objects[i].id=0;
-	escena.objects[i].radio=10.0f;
+	escena.objects[i].radious=10.0f;
     escena.objects[i].type=OBJ_SPHERE;
 	V_INIT(escena.objects[i].v1,0.0f,0.0f,14.0f);
 	i++;
 	escena.objects[i].group_id=1;
 	escena.objects[i].id=0;
-	escena.objects[i].radio=2.0f;
+	escena.objects[i].radious=2.0f;
     escena.objects[i].type=OBJ_SPHERE;
 	V_INIT(escena.objects[i].v1,-2.5f,2.0f,6.0f);
 
 	i++;
 	escena.objects[i].group_id=1;
 	escena.objects[i].id=0;
-	escena.objects[i].radio=2.0f;
+	escena.objects[i].radious=2.0f;
     escena.objects[i].type=OBJ_SPHERE;
 	V_INIT(escena.objects[i].v1,2.5f,2.0f,6.0f);
 
@@ -640,7 +640,7 @@ void Demo4()
 		i++;
 		escena.objects[i].group_id=1;
 		escena.objects[i].id=0;
-		escena.objects[i].radio=2.0f;
+		escena.objects[i].radious=2.0f;
         escena.objects[i].type=OBJ_SPHERE;
 		V_INIT(escena.objects[i].v1,-2.5f + (x*0.25f),-2.0f,6.0f);
 	}
@@ -730,7 +730,7 @@ void Demo7()
 			{
 				escena.objects[i].group_id=0;
 				escena.objects[i].id=i;
-				//objects[i].radio=0.5f;
+				//objects[i].radious=0.5f;
                 escena.objects[i].type=OBJ_TRIANGLE;
 				//objects[i].v1[3]=0;
 				//objects[i].v1[0]=fx;
