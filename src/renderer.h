@@ -81,8 +81,8 @@ align(16)
 typedef struct
 {
     int id;
-    float refraccion;
-    float reflexion;
+    float refraction;
+    float reflection;
     float specular;
     int textura;
     int* ptr_textura;
@@ -126,7 +126,7 @@ typedef struct
 	int id_objeto;
 	float dist;
 	int hit;
-	float refraccion_ant;
+	float refraction_ant;
 	float color[4];
 } TraceResult;
 

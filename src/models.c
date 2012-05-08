@@ -9,7 +9,8 @@ struct aiScene* importmodel( const char* file)
     aiProcess_CalcTangentSpace       |
         aiProcess_Triangulate            |
         aiProcess_JoinIdenticalVertices  |
-        aiProcess_SortByPType);
+        aiProcess_SortByPType	|
+		aiProcess_MakeLeftHanded);
 
   // If the import failed, report it
   if(!scene)

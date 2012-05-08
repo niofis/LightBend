@@ -189,7 +189,7 @@ int interactive_mode()
 		return 1;
 	}
 
-	SDL_WM_SetCaption("cRTu",NULL);
+	SDL_WM_SetCaption("LightBend",NULL);
 
 	info = SDL_GetVideoInfo();
 

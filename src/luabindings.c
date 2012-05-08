@@ -23,11 +23,7 @@ Scene lua_scene;
 //lua: doneLoading()
 static int doneLoading(lua_State *L)
 {
-    printf("Cameras: %d\n",lua_scene.cameras->count);
-    printf("Groups: %d\n",lua_scene.groups->count);
-    printf("Lights: %d\n",lua_scene.lights->count);
-    printf("Materials: %d\n",lua_scene.materials->count);
-    printf("Objects: %d\n",lua_scene.objects->count);
+    
 
     convertscene(&lua_scene, NULL);
 
@@ -53,7 +49,7 @@ static int setGroup(lua_State *L)
 	return 0;
 }
 
-//lua: setMaterial(material_id,color_a,color_r,color_g,color_b,reflexion,refraccion,specular)
+//lua: setMaterial(material_id,color_a,color_r,color_g,color_b,reflection,refraction,specular)
 static int setMaterial(lua_State *L)
 {
 	int i=lua_tonumber(L, 1)-1;
@@ -65,8 +61,8 @@ static int setMaterial(lua_State *L)
     m->color[1]=lua_tonumber(L, 3);	//Old Gold
     m->color[2]=lua_tonumber(L, 4);
     m->color[3]=lua_tonumber(L, 5);
-    m->reflexion=lua_tonumber(L, 6);
-    m->refraccion=lua_tonumber(L, 7);
+    m->reflection=lua_tonumber(L, 6);
+    m->refraction=lua_tonumber(L, 7);
     m->specular=lua_tonumber(L, 8);
     m->ptr_textura=0;
     m->textura=0;
@@ -197,7 +193,7 @@ static int initScene(lua_State *L)
 static int loadModel(lua_State *L)
 {
 
-    char *file=lua_tostring(L,1);
+    const char *file=lua_tostring(L,1);
     int i;
     int j;
     int k;
@@ -211,18 +207,34 @@ static int loadModel(lua_State *L)
     if(model)
     {
         //printf("Num Meshes: %d\n",model->mNumMeshes);
-		printf("Num Materials: %d\n",model->mNumMaterials);
+		//printf("Num Materials: %d\n",model->mNumMaterials);
 		for(i=0;i<model->mNumMaterials;++i)
 		{
 			Material *m=(Material *) aligned_malloc(ALIGMENT,sizeof(Material));
 			struct aiMaterial *ma=model->mMaterials[i];
 			struct aiColor4D color;
+			float ref;
+			float rfl;
+			float sp;
+
 			aiGetMaterialColor(ma,AI_MATKEY_COLOR_DIFFUSE,&color);
-            m->id=i+material_offset;
+			if(aiGetMaterialFloatArray(ma,AI_MATKEY_REFRACTI,&ref,(unsigned int*)0x0) != AI_SUCCESS)
+				ref=1.0f;
+			if(aiGetMaterialFloatArray(ma,AI_MATKEY_REFLECTIVITY,&rfl,(unsigned int*)0x0) != AI_SUCCESS)
+				rfl=0.0f;
+			if(aiGetMaterialFloatArray(ma,AI_MATKEY_SHININESS,&sp,(unsigned int*)0x0) != AI_SUCCESS)
+				sp=0.0f;
+			m->id=i+material_offset;
 			m->color[0]=color.a;
 			m->color[1]=color.r;
 			m->color[2]=color.g;
 			m->color[3]=color.b;
+			m->refraction=ref;
+			m->reflection=rfl;
+			m->specular=sp;
+
+			printf("refraction:%f reflection:%f color.a:%f\n",ref,rfl,color.a);
+
 			list_add(lua_scene.materials,m);
 			//printf("Material %d (%f,%f,%f,%f)\n",m->id,m->color[0],m->color[1],m->color[2],m->color[3]);
 		}
@@ -242,9 +254,9 @@ static int loadModel(lua_State *L)
                 obj->group_id=i+group_offset;
 				obj->id=j;
 				obj->type=OBJ_TRIANGLE;
-                V_INIT(obj->v1,m->mVertices[f.mIndices[0]].x,m->mVertices[f.mIndices[0]].y,-m->mVertices[f.mIndices[0]].z);
-                V_INIT(obj->v2,m->mVertices[f.mIndices[1]].x,m->mVertices[f.mIndices[1]].y,-m->mVertices[f.mIndices[1]].z);
-                V_INIT(obj->v3,m->mVertices[f.mIndices[2]].x,m->mVertices[f.mIndices[2]].y,-m->mVertices[f.mIndices[2]].z);
+                V_INIT(obj->v1,m->mVertices[f.mIndices[0]].x,m->mVertices[f.mIndices[0]].y,m->mVertices[f.mIndices[0]].z);
+                V_INIT(obj->v2,m->mVertices[f.mIndices[1]].x,m->mVertices[f.mIndices[1]].y,m->mVertices[f.mIndices[1]].z);
+                V_INIT(obj->v3,m->mVertices[f.mIndices[2]].x,m->mVertices[f.mIndices[2]].y,m->mVertices[f.mIndices[2]].z);
                 //printf("Face %d Vertices: %d\n",j,f.mNumIndices);
 				list_add(lua_scene.objects,obj);
 			}

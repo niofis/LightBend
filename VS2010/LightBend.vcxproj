@@ -32,7 +32,7 @@
     <ClCompile Include="..\src\utils.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\list.h"/>
+    <ClInclude Include="..\src\list.h" />
     <ClInclude Include="..\src\bvh.h" />
     <ClInclude Include="..\src\demos.h" />
     <ClInclude Include="..\src\globals.h" />
@@ -171,6 +171,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\src;..\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Oi %(AdditionalOptions)</AdditionalOptions>
+      <OpenMP>GenerateParallelCode</OpenMP>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -136,10 +136,12 @@ addLevel(o,1)
 local l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=0,y=2,z=-50}}
 tb.insert(scene.lights,l)
 
-l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=0,y=2,z=50}}
+l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=2,y=2,z=-2}}
 tb.insert(scene.lights,l)
 
-tb.insert(scene.models,"/home/niofis/Raytracing/models/tree.ms3d")
+
+--tb.insert(scene.models,"/home/niofis/Raytracing/models/tree.ms3d")
+tb.insert(scene.models,"D:/Enrique/Raytracing/models/cubo.blend")
 
 
 tr.sendScene(lb,scene)

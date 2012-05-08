@@ -408,10 +408,10 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 	depth++;
 	if(depth>=MAX_DEPTH)
 		return;
-	//Habiendo aun mas pasos para recursion, se puede probar por reflexion y refraccion
+	//Habiendo aun mas pasos para recursion, se puede probar por reflection y refraction
 
 	//Prueba Reflexin
-	if(material->reflexion>0.0f)
+	if(material->reflection>0.0f)
 	{
 		//vert0=(float*)(&(ray->direction->u)); //V
 		//vert1=(float*)(&(pt->normal->u));	//N
@@ -430,11 +430,11 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 		rf_stack[depth]=rf_stack[depth-1];
 		TraceRay(&nray,&nresult,rf_stack,depth);
 
-		result->color[1]=((1.0f-material->reflexion)*result->color[1])+(material->reflexion*nresult.color[1]);
-		result->color[2]=((1.0f-material->reflexion)*result->color[2])+(material->reflexion*nresult.color[2]);
-		result->color[3]=((1.0f-material->reflexion)*result->color[3])+(material->reflexion*nresult.color[3]);
+		result->color[1]=((1.0f-material->reflection)*result->color[1])+(material->reflection*nresult.color[1]);
+		result->color[2]=((1.0f-material->reflection)*result->color[2])+(material->reflection*nresult.color[2]);
+		result->color[3]=((1.0f-material->reflection)*result->color[3])+(material->reflection*nresult.color[3]);
 	}
-	if(material->refraccion>0.0f && result->color[0]<1.0f)
+	if(material->refraction>0.0f && result->color[0]<1.0f)
 	{
 		//;Reflections and Refractions in Ray Tracing
 		//;Bram de Greve (bram.degreve@gmail.com)
@@ -447,13 +447,13 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 		//;return Vector::invalid;
 		//;}
 		//;return n * incident - (n + sqrt(1.0 - sinT2)) * normal;
-		//norm=result->refraccion_ant / material->refraccion;
-		norm=rf_stack[depth-1] / material->refraccion;
+		//norm=result->refraction_ant / material->refraction;
+		norm=rf_stack[depth-1] / material->refraction;
 		t=V_DOT(normal,ray->direccion);
 		if(t>0)
 		{
 			V_MUL(normal,-1.0f);
-			norm=rf_stack[depth-2] / material->refraccion;
+			norm=rf_stack[depth-2] / material->refraction;
 			t=-t;
 		}
 
@@ -468,16 +468,16 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 			//	normal[2]*=-1.0f;
 			//}
 
-			//nuevo rayo de refraccion
+			//nuevo rayo de refraction
 			nray.direccion[0]=norm*ray->direccion[0] - (norm + sqrt(1.0f - ta)) * normal[0];
 			nray.direccion[1]=norm*ray->direccion[1] - (norm + sqrt(1.0f - ta)) * normal[1];
 			nray.direccion[2]=norm*ray->direccion[2] - (norm + sqrt(1.0f - ta)) * normal[2];
 			norm=V_SIZE(nray.direccion);
 			V_DIV(nray.direccion,norm);
-			nresult.refraccion_ant=material->refraccion;
+			nresult.refraction_ant=material->refraction;
 			nresult.id_objeto=result->id_objeto;
 
-			rf_stack[depth]=material->refraccion;
+			rf_stack[depth]=material->refraction;
 			TraceRay(&nray,&nresult,rf_stack,depth);
 
 			//result->color[1]=nresult.color[1];
@@ -540,9 +540,9 @@ THREAD Render(int param)
 		dx=(x+0.5f)/job.width;
 		dy=(y+0.5f)/job.height;
 
-		ray.origen[0]=(dt[0]*dx  + dl[0]*dy + escena.cameras[0].lefttop[0]);//cameras[0].eye[0];
-		ray.origen[1]=(dt[1]*dx  + dl[1]*dy + escena.cameras[0].lefttop[1]);//cameras[0].eye[1];
-		ray.origen[2]=(dt[2]*dx  + dl[2]*dy + escena.cameras[0].lefttop[2]);//cameras[0].eye[2];
+		ray.origen[0]=(dt[0]*dx  + dl[0]*dy + escena.cameras[0].lefttop[0]);//escena.cameras[0].eye[0];//
+		ray.origen[1]=(dt[1]*dx  + dl[1]*dy + escena.cameras[0].lefttop[1]);//escena.cameras[0].eye[1];//
+		ray.origen[2]=(dt[2]*dx  + dl[2]*dy + escena.cameras[0].lefttop[2]);//escena.cameras[0].eye[2];//
 		ray.direccion[0]= ray.origen[0] - escena.cameras[0].eye[0];//ray.origen[0];
 		ray.direccion[1]= ray.origen[1] - escena.cameras[0].eye[1];//ray.origen[1];
 		ray.direccion[2]= ray.origen[2] - escena.cameras[0].eye[2];//ray.origen[2];
@@ -561,7 +561,7 @@ THREAD Render(int param)
 		else
 			buffer[y*width + x]=0;*/
 
-		result.refraccion_ant=AIR_INDEX;
+		result.refraction_ant=AIR_INDEX;
 		result.id_objeto=-1;
 
 		rf_stack[0]=AIR_INDEX;
@@ -690,8 +690,14 @@ void CreateObjects(int qty)
 void convertscene(Scene *scene, Escena *nscene)
 {
 	int i=0;
-	CleanRenderer();
 
+	printf("Cameras: %d\n",scene->cameras->count);
+    printf("Groups: %d\n",scene->groups->count);
+    printf("Lights: %d\n",scene->lights->count);
+    printf("Materials: %d\n",scene->materials->count);
+    printf("Objects: %d\n",scene->objects->count);
+
+	CleanRenderer();
         /*
 	escena.num_cameras=1;
 	escena.cameras=(Camera*)aligned_malloc(ALIGMENT,sizeof(Camera)*escena.num_cameras);
@@ -778,9 +784,9 @@ void convertscene(Scene *scene, Escena *nscene)
 		escena.materials[i].color[3]=m->color[3];
 		escena.materials[i].id=i;
 		escena.materials[i].ptr_textura=0;
-		escena.materials[i].reflexion=0;
-		escena.materials[i].refraccion=0;
-		escena.materials[i].specular=1.0f;
+		escena.materials[i].reflection=m->reflection;
+		escena.materials[i].refraction=m->refraction;
+		escena.materials[i].specular=m->specular;
 		escena.materials[i].textura=0;
 		escena.materials[i].txt_height=0;
 		escena.materials[i].txt_width=0;
