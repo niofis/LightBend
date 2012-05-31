@@ -432,6 +432,7 @@ int main(int argc, char* args[])
 
 	bpp=32;
 
+    #pragma omp critical
 	cpu_count=omp_get_num_procs();
 	
 	process_args(argc, args);

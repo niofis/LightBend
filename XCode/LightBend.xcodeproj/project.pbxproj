@@ -21,6 +21,13 @@
 		12EAE60E14F8C49900F0096F /* MS3DFile.c in Sources */ = {isa = PBXBuildFile; fileRef = 12EAE60214F8C49900F0096F /* MS3DFile.c */; };
 		12EAE60F14F8C49900F0096F /* renderer.c in Sources */ = {isa = PBXBuildFile; fileRef = 12EAE60514F8C49900F0096F /* renderer.c */; };
 		12EAE61014F8C49900F0096F /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 12EAE60714F8C49900F0096F /* utils.c */; };
+		12F3C50415774A9F001E004D /* image.c in Sources */ = {isa = PBXBuildFile; fileRef = 12F3C4FE15774A9F001E004D /* image.c */; };
+		12F3C50515774A9F001E004D /* list.c in Sources */ = {isa = PBXBuildFile; fileRef = 12F3C50015774A9F001E004D /* list.c */; };
+		12F3C50615774A9F001E004D /* models.c in Sources */ = {isa = PBXBuildFile; fileRef = 12F3C50215774A9F001E004D /* models.c */; };
+		12F3C50915774B03001E004D /* libpng14.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F3C50715774B03001E004D /* libpng14.a */; };
+		12F3C50A15774B03001E004D /* libpng14.la in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F3C50815774B03001E004D /* libpng14.la */; };
+		12F3C510157765F7001E004D /* libassimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F3C50F157765F7001E004D /* libassimp.a */; };
+		12F3C51215776624001E004D /* libgomp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F3C51115776624001E004D /* libgomp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -62,6 +69,16 @@
 		12EAE60614F8C49900F0096F /* renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = renderer.h; sourceTree = "<group>"; };
 		12EAE60714F8C49900F0096F /* utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utils.c; sourceTree = "<group>"; };
 		12EAE60814F8C49900F0096F /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		12F3C4FE15774A9F001E004D /* image.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = image.c; sourceTree = "<group>"; };
+		12F3C4FF15774A9F001E004D /* image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image.h; sourceTree = "<group>"; };
+		12F3C50015774A9F001E004D /* list.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = list.c; sourceTree = "<group>"; };
+		12F3C50115774A9F001E004D /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
+		12F3C50215774A9F001E004D /* models.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = models.c; sourceTree = "<group>"; };
+		12F3C50315774A9F001E004D /* models.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = models.h; sourceTree = "<group>"; };
+		12F3C50715774B03001E004D /* libpng14.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng14.a; path = ../../../../../../opt/local/lib/libpng14.a; sourceTree = "<group>"; };
+		12F3C50815774B03001E004D /* libpng14.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libpng14.la; path = ../../../../../../opt/local/lib/libpng14.la; sourceTree = "<group>"; };
+		12F3C50F157765F7001E004D /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = "../../../../Downloads/assimp--2.0.863-sdk/bin/assimp_Release_MacOSX/libassimp.a"; sourceTree = "<group>"; };
+		12F3C51115776624001E004D /* libgomp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgomp.a; path = ../../../../../../opt/local/lib/gcc47/libgomp.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +86,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12F3C51215776624001E004D /* libgomp.a in Frameworks */,
+				12F3C510157765F7001E004D /* libassimp.a in Frameworks */,
+				12F3C50915774B03001E004D /* libpng14.a in Frameworks */,
+				12F3C50A15774B03001E004D /* libpng14.la in Frameworks */,
 				12BC31A014F9891700F4D3F9 /* OpenGL.framework in Frameworks */,
 				12BC319E14F9890B00F4D3F9 /* Cocoa.framework in Frameworks */,
 				12BC319C14F988BC00F4D3F9 /* libSDLmain.a in Frameworks */,
@@ -84,6 +105,10 @@
 		1203B7B414D911FC00319C07 = {
 			isa = PBXGroup;
 			children = (
+				12F3C51115776624001E004D /* libgomp.a */,
+				12F3C50F157765F7001E004D /* libassimp.a */,
+				12F3C50715774B03001E004D /* libpng14.a */,
+				12F3C50815774B03001E004D /* libpng14.la */,
 				12BC319F14F9891700F4D3F9 /* OpenGL.framework */,
 				12BC319D14F9890B00F4D3F9 /* Cocoa.framework */,
 				12BC319B14F988BC00F4D3F9 /* libSDLmain.a */,
@@ -108,6 +133,12 @@
 		1203B7D214D912FC00319C07 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				12F3C4FE15774A9F001E004D /* image.c */,
+				12F3C4FF15774A9F001E004D /* image.h */,
+				12F3C50015774A9F001E004D /* list.c */,
+				12F3C50115774A9F001E004D /* list.h */,
+				12F3C50215774A9F001E004D /* models.c */,
+				12F3C50315774A9F001E004D /* models.h */,
 				12EAE5F814F8C49900F0096F /* bvh.c */,
 				12EAE5F914F8C49900F0096F /* bvh.h */,
 				12EAE5FA14F8C49900F0096F /* demos.c */,
@@ -156,7 +187,7 @@
 		1203B7B614D911FC00319C07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 1203B7B914D911FC00319C07 /* Build configuration list for PBXProject "LightBend" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -188,6 +219,9 @@
 				12EAE60E14F8C49900F0096F /* MS3DFile.c in Sources */,
 				12EAE60F14F8C49900F0096F /* renderer.c in Sources */,
 				12EAE61014F8C49900F0096F /* utils.c in Sources */,
+				12F3C50415774A9F001E004D /* image.c in Sources */,
+				12F3C50515774A9F001E004D /* list.c in Sources */,
+				12F3C50615774A9F001E004D /* models.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,12 +304,15 @@
 					"\"$(SRCROOT)/../lib/amd64\"",
 					"\"$(SRCROOT)/../lib/x86\"",
 					/opt/local/lib,
+					"\"$(SRCROOT)/../../../../Downloads/assimp--2.0.863-sdk/bin/assimp_Release_MacOSX\"",
+					/opt/local/lib/gcc47,
 				);
 				LLVM_LTO = NO;
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../inc/\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../inc/\" \"opt/local/lib/gcc47/gcc/x86_64-apple-darwin11/4.7.0/include/\"";
 			};
 			name = Debug;
 		};
@@ -311,12 +348,15 @@
 					"\"$(SRCROOT)/../lib/amd64\"",
 					"\"$(SRCROOT)/../lib/x86\"",
 					/opt/local/lib,
+					"\"$(SRCROOT)/../../../../Downloads/assimp--2.0.863-sdk/bin/assimp_Release_MacOSX\"",
+					/opt/local/lib/gcc47,
 				);
 				LLVM_LTO = NO;
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../inc/\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../inc/\" \"opt/local/lib/gcc47/gcc/x86_64-apple-darwin11/4.7.0/include/\"";
 			};
 			name = Release;
 		};
