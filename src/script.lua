@@ -126,12 +126,12 @@ function addLevel(parent,level)
 
 end
 
---[[
+
 local o=prm.Sphere:new{radius=2, center=prm.Vector3:new{x=0,y=0,z=0}, group=g}
-o.bottom=1
+--o.bottom=1
 tb.insert(scene.objects,o)
 addLevel(o,1)
-]]
+
 
 local l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=0,y=2,z=-50}}
 tb.insert(scene.lights,l)
@@ -141,7 +141,7 @@ tb.insert(scene.lights,l)
 
 
 --tb.insert(scene.models,"/home/niofis/Raytracing/models/tree.ms3d")
-tb.insert(scene.models,"D:/Enrique/Raytracing/models/cubo.blend")
+--tb.insert(scene.models,"D:/Enrique/Raytracing/models/cubo.blend")
 
 
 tr.sendScene(lb,scene)

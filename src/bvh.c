@@ -102,16 +102,16 @@ int Partition(int p, int r,int eje)
 {
 	int i,j,k;
 	float x;
-	Object3D t;
+    Triangle t;
 	//Randomized Partition
 	k=rand()%(r-p);
 	k+=p;
 	//t=numeros[r];
 	//numeros[r]=numeros[k];
 	//numeros[k]=t;
-	memcpy(&t,&escena.objects[r],sizeof(Object3D));
-	memcpy(&escena.objects[r],&escena.objects[k],sizeof(Object3D));
-	memcpy(&escena.objects[k],&t,sizeof(Object3D));
+    memcpy(&t,&escena.objects[r],sizeof(Triangle));
+    memcpy(&escena.objects[r],&escena.objects[k],sizeof(Triangle));
+    memcpy(&escena.objects[k],&t,sizeof(Triangle));
 	/////////////
 	x=escena.objects[r].v1[eje];
 	i=p-1;
@@ -120,15 +120,15 @@ int Partition(int p, int r,int eje)
 		if(escena.objects[j].v1[eje]<x)
 		{
 			i++;
-			memcpy(&t,&escena.objects[i],sizeof(Object3D));
-			memcpy(&escena.objects[i],&escena.objects[j],sizeof(Object3D));
-			memcpy(&escena.objects[j],&t,sizeof(Object3D));
+            memcpy(&t,&escena.objects[i],sizeof(Triangle));
+            memcpy(&escena.objects[i],&escena.objects[j],sizeof(Triangle));
+            memcpy(&escena.objects[j],&t,sizeof(Triangle));
 		}
 	}
 	i++;
-	memcpy(&t,&escena.objects[i],sizeof(Object3D));
-	memcpy(&escena.objects[i],&escena.objects[j],sizeof(Object3D));
-	memcpy(&escena.objects[j],&t,sizeof(Object3D));
+    memcpy(&t,&escena.objects[i],sizeof(Triangle));
+    memcpy(&escena.objects[i],&escena.objects[j],sizeof(Triangle));
+    memcpy(&escena.objects[j],&t,sizeof(Triangle));
 	return i;
 }
 
@@ -173,7 +173,7 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 	int x, y, i;
 	int obj_id=0;
 	int l_id=0;
-	Object3D *objeto;
+    Triangle *objeto;
 
 	//GetDistances();
 	//ordenar los objects, por el eje x, luego el y y por ultimo el z
@@ -201,8 +201,8 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 		{
 			for(i=0;i<3;i++){
 				objeto=&escena.objects[obj_id];
-				if(objeto->type==OBJ_TRIANGLE)
-				{
+                //if(objeto->type==OBJ_TRIANGLE)
+                //{
 					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v1[i]);
 					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v1[i]);
 
@@ -211,8 +211,9 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 
 					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v3[i]);
 					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v3[i]);
-				}
-				else if(objeto->type==OBJ_SPHERE)
+                //}
+                /*
+                else if(objeto->type==OBJ_SPHERE)
 				{
 					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v1[i]-objeto->radious);
 					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v1[i]+objeto->radious);
@@ -223,6 +224,7 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v3[i]-objeto->radious);
 					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v3[i]+objeto->radious);
 				}
+                */
 			}
 
 			hierarchy[l_id].objs[y]=obj_id;

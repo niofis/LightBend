@@ -4,10 +4,12 @@
 #include "globals.h"
 #include "list.h"
 
+/*
 #define OBJ_NULL		0
 #define OBJ_SPHERE		1
 #define OBJ_TRIANGLE	2
 #define OBJ_SKYDOME		3
+*/
 
 #define MAX_DEPTH	10
 
@@ -100,6 +102,7 @@ typedef struct
 	int pad2;
 } Group;
 
+/*
 align(16)
 typedef struct
 {
@@ -112,6 +115,17 @@ typedef struct
 	float v3[3];
 	float normal[3];
 } Object3D;
+*/
+
+align(16)
+typedef struct
+{
+    int group_id;
+    float v1[3];//x,y,z
+    float v2[3];
+    float v3[3];
+    float normal[3];
+} Triangle;
 
 align(16)
 typedef struct
@@ -135,7 +149,8 @@ typedef struct
 {
     Group *groups;
     Material *materials;
-    Object3D *objects;
+    //Object3D *objects;
+    Triangle *objects;
     Light *lights;
     Camera* cameras;
     int num_groups;

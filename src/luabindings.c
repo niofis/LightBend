@@ -134,7 +134,7 @@ static int setCamera(lua_State *L)
 static int setSphere(lua_State *L)
 {
 	int i=lua_tonumber(L, 1)-1;
-    Object3D *obj=(Object3D *)aligned_malloc(ALIGMENT,sizeof(Object3D));
+    Triangle *obj=(Triangle *)aligned_malloc(ALIGMENT,sizeof(Triangle));
 
     /*
     escena.objects[i].id=i;
@@ -148,9 +148,9 @@ static int setSphere(lua_State *L)
 
 
     obj->group_id=lua_tonumber(L, 2)-1;
-    obj->id=i;
-    obj->type=OBJ_SPHERE;
-    obj->radious=lua_tonumber(L, 3);
+    //obj->id=i;
+    //obj->type=OBJ_SPHERE;
+    //obj->radious=lua_tonumber(L, 3);
     obj->v1[0]=lua_tonumber(L, 4);
     obj->v1[1]=lua_tonumber(L, 5);
     obj->v1[2]=lua_tonumber(L, 6);
@@ -165,11 +165,11 @@ static int setSphere(lua_State *L)
 static int setTriangle(lua_State *L)
 {
 	int i=lua_tonumber(L, 1)-1;
-    Object3D *obj=(Object3D *)aligned_malloc(ALIGMENT,sizeof(Object3D));
+    Triangle *obj=(Triangle *)aligned_malloc(ALIGMENT,sizeof(Triangle));
 
     obj->group_id=lua_tonumber(L, 2)-1;
-    obj->id=i;
-    obj->type=OBJ_TRIANGLE;
+    //obj->id=i;
+    //obj->type=OBJ_TRIANGLE;
 
     V_INIT(obj->v1,lua_tonumber(L, 3),lua_tonumber(L, 4),lua_tonumber(L, 5));
     V_INIT(obj->v2,lua_tonumber(L, 6),lua_tonumber(L, 7),lua_tonumber(L, 8));
@@ -250,10 +250,10 @@ static int loadModel(lua_State *L)
             for(j=0;j<m->mNumFaces;++j)
             {
                 struct aiFace f=m->mFaces[j];
-                Object3D *obj=(Object3D *)aligned_malloc(ALIGMENT,sizeof(Object3D));
+                Triangle *obj=(Triangle *)aligned_malloc(ALIGMENT,sizeof(Triangle));
                 obj->group_id=i+group_offset;
-				obj->id=j;
-				obj->type=OBJ_TRIANGLE;
+                //obj->id=j;
+                //obj->type=OBJ_TRIANGLE;
                 V_INIT(obj->v1,m->mVertices[f.mIndices[0]].x,m->mVertices[f.mIndices[0]].y,m->mVertices[f.mIndices[0]].z);
                 V_INIT(obj->v2,m->mVertices[f.mIndices[1]].x,m->mVertices[f.mIndices[1]].y,m->mVertices[f.mIndices[1]].z);
                 V_INIT(obj->v3,m->mVertices[f.mIndices[2]].x,m->mVertices[f.mIndices[2]].y,m->mVertices[f.mIndices[2]].z);

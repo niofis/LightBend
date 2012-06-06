@@ -23,7 +23,7 @@ int ShadowRay(Ray *ray,float max_dist)
 	
 	int i,si;
 	int k,u,v;
-    Object3D* objeto;
+    Triangle* objeto;
 	float edge[3]={0,0,0};
 	float normal[3]={0,0,0};
 	float temp[3]={0,0,0};
@@ -66,6 +66,7 @@ int ShadowRay(Ray *ray,float max_dist)
             objeto=&objects[i];
 	#endif
 
+            /*
             if(objeto->type==OBJ_SPHERE)
 			{
 				//Vector *c=sphere->center;
@@ -92,6 +93,7 @@ int ShadowRay(Ray *ray,float max_dist)
 			}
             else if(objeto->type==OBJ_TRIANGLE)
 			{
+            */
 				//http://ompf.org/forum/viewtopic.php?f=4&t=1383
 
 				// calc edges and normal
@@ -131,7 +133,7 @@ int ShadowRay(Ray *ray,float max_dist)
 					continue;
 				if(t<=max_dist)
 					return 1;
-			}
+            //}
 		}
 	#if defined(USE_BVH)
 	}
@@ -236,7 +238,7 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 	
 	int i,si;
 	int k,u,v;
-    Object3D* objeto;
+    Triangle* objeto;
 	Material* material;
 	BoundingVolume *bv;
 	Ray nray;
@@ -289,6 +291,7 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 		for(i=0;i<bv->cant_objs;i++)
 		{
             objeto=&escena.objects[bv->objs[i]];
+            /*
             if(objeto->type==OBJ_SPHERE)
 			{
 				//Vector *c=sphere->center;
@@ -320,6 +323,7 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 			}
             else if(objeto->type==OBJ_TRIANGLE)
 			{
+            */
 				//http://ompf.org/forum/viewtopic.php?f=4&t=1383
 
 				// calc edges and normal
@@ -364,7 +368,7 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 					result->id_objeto=bv->objs[i];
 					result->dist=ta;
 				}
-			}
+            //}
 		}
 	}
 
@@ -385,6 +389,7 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 	nray.origen[2]=ray->origen[2]+ray->direccion[2]*result->dist;
 
 	//Obtener la normal del objeto detectado
+    /*
     if(objeto->type==OBJ_SPHERE)
 	{
 		V_SUB(normal,nray.origen,objeto->v1);
@@ -393,13 +398,14 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 	}
     else if(objeto->type==OBJ_TRIANGLE)
 	{
+    */
 		//V_CROSS(normal,objeto->v3,objeto->v2);
 		//norm=V_SIZE(normal);
 		//V_DIV(normal,norm);
 		normal[0]=objeto->normal[0];
 		normal[1]=objeto->normal[1];
 		normal[2]=objeto->normal[2];
-	}
+    //}
 
 
 	Shading(nray.origen,ray->direccion,normal,material,result->color);
@@ -519,7 +525,7 @@ THREAD Render(int param)
 
 	float color[4];
 
-    Object3D* objeto;
+    Triangle* objeto;
 	Material* material;
 
 	TraceResult result;
@@ -684,7 +690,7 @@ void PreprocessObjects()
 void CreateObjects(int qty)
 {
     escena.num_objects=qty;
-    escena.objects=(Object3D*)aligned_malloc(ALIGMENT,sizeof(Object3D)*escena.num_objects);
+    escena.objects=(Triangle*)aligned_malloc(ALIGMENT,sizeof(Triangle)*escena.num_objects);
 }
 
 void convertscene(Scene *scene, Escena *nscene)
@@ -802,15 +808,15 @@ void convertscene(Scene *scene, Escena *nscene)
 	}
 
 	escena.num_objects=scene->objects->count;
-	escena.objects=(Object3D*)aligned_malloc(16,sizeof(Object3D)*escena.num_objects);
+    escena.objects=(Triangle*)aligned_malloc(16,sizeof(Triangle)*escena.num_objects);
 
 	for(i=0;i<scene->objects->count;++i)
 	{
-		Object3D *obj=(Object3D*)list_get(scene->objects,i);
+        Triangle *obj=(Triangle*)list_get(scene->objects,i);
 		escena.objects[i].group_id=obj->group_id;
-		escena.objects[i].id=i;
-        escena.objects[i].type=obj->type;
-        escena.objects[i].radious=obj->radious;
+        //escena.objects[i].id=i;
+        //escena.objects[i].type=obj->type;
+        //escena.objects[i].radious=obj->radious;
 		
         V_INIT(escena.objects[i].v1,obj->v1[0],obj->v1[1],obj->v1[2]);
         V_INIT(escena.objects[i].v2,obj->v2[0],obj->v2[1],obj->v2[2]);
