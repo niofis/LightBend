@@ -27,11 +27,11 @@ static int doneLoading(lua_State *L)
 
     convertscene(&lua_scene, NULL);
 
-    list_destroy(lua_scene.cameras);
-    list_destroy(lua_scene.groups);
-    list_destroy(lua_scene.lights);
-    list_destroy(lua_scene.materials);
-    list_destroy(lua_scene.objects);
+    list_destroy(lua_scene.cameras,TRUE);
+    list_destroy(lua_scene.groups,TRUE);
+    list_destroy(lua_scene.lights,TRUE);
+    list_destroy(lua_scene.materials,TRUE);
+    list_destroy(lua_scene.objects,TRUE);
 
 	BuildBVH();
 	PreprocessObjects();

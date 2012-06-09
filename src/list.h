@@ -22,8 +22,9 @@ typedef struct
 
 List* list_create();
 void list_add(List* list,void* aligned_data);
-void list_delete(List* list,int index);
+void list_delete(List* list,int index,int delete_data);
 void* list_get(List* list,int index);
-void list_destroy(List* list);
+void list_destroy(List* list,int delete_data);
+void list_append(List* to, List* from);
 
 #endif

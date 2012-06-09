@@ -3,7 +3,9 @@
 #include "solids.h"
 
 
-int CreateSphere(float x, float y, float z, float radious, int num_slices, int num_sections, int group_id)
+List* CreateSphere(float x, float y, float z, float radious, int num_slices, int slice_sections, int group_id)
 {
+	List* sphere;
+	sphere=(List*)aligned_malloc(ALIGMENT,sizeof(List));
 
 }

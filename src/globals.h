@@ -10,6 +10,9 @@
 
 	#define ALIGMENT 16
 
+	#define FALSE 0
+	#define TRUE ~FALSE
+
 	
 
 	#if defined(WIN32)

@@ -29,6 +29,7 @@
     <ClCompile Include="..\src\image.c" />
     <ClCompile Include="..\src\list.c" />
     <ClCompile Include="..\src\renderer.c" />
+    <ClCompile Include="..\src\solids.c" />
     <ClCompile Include="..\src\utils.c" />
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +44,7 @@
     <ClInclude Include="..\src\nbvh.h" />
     <ClInclude Include="..\src\image.h" />
     <ClInclude Include="..\src\renderer.h" />
+    <ClInclude Include="..\src\solids.h" />
     <ClInclude Include="..\src\utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

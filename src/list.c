@@ -37,7 +37,7 @@ void list_add(List* list,void* aligned_data)
 	}
 }
 
-void list_delete(List* list,int index)
+void list_delete(List* list,int index, int delete_data)
 {
 	int i;
 	struct ListElement* el;
@@ -72,7 +72,10 @@ void list_delete(List* list,int index)
 				list->tail=el->previous;
 			}
 
-			aligned_free(el->data);
+			if(delete_data==TRUE)
+			{
+				aligned_free(el->data);
+			}
 			aligned_free(el);
 
 			list->count--;
@@ -99,7 +102,7 @@ void* list_get(List* list,int index)
 	return NULL;
 }
 
-void list_destroy(List* list)
+void list_destroy(List* list,int delete_data)
 {
 	struct ListElement* el;
 	if(list!=NULL)
@@ -108,11 +111,20 @@ void list_destroy(List* list)
 		{
 			el=list->head;
             list->head=el->next;
-            if(el->data!=NULL)
+            if(el->data!=NULL && delete_data==TRUE)
                 aligned_free(el->data);
 			aligned_free(el);
 		}
 		aligned_free(list);
 	}
 	
+}
+
+void list_append(List* to, List* from)
+{
+	int i;
+	for(i=0;i<from->count;++i)
+	{
+		list_add(to,list_get(from,i));
+	}
 }
