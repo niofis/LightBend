@@ -4,7 +4,7 @@
 #include "globals.h"
 #include "memory.h"
 
-align(16)
+align(ALIGMENT)
 struct ListElement
 {
 	struct ListElement* previous;
@@ -12,7 +12,7 @@ struct ListElement
 	void* data;
 };
 
-align(16)
+align(ALIGMENT)
 typedef struct
 {
 	int count;

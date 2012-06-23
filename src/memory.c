@@ -1,6 +1,17 @@
 #include "memory.h"
 
 
+
+void* aligned_malloc16(int size)
+{
+	aligned_malloc(16, size);
+}
+
+void* aligned_realloc16(void* mem, int size)
+{
+	aligned_realloc(mem,16, size);
+}
+
 //When allocating memory, aligment bytes plus the size of a memory pointer are added to the
 //memory allocation
 

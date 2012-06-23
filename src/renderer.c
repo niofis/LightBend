@@ -7,12 +7,12 @@
 
 long done_threads;
 
-align(16) Escena escena;
+align(ALIGMENT) Escena escena;
 
-align(16) int *buffer;
-align(16) int bpp;
+align(ALIGMENT) int *buffer;
+align(ALIGMENT) int bpp;
 
-align(16) RenderJob job;
+align(ALIGMENT) RenderJob job;
 
 #define BOX 50
 
@@ -799,7 +799,7 @@ void convertscene(Scene *scene, Escena *nscene)
 	}
 
 	escena.num_groups=scene->groups->count;
-    escena.groups=(Group*)aligned_malloc(16,sizeof(Group)*escena.num_groups);
+    escena.groups=(Group*)aligned_malloc(ALIGMENT,sizeof(Group)*escena.num_groups);
 	for(i=0;i<scene->groups->count;++i)
 	{
 		Group *g=(Group*)list_get(scene->groups,i);
@@ -808,7 +808,7 @@ void convertscene(Scene *scene, Escena *nscene)
 	}
 
 	escena.num_objects=scene->objects->count;
-    escena.objects=(Triangle*)aligned_malloc(16,sizeof(Triangle)*escena.num_objects);
+    escena.objects=(Triangle*)aligned_malloc(ALIGMENT,sizeof(Triangle)*escena.num_objects);
 
 	for(i=0;i<scene->objects->count;++i)
 	{

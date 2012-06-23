@@ -13,7 +13,7 @@
 #define NODO_HOJA 1
 #define NODO_INVALIDO 2
 
-align(16)
+align(ALIGMENT)
 typedef struct
 {
 	float min[3];
@@ -23,7 +23,7 @@ typedef struct
 float *cajas_min_x,*cajas_min_y,*cajas_min_z;
 float *cajas_max_x,*cajas_max_y,*cajas_max_z;
 
-align(16)
+align(ALIGMENT)
 typedef struct
 {
 	int type;//0 nodo raiz, 1 nodo hoja, 2 nodo deshabilitado
@@ -31,7 +31,7 @@ typedef struct
 	int objs[CANT_OBJ_CAJA];
 } BoundingVolume;
 
-align(16)
+align(ALIGMENT)
 typedef struct
 {
 	Caja caja;

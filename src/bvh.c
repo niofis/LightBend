@@ -317,10 +317,10 @@ void BuildBVH()
 
 	//se obtiene el espacio de memoria y se inicializa a ceros
 
-	hierarchy=(BoundingVolume*)aligned_malloc(16,num_cajas*sizeof(BoundingVolume));
-	cajas=(Caja*)aligned_malloc(16,num_cajas*sizeof(Caja));
-	v_traverse=(int*)aligned_malloc(16,num_cajas*sizeof(int));
-	skip_ptrs=(int*)aligned_malloc(16,num_cajas*sizeof(int));
+	hierarchy=(BoundingVolume*)aligned_malloc(ALIGMENT,num_cajas*sizeof(BoundingVolume));
+	cajas=(Caja*)aligned_malloc(ALIGMENT,num_cajas*sizeof(Caja));
+	v_traverse=(int*)aligned_malloc(ALIGMENT,num_cajas*sizeof(int));
+	skip_ptrs=(int*)aligned_malloc(ALIGMENT,num_cajas*sizeof(int));
 
 	memset(hierarchy,0,num_cajas*sizeof(BoundingVolume));
 	memset(cajas,0,num_cajas*sizeof(Caja));

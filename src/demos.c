@@ -8,7 +8,7 @@ void Demo1()
 
 	//Crear Camera
 	escena.num_cameras=1;
-	escena.cameras=(Camera*)aligned_malloc(16,sizeof(Camera)*escena.num_cameras);
+	escena.cameras=(Camera*)aligned_malloc(ALIGMENT,sizeof(Camera)*escena.num_cameras);
 	i=0;
 	escena.cameras[0].eye[0]=0.0f;
 	escena.cameras[0].eye[1]=0.0f;
@@ -28,7 +28,7 @@ void Demo1()
 
 	//Crear Light
 	escena.num_lights=1;
-	escena.lights=(Light*)aligned_malloc(16,sizeof(Light)*escena.num_lights);
+	escena.lights=(Light*)aligned_malloc(ALIGMENT,sizeof(Light)*escena.num_lights);
 	i=0;
 	escena.lights[i].color[0]=1.0f;
 	escena.lights[i].color[1]=1.0f;
@@ -43,7 +43,7 @@ void Demo1()
 
 	//Crear Material
 	escena.num_materials=3;
-	escena.materials=(Material*)aligned_malloc(16,sizeof(Material)*escena.num_materials);
+	escena.materials=(Material*)aligned_malloc(ALIGMENT,sizeof(Material)*escena.num_materials);
 	i=0;
 	//207, 181, 59
 	//azul
@@ -91,7 +91,7 @@ void Demo1()
 	escena.materials[i].txt_width=0;
 
 	escena.num_groups=3;
-    escena.groups=(Group*)aligned_malloc(16,sizeof(Group)*escena.num_groups);
+    escena.groups=(Group*)aligned_malloc(ALIGMENT,sizeof(Group)*escena.num_groups);
 	i=0;
 	escena.groups[i].id=i;
 	escena.groups[i].material_id=0;
@@ -106,7 +106,7 @@ void Demo1()
 	
 
 	escena.num_objects=3;
-    escena.objects=(Triangle*)aligned_malloc(16,sizeof(Triangle)*escena.num_objects);
+    escena.objects=(Triangle*)aligned_malloc(ALIGMENT,sizeof(Triangle)*escena.num_objects);
 	i=0; 
 	escena.objects[i].group_id=0;
     //escena.objects[i].id=0;
@@ -168,7 +168,7 @@ void Demo2()
 
 	//Crear Camera
 	escena.num_cameras=1;
-	escena.cameras=(Camera*)aligned_malloc(16,sizeof(Camera)*escena.num_cameras);
+	escena.cameras=(Camera*)aligned_malloc(ALIGMENT,sizeof(Camera)*escena.num_cameras);
 	i=0;
 	escena.cameras[0].eye[0]=0.0f;
 	escena.cameras[0].eye[1]=0.0f;
@@ -188,7 +188,7 @@ void Demo2()
 
 	//Crear Light
 	escena.num_lights=1;
-	escena.lights=(Light*)aligned_malloc(16,sizeof(Light)*escena.num_lights);
+	escena.lights=(Light*)aligned_malloc(ALIGMENT,sizeof(Light)*escena.num_lights);
 	i=0;
 	escena.lights[i].color[0]=1.0f;
 	escena.lights[i].color[1]=1.0f;
@@ -203,7 +203,7 @@ void Demo2()
 
 	//Crear Material
 	escena.num_materials=2;
-	escena.materials=(Material*)aligned_malloc(16,sizeof(Material)*escena.num_materials);
+	escena.materials=(Material*)aligned_malloc(ALIGMENT,sizeof(Material)*escena.num_materials);
 	i=0;
 	escena.materials[i].color[0]=1.0f;
 	escena.materials[i].color[1]=0.0f;
@@ -233,7 +233,7 @@ void Demo2()
 	escena.materials[i].txt_width=0;
 
 	escena.num_groups=2;
-    escena.groups=(Group*)aligned_malloc(16,sizeof(Group)*escena.num_groups);
+    escena.groups=(Group*)aligned_malloc(ALIGMENT,sizeof(Group)*escena.num_groups);
 	i=0;
 	escena.groups[i].id=i;
 	escena.groups[i].material_id=0;
@@ -244,19 +244,19 @@ void Demo2()
 	
 
 	//num_objects=2;
-	//objects=(Object3D*)aligned_malloc(16,sizeof(Object3D)*num_objects);
-	CreateObjects(2);
+	//objects=(Object3D*)aligned_malloc(ALIGMENT,sizeof(Object3D)*num_objects);
+	CreateObjects(1);
 	i=0; 
-	escena.objects[i].group_id=0;
+	//escena.objects[i].group_id=0;
     //escena.objects[i].id=i;
     //escena.objects[i].radious=10000.0f;
     //escena.objects[i].type=OBJ_SPHERE;
-	escena.objects[i].v1[0]=0.0f;
-	escena.objects[i].v1[1]=-10000.0f;
-	escena.objects[i].v1[2]=0.0f;
+	//escena.objects[i].v1[0]=0.0f;
+	//escena.objects[i].v1[1]=-10000.0f;
+	//escena.objects[i].v1[2]=0.0f;
 
 	// GEN_TRIANGULO eax + Object3D,mdos,zero,zero, dos,zero,zero, zero,tres,zero, 0
-	i++; 
+	//i++; 
 	escena.objects[i].group_id=1;
     //escena.objects[i].id=i;
     //escena.objects[i].type=OBJ_TRIANGLE;
@@ -278,7 +278,7 @@ void Demo3()
 
 	//Crear Camera
 	escena.num_cameras=1;
-	escena.cameras=(Camera*)aligned_malloc(16,sizeof(Camera)*escena.num_cameras);
+	escena.cameras=(Camera*)aligned_malloc(ALIGMENT,sizeof(Camera)*escena.num_cameras);
 	i=0;
 	escena.cameras[0].eye[0]=0.0f;
 	escena.cameras[0].eye[1]=0.0f;
@@ -298,7 +298,7 @@ void Demo3()
 
 	//Crear Light
 	escena.num_lights=1;
-	escena.lights=(Light*)aligned_malloc(16,sizeof(Light)*escena.num_lights);
+	escena.lights=(Light*)aligned_malloc(ALIGMENT,sizeof(Light)*escena.num_lights);
 	i=0;
 	escena.lights[i].color[0]=1.0f;
 	escena.lights[i].color[1]=1.0f;
@@ -312,7 +312,7 @@ void Demo3()
 
 	//Crear Material
 	escena.num_materials=6;
-	escena.materials=(Material*)aligned_malloc(16,sizeof(Material)*escena.num_materials);
+	escena.materials=(Material*)aligned_malloc(ALIGMENT,sizeof(Material)*escena.num_materials);
 	i=0;
 	escena.materials[i].color[0]=1.0f;
 	escena.materials[i].color[1]=0.0f;
@@ -400,7 +400,7 @@ void Demo3()
 
 
 	escena.num_groups=6;
-    escena.groups=(Group*)aligned_malloc(16,sizeof(Group)*escena.num_groups);
+    escena.groups=(Group*)aligned_malloc(ALIGMENT,sizeof(Group)*escena.num_groups);
 	i=0;
 	escena.groups[i].id=i;
 	escena.groups[i].material_id=0;
@@ -428,7 +428,7 @@ void Demo3()
 	
 
 	//num_objects=7;
-	//objects=(Object3D*)aligned_malloc(16,sizeof(Object3D)*num_objects);
+	//objects=(Object3D*)aligned_malloc(ALIGMENT,sizeof(Object3D)*num_objects);
 	CreateObjects(9);
 	i=0; 
 	escena.objects[i].group_id=0;
@@ -516,7 +516,7 @@ void Demo4()
 
 	//Crear Camera
 	escena.num_cameras=1;
-	escena.cameras=(Camera*)aligned_malloc(16,sizeof(Camera)*escena.num_cameras);
+	escena.cameras=(Camera*)aligned_malloc(ALIGMENT,sizeof(Camera)*escena.num_cameras);
 	i=0;
 	escena.cameras[i].eye[0]=0.0f;
 	escena.cameras[i].eye[1]=0.0f;
@@ -536,7 +536,7 @@ void Demo4()
 
 	//Crear Light
 	escena.num_lights=1;
-	escena.lights=(Light*)aligned_malloc(16,sizeof(Light)*escena.num_lights);
+	escena.lights=(Light*)aligned_malloc(ALIGMENT,sizeof(Light)*escena.num_lights);
 	//lights=(Light*)CreateLights(num_lights);
 	i=0;
 	escena.lights[i].color[0]=1.0f;
@@ -552,7 +552,7 @@ void Demo4()
 
 	//Crear Material
 	escena.num_materials=3;
-	escena.materials=(Material*)aligned_malloc(16,sizeof(Material)*escena.num_materials);
+	escena.materials=(Material*)aligned_malloc(ALIGMENT,sizeof(Material)*escena.num_materials);
 	//materials=(Material*)CreateMaterials(num_materials);
 	i=0;
 	escena.materials[i].color[0]=1.0f;
@@ -597,7 +597,7 @@ void Demo4()
 	escena.materials[i].txt_width=0;
 
 	escena.num_groups=3;
-    escena.groups=(Group*)aligned_malloc(16,sizeof(Group)*escena.num_groups);
+    escena.groups=(Group*)aligned_malloc(ALIGMENT,sizeof(Group)*escena.num_groups);
     //groups=(Group*)CreateGroups(num_groups);
 	i=0;
 	escena.groups[i].id=i;
@@ -613,7 +613,7 @@ void Demo4()
 	
 
 	escena.num_objects=23;
-    escena.objects=(Triangle*)aligned_malloc(16,sizeof(Triangle)*escena.num_objects);
+    escena.objects=(Triangle*)aligned_malloc(ALIGMENT,sizeof(Triangle)*escena.num_objects);
 	//objects=(Object3D*)CreateObjects(num_objects);
 	i=0; 
 	escena.objects[i].group_id=0;
@@ -659,7 +659,7 @@ void Demo7()
 
 	//Crear Camera
 	escena.num_cameras=1;
-	escena.cameras=(Camera*)aligned_malloc(16,sizeof(Camera)*escena.num_cameras);
+	escena.cameras=(Camera*)aligned_malloc(ALIGMENT,sizeof(Camera)*escena.num_cameras);
 	i=0;
 	escena.cameras[i].eye[0]=0.0f;
 	escena.cameras[i].eye[1]=0.0f;
@@ -679,7 +679,7 @@ void Demo7()
 
 	//Crear Light
 	escena.num_lights=1;
-	escena.lights=(Light*)aligned_malloc(16,sizeof(Light)*escena.num_lights);
+	escena.lights=(Light*)aligned_malloc(ALIGMENT,sizeof(Light)*escena.num_lights);
 	i=0;
 	escena.lights[i].color[0]=1.0f;
 	escena.lights[i].color[1]=1.0f;
@@ -694,7 +694,7 @@ void Demo7()
 
 	//Crear Material
 	escena.num_materials=1;
-	escena.materials=(Material*)aligned_malloc(16,sizeof(Material)*escena.num_materials);
+	escena.materials=(Material*)aligned_malloc(ALIGMENT,sizeof(Material)*escena.num_materials);
 	i=0;
 	escena.materials[i].color[0]=1.0f;
 	escena.materials[i].color[1]=1.0f;
@@ -710,13 +710,13 @@ void Demo7()
 	escena.materials[i].txt_width=0;
 
 	escena.num_groups=1;
-    escena.groups=(Group*)aligned_malloc(16,sizeof(Group)*escena.num_groups);
+    escena.groups=(Group*)aligned_malloc(ALIGMENT,sizeof(Group)*escena.num_groups);
 	i=0;
 	escena.groups[i].id=i;
 	escena.groups[i].material_id=0;
 
 	escena.num_objects=nx*ny*nz;
-    escena.objects=(Triangle*)aligned_malloc(16,sizeof(Triangle)*escena.num_objects);
+    escena.objects=(Triangle*)aligned_malloc(ALIGMENT,sizeof(Triangle)*escena.num_objects);
 	//CreateObjects(num_objects);
 	i=0; 
 	fz=0;
@@ -768,7 +768,7 @@ void Demo9()
 
 
 	escena.num_cameras=1;
-	escena.cameras=(Camera*)aligned_malloc(16,sizeof(Camera)*escena.num_cameras);
+	escena.cameras=(Camera*)aligned_malloc(ALIGMENT,sizeof(Camera)*escena.num_cameras);
 	i=0;
 	escena.cameras[0].eye[0]=0.0f;
 	escena.cameras[0].eye[1]=0.0f;
@@ -788,7 +788,7 @@ void Demo9()
 
 	//Crear Light
 	escena.num_lights=1;
-	escena.lights=(Light*)aligned_malloc(16,sizeof(Light)*escena.num_lights);
+	escena.lights=(Light*)aligned_malloc(ALIGMENT,sizeof(Light)*escena.num_lights);
 	i=0;
 	escena.lights[i].color[0]=1.0f;
 	escena.lights[i].color[1]=1.0f;
@@ -803,7 +803,7 @@ void Demo9()
 
 	//Crear Material
 	escena.num_materials=MS3DGetNumMaterials();
-	escena.materials=(Material*)aligned_malloc(16,sizeof(Material)*escena.num_materials);
+	escena.materials=(Material*)aligned_malloc(ALIGMENT,sizeof(Material)*escena.num_materials);
 	for(i=0;i<escena.num_materials;i++)
 	{
 		ms3d_material=MS3DGetMaterialAt(i);
@@ -822,7 +822,7 @@ void Demo9()
 	}
 
 	escena.num_groups=MS3DGetNumGroups();
-    escena.groups=(Group*)aligned_malloc(16,sizeof(Group)*escena.num_groups);
+    escena.groups=(Group*)aligned_malloc(ALIGMENT,sizeof(Group)*escena.num_groups);
 	for(i=0;i<escena.num_groups;i++)
 	{
 		ms3d_group=MS3DGetGroupAt(i);
@@ -832,7 +832,7 @@ void Demo9()
 
 
 	escena.num_objects=MS3DGetNumTriangles();
-	//objects=(Object3D*)aligned_malloc(16,sizeof(Object3D)*num_objects);
+	//objects=(Object3D*)aligned_malloc(ALIGMENT,sizeof(Object3D)*num_objects);
 	CreateObjects(escena.num_objects);
 	for(i=0;i<escena.num_objects;i++)
 	{

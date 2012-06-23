@@ -37,7 +37,7 @@
 #define V_REC(v1,v2)v1[0]=1/v2[0]; v1[1]=1/v2[1];v1[2]=1/v2[2];
 
 
-//align(16)
+//align(ALIGMENT)
 //typedef struct
 //{
 //	float t;
@@ -46,7 +46,7 @@
 //	float w;
 //} Vector;
 //
-//align(16)
+//align(ALIGMENT)
 //typedef struct
 //{
 //	float a;
@@ -55,7 +55,7 @@
 //	float b;
 //} Color;
 
-align(16)
+align(ALIGMENT)
 typedef struct
 {
 	float lefttop[3];
@@ -68,7 +68,7 @@ typedef struct
 	int pad3;
 } Camera;
 
-align(16)
+align(ALIGMENT)
 typedef struct
 {
     float position[3];
@@ -79,7 +79,7 @@ typedef struct
 	int pad2;
 } Light;
 
-align(16)
+align(ALIGMENT)
 typedef struct
 {
     int id;
@@ -93,7 +93,7 @@ typedef struct
     float color[4];
 } Material;
 
-align(16)
+align(ALIGMENT)
 typedef struct
 {
 	int id;
@@ -103,7 +103,7 @@ typedef struct
 } Group;
 
 /*
-align(16)
+align(ALIGMENT)
 typedef struct
 {
     int type;
@@ -117,7 +117,7 @@ typedef struct
 } Object3D;
 */
 
-align(16)
+align(ALIGMENT)
 typedef struct
 {
     int group_id;
@@ -127,14 +127,14 @@ typedef struct
     float normal[3];
 } Triangle;
 
-align(16)
+align(ALIGMENT)
 typedef struct
 {
 	float origen[3];
 	float direccion[3];
 } Ray;
 
-align(16)
+align(ALIGMENT)
 typedef struct
 {
 	int id_objeto;
@@ -144,7 +144,7 @@ typedef struct
 	float color[4];
 } TraceResult;
 
-align(16)
+align(ALIGMENT)
 typedef struct
 {
     Group *groups;
@@ -160,7 +160,7 @@ typedef struct
     int num_lights;
 } Escena;
 
-align(16)
+align(ALIGMENT)
 typedef struct
 {
 	List *groups;
@@ -170,7 +170,7 @@ typedef struct
 	List *cameras;
 } Scene;
 
-align(16)
+align(ALIGMENT)
 typedef struct
 {
 	int *buffer;
@@ -197,10 +197,10 @@ void CleanRenderer();
 void PreprocessObjects();
 void CreateObjects(int qty);
 
-align(16) extern int *buffer;
-align(16) extern int bpp;
-align(16) extern RenderJob job;
-align(16) extern Escena escena;
-align(16) extern void convertscene(Scene *scene, Escena *nscene);
+align(ALIGMENT) extern int *buffer;
+align(ALIGMENT) extern int bpp;
+align(ALIGMENT) extern RenderJob job;
+align(ALIGMENT) extern Escena escena;
+align(ALIGMENT) extern void convertscene(Scene *scene, Escena *nscene);
 
 #endif
