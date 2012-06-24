@@ -3,9 +3,14 @@
 #include "solids.h"
 
 
-List* CreateSphere(float x, float y, float z, float radious, int num_slices, int slice_sections, int group_id)
+List* CreateSphere(float* center, float radious, int num_slices, int slice_sections, int group_id)
 {
 	List* sphere;
 	sphere=(List*)aligned_malloc(ALIGMENT,sizeof(List));
+    return sphere;
+}
 
+void Translate(float* offset, List* triangles)
+{
+    
 }

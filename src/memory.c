@@ -4,12 +4,12 @@
 
 void* aligned_malloc16(int size)
 {
-	aligned_malloc(16, size);
+	return aligned_malloc(16, size);
 }
 
 void* aligned_realloc16(void* mem, int size)
 {
-	aligned_realloc(mem,16, size);
+	return aligned_realloc(mem,16, size);
 }
 
 //When allocating memory, aligment bytes plus the size of a memory pointer are added to the
@@ -17,11 +17,11 @@ void* aligned_realloc16(void* mem, int size)
 
 void* aligned_malloc(int aligment, int size)
 {
-	int total;
+	size_t total;
 	void* ptr;
-	int pad;
+	size_t pad;
 	void* final;
-	int t;
+	size_t t;
 
 	pad=aligment+sizeof(size_t);
 	total=size+pad;
@@ -64,11 +64,11 @@ void aligned_free(void* mem)
 void* aligned_realloc(void* mem, int aligment, int size)
 {
 	void* original;
-	int total;
+	size_t total;
 	void* ptr;
-	int pad;
+	size_t pad;
 	void* final;
-	int t;
+	size_t t;
 	
 	pad=aligment+sizeof(size_t);
 	total=size+pad;

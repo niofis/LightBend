@@ -192,6 +192,7 @@ typedef struct
 
 } RenderJob;
 
+
 void RenderFrame(int* buffer, int threads);
 void CleanRenderer();
 void PreprocessObjects();
