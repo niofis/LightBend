@@ -127,10 +127,10 @@ function addLevel(parent,level)
 end
 
 
-local o=prm.Sphere:new{radius=2, center=prm.Vector3:new{x=0,y=0,z=0}, group=g}
+local o=prm.Sphere:new{radius=2, center=prm.Vector3:new{x=0,y=0,z=0}, sections=10, resolution=10, group=g}
 --o.bottom=1
 tb.insert(scene.objects,o)
-addLevel(o,1)
+--addLevel(o,1)
 
 
 local l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=0,y=2,z=-50}}

@@ -35,6 +35,7 @@
 #define V_DIV(v1,d)v1[0]=v1[0]/d; v1[1]=v1[1]/d;v1[2]=v1[2]/d;
 #define V_INIT(v,x,y,z)v[0]=x;v[1]=y;v[2]=z;
 #define V_REC(v1,v2)v1[0]=1/v2[0]; v1[1]=1/v2[1];v1[2]=1/v2[2];
+#define V_COPY(dest,src)dest[0]=src[0]; dest[1]=src[1]; dest[2]=src[2];
 
 
 //align(ALIGMENT)

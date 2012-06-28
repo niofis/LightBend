@@ -23,7 +23,7 @@ int RotateCamera(Camera* camera, float rads, int axis) //1=x 2=y 4=z
 	float y =0;// axis==2?1:0;
 	float z =0;// axis==4?1:0;
 	float ax[4]={0,0,0,0};
-	float dir=(rads<0)?-1.0f:1.0f;
+    //float dir=(rads<0)?-1.0f:1.0f;
 	float norm=0;
 
 	float c = cos(rads);

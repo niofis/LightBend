@@ -289,6 +289,9 @@ function Sphere:new(o)
 
 	o.group=o.group
 
+	o.slices=o.slices or 10
+	o.resolution=o.resolution or 10
+	
 	return o
 end
 

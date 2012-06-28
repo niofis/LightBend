@@ -4,6 +4,7 @@
 #include "bvh.h"
 #include "demos.h"
 #include "models.h"
+#include "solids.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -133,8 +134,25 @@ static int setCamera(lua_State *L)
 //lua: setSphere(id_object,id_group,radious,x,y,z)
 static int setSphere(lua_State *L)
 {
-	int i=lua_tonumber(L, 1)-1;
-    Triangle *obj=(Triangle *)aligned_malloc(ALIGMENT,sizeof(Triangle));
+    int group_id=lua_tonumber(L, 2)-1;
+    float center[3];
+    float radious=lua_tonumber(L, 3);
+    float slices=lua_tonumber(L,7);
+    float resolution=lua_tonumber(L,8);
+    List* sphere;
+
+    center[0]=lua_tonumber(L,4);
+    center[1]=lua_tonumber(L,5);
+    center[2]=lua_tonumber(L,6);
+
+    sphere=CreateSphere(&center,radious,slices,resolution,group_id);
+
+    list_append(lua_scene.objects,sphere);
+
+    list_destroy(sphere,FALSE);
+
+
+    //Triangle *obj=(Triangle *)aligned_malloc(ALIGMENT,sizeof(Triangle));
 
     /*
     escena.objects[i].id=i;
@@ -147,15 +165,15 @@ static int setSphere(lua_State *L)
     */
 
 
-    obj->group_id=lua_tonumber(L, 2)-1;
+    //obj->group_id=lua_tonumber(L, 2)-1;
     //obj->id=i;
     //obj->type=OBJ_SPHERE;
     //obj->radious=lua_tonumber(L, 3);
-    obj->v1[0]=lua_tonumber(L, 4);
-    obj->v1[1]=lua_tonumber(L, 5);
-    obj->v1[2]=lua_tonumber(L, 6);
+    //obj->v1[0]=lua_tonumber(L, 4);
+    //obj->v1[1]=lua_tonumber(L, 5);
+    //obj->v1[2]=lua_tonumber(L, 6);
 
-    list_add(lua_scene.objects,obj);
+    //list_add(lua_scene.objects,obj);
 
 
 	return 0;

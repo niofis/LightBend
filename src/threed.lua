@@ -63,7 +63,7 @@ for i,v in base.pairs(scene.objects) do
 	if v.issphere then
 		lb.setSphere(i,
 					v.group.idx, v.radius,
-					v.center.x,v.center.y,v.center.z)
+					v.center.x,v.center.y,v.center.z, v.slices, v.resolution)
 	elseif v.istriangle then
 
 	end
