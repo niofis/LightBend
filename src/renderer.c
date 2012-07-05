@@ -31,7 +31,6 @@ int ShadowRay(Ray *ray,float max_dist)
 	float t0,t,ta,B,B2,C,I;
 	BoundingVolume *bv;
 
-	#if defined(USE_BVH)
 	//Recorrer el v_traverse, he ir checando con cada BoundingBox si tiene un hit
 	//Si no hace hit, saltar al nodo indicado en el skip_ptrs
 	//Si hace hit, revisar si es raiz u hoja, en el primer caso, continuar con el
@@ -60,11 +59,7 @@ int ShadowRay(Ray *ray,float max_dist)
 		for(i=0;i<bv->cant_objs;i++)
 		{
             objeto=&escena.objects[bv->objs[i]];
-	#else
-        for(i=0;i<num_objects;i++)
-		{
-            objeto=&objects[i];
-	#endif
+
 
             /*
             if(objeto->type==OBJ_SPHERE)
@@ -135,9 +130,9 @@ int ShadowRay(Ray *ray,float max_dist)
 					return 1;
             //}
 		}
-	#if defined(USE_BVH)
+
 	}
-	#endif
+
 	return 0;
 }
 
@@ -589,7 +584,8 @@ THREAD Render(int param)
 		else
 		{
 			//buffer[y*job.width + x]=0;
-			buffer[y*job.width + x]=255<<24;
+            //buffer[y*job.width + x]=255<<24;
+            buffer[y*job.width + x]=0xFF888888;
 		}
 			
 
@@ -661,11 +657,11 @@ void CleanRenderer()
 		aligned_free(escena.cameras);
 
 
-    escena.groups=0;
-    escena.materials=0;
-    escena.objects=0;
-    escena.lights=0;
-	escena.cameras=0;
+    escena.groups=NULL;
+    escena.materials=NULL;
+    escena.objects=NULL;
+    escena.lights=NULL;
+    escena.cameras=NULL;
     escena.num_groups=0;
     escena.num_materials=0;
     escena.num_objects=0;

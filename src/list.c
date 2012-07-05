@@ -37,7 +37,7 @@ void list_add(List* list,void* aligned_data)
 	}
 }
 
-void list_delete(List* list,int index, bool delete_data)
+void list_remove(List* list,int index, bool delete_data)
 {
 	int i;
 	struct ListElement* el;
@@ -75,6 +75,7 @@ void list_delete(List* list,int index, bool delete_data)
 			if(delete_data==TRUE)
 			{
 				aligned_free(el->data);
+                el->data=NULL;
 			}
 			aligned_free(el);
 
@@ -102,7 +103,7 @@ void* list_get(List* list,int index)
 	return NULL;
 }
 
-void list_destroy(List* list,bool delete_data)
+void list_delete(List* list,bool delete_data)
 {
 	struct ListElement* el;
 	if(list!=NULL)
@@ -112,7 +113,10 @@ void list_destroy(List* list,bool delete_data)
 			el=list->head;
             list->head=el->next;
             if(el->data!=NULL && delete_data==TRUE)
+            {
                 aligned_free(el->data);
+                el->data=NULL;
+            }
 			aligned_free(el);
 		}
 		aligned_free(list);

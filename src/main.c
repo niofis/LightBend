@@ -27,6 +27,7 @@ char text[256];
 int cpu_count=0;
 
 
+
 void reset_stats()
 {
     last_frame=-1;
@@ -284,10 +285,12 @@ int interactive_mode()
 					
 					if(event.key.keysym.sym == SDLK_9)
 					{
+                        /*
 						CleanRenderer();
 						Demo9();
 						reset_stats();
 						render_next=1;
+                        */
 					}
 					if(event.key.keysym.sym == SDLK_0)
 					{
@@ -295,9 +298,7 @@ int interactive_mode()
 						//run lua script
 						runluascript(job.lua_script);
 						reset_stats();
-						render_next=1;
-                        CleanRenderer();
-                        Demo1();
+                        render_next=1;
 					}
 					if(event.key.keysym.sym == SDLK_n)
 					{
@@ -396,7 +397,7 @@ int interactive_mode()
 	}
 	SDL_FreeSurface(screen);
 	SDL_FreeSurface(surface);
-	SDL_Quit();
+    SDL_Quit();
 
 	CleanBVH();
 	CleanRenderer();
@@ -405,50 +406,64 @@ int interactive_mode()
 void offline_mode()
 {
 	long long  i,f,q;
-	int* buffer=(int*) malloc(job.width*job.height*4);
+    int* buffer=(int*) aligned_malloc16(job.width*job.height*4);
 	q=CLOCKS_PER_SEC;
 	
-	runluascript(job.lua_script);
+    runluascript(job.lua_script);
 	
-	printf("Rendering...\n\r");
-	
+    printf("Rendering...\n\r");
+
 	i=clock();
-	RenderFrame(buffer,job.threads);
+    RenderFrame(buffer,job.threads);
 	f=clock();
 	
 	printf("Done in %8.4f s\n\r",(double)((double)(f-i)/(double)q));
 		
-	save_image(job.img_file,job.width,job.height,(unsigned char*)buffer);
-	CleanBVH();
-	CleanRenderer();
-	free(buffer);
+    save_image(job.img_file,job.width,job.height,(unsigned char*)buffer);
+
+
+    CleanBVH();
+    CleanRenderer();
+
+    aligned_free(buffer);
 }
+
+
 
 int main(int argc, char* args[])
 {
+
 	#ifdef SSE
 	//_MM_SET_FLUSH_ZERO_MOD(_MM_FLUSH_ZERO_ON);
 	#endif
 
+    //debug("Init");
+
+
 	bpp=32;
 
+
     #pragma omp critical
-	cpu_count=omp_get_num_procs();
+    cpu_count=omp_get_num_procs();
 	
-	process_args(argc, args);
+    process_args(argc, args);
 
 	if(job.threads==0)
 		job.threads=cpu_count;
 	
-	omp_set_dynamic(0);
-	omp_set_num_threads(job.threads);
-	omp_set_nested(1);
-	
+    omp_set_dynamic(0);
+    omp_set_num_threads(job.threads);
+    omp_set_nested(1);
+
+
 	if(job.interactive==1)
 		interactive_mode();
-	else
-		offline_mode();
+    else
+        offline_mode();
 
+
+
+    //debug("Exit");
 
 	return 0;
 }

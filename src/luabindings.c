@@ -28,11 +28,11 @@ static int doneLoading(lua_State *L)
 
     convertscene(&lua_scene, NULL);
 
-    list_destroy(lua_scene.cameras,TRUE);
-    list_destroy(lua_scene.groups,TRUE);
-    list_destroy(lua_scene.lights,TRUE);
-    list_destroy(lua_scene.materials,TRUE);
-    list_destroy(lua_scene.objects,TRUE);
+    list_delete(lua_scene.cameras,TRUE);
+    list_delete(lua_scene.groups,TRUE);
+    list_delete(lua_scene.lights,TRUE);
+    list_delete(lua_scene.materials,TRUE);
+    list_delete(lua_scene.objects,TRUE);
 
 	BuildBVH();
 	PreprocessObjects();
@@ -149,7 +149,7 @@ static int setSphere(lua_State *L)
 
     list_append(lua_scene.objects,sphere);
 
-    list_destroy(sphere,FALSE);
+    list_delete(sphere,FALSE);
 
 
     //Triangle *obj=(Triangle *)aligned_malloc(ALIGMENT,sizeof(Triangle));

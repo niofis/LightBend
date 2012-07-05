@@ -1,15 +1,65 @@
 #include <math.h>
 #include "list.h"
+#include "primitives.h"
 #include "solids.h"
 #include "renderer.h"
 
 
-
-float* point()
+float* point(float x, float y, float z)
 {
-    return aligned_malloc16(sizeof(float)*3);
+    float* pt=aligned_malloc16(sizeof(float)*3);
+    V_INIT(pt,x,y,z);
+    return pt;
 }
 
+//Name: rotate
+//Function: rotates a point the specified rads, on the axis especified (0:x, 1:y, 2:z)
+//Conditions: point must be a 3 elements array, rads must be radians and 0<=axis<=2
+//Results: point gets rotated, no return value with the return keyword
+void rotate(float* point, float rads, int axis)
+{
+    float tx;
+    float ty;
+    float tz;
+
+    tx=point[0];
+    ty=point[1];
+    tz=point[2];
+
+    //rotation over x:
+    //tx=x
+    //ty=y*cos + z*sin
+    //tz=-y*sin + z*cos
+
+    if(axis==0)
+    {
+        point[1]=ty*cos(rads) + tz*sin(rads);
+        point[2]=-ty*sin(rads) + tz*cos(rads);
+    }
+
+    //rotation over y
+    //tx=x*cos + z*sin
+    //ty=y
+    //tz=-x*sin + z*cos
+
+    if(axis==1)
+    {
+        point[0]=tx*cos(rads) + tz*sin(rads);
+        point[2]=-tx*sin(rads) + tz*cos(rads);
+    }
+    //rotation over z
+    //tx=x*cos + y*sin
+    //ty=-x*sin + y*cos
+    //tz=z
+
+    if(axis==2)
+    {
+        point[0]=tx*cos(rads) + ty*sin(rads);
+        point[1]=-tx*sin(rads) + ty*cos(rads);
+    }
+
+
+}
 
 //Name: CreateSphere
 //Function: Creates a sphere acording to the number of slices and slice resolution indicated
@@ -19,28 +69,162 @@ float* point()
 List* CreateSphere(float* center, float radious, int num_slices, int slice_resolution, int group_id)
 {
 	List* sphere;
-    List** points;
+    List* points;
     float* pt;
+    int slice;
+    int section;
+    float x_rads;
+    float y_rads;
 
     if(num_slices<2)
         return NULL;
 
-	sphere=(List*)aligned_malloc(ALIGMENT,sizeof(List));
 
-    points=(List**)aligned_malloc16(sizeof(List*)*(num_slices+1));
+     //printf("center(%f,%f,%f) radious(%f) slices(%d) res(%d) group(%d)\n",center[0],center[1],center[2],radious,num_slices,slice_resolution,group_id);
+
+
+    x_rads=PI/num_slices;
+    y_rads=2*PI/slice_resolution;
+
+    sphere=list_create();
+
+    points=list_create();
 
     //first point, on top
-    pt=point();
-    V_COPY(pt,center);
-    pt[1]=pt[1]-radious;
-    list_add(points[0],pt);
-
-    //last point, botton
-    pt=point();
+    list_add(points,list_create());
+    pt=point(0,0,0);
     V_COPY(pt,center);
     pt[1]=pt[1]+radious;
-    list_add(points[num_slices],pt);
+    list_add(list_get(points,0),pt);
 
+    for(slice=1;slice<=num_slices;++slice)
+    {
+        float* npt=point(pt[0],pt[1],pt[2]);
+
+        //rotate the topmost point x_rads*slice rads
+        rotate(npt,x_rads*slice,0);
+
+
+        list_add(points,list_create());
+
+        for(section=0;section<slice_resolution;++section)
+        {
+            float* nnpt=point(npt[0],npt[1],npt[2]);
+
+            rotate(nnpt,y_rads*section,1);
+
+            list_add(list_get(points,slice),nnpt);
+        }
+
+    }
+
+    //last point, botton
+    pt=point(0,0,0);
+    V_COPY(pt,center);
+    pt[1]=pt[1]-radious;
+    list_add(list_get(points,num_slices),pt);
+
+    //We now got all the points, it's time to stitch them together and create the triangles
+
+    for(slice=1;slice<=num_slices;++slice)
+    {
+        for(section=0;section<slice_resolution;++section)
+        {
+            Triangle* tr;
+            Triangle* tr2;
+            float* pt1; //left,top
+            float* pt2; //right,top
+            float* pt3; //right,bottom
+            float* pt4; //left,bottom
+
+
+
+            if(slice==1)
+            {
+                pt2=pt1=(float*)list_get(list_get(points,slice-1),0);
+            }
+            else
+            {
+                pt1=(float*)list_get(list_get(points,slice-1),section);
+                if(section<slice_resolution-1)
+                {
+                    pt2=(float*)list_get(list_get(points,slice-1),section+1);
+                }
+                else
+                {
+                    pt2=(float*)list_get(list_get(points,slice-1),0);
+                }
+            }
+
+            if(section<slice_resolution-1)
+            {
+                pt3=(float*)list_get(list_get(points,slice),section+1);
+            }
+            else
+            {
+                pt3=(float*)list_get(list_get(points,slice),0);
+            }
+
+            pt4=(float*)list_get(list_get(points,slice),section);
+
+
+
+            if(slice>1 && slice<num_slices)
+            {
+                tr=triangle_new();
+                tr2=triangle_new();
+
+                V_COPY(tr->v1,pt1);
+                V_COPY(tr->v2,pt2);
+                V_COPY(tr->v3,pt3);
+
+                V_COPY(tr2->v1,pt1);
+                V_COPY(tr2->v2,pt3);
+                V_COPY(tr2->v3,pt4);
+
+                tr->group_id=group_id;
+                tr2->group_id=group_id;
+                list_add(sphere,tr);
+                list_add(sphere,tr2);
+            }
+            else if(slice==1)
+            {
+                tr=triangle_new();
+                V_COPY(tr->v1,pt1);
+                V_COPY(tr->v2,pt3);
+                V_COPY(tr->v3,pt4);
+                tr->group_id=group_id;
+                list_add(sphere,tr);
+            }
+            else if(slice==num_slices)
+            {
+                tr=triangle_new();
+                V_COPY(tr->v1,pt1);
+                V_COPY(tr->v2,pt2);
+                V_COPY(tr->v3,pt4);
+                tr->group_id=group_id;
+                list_add(sphere,tr);
+            }
+
+
+
+            /*
+            printf("triangle v1(%f,%f,%f) v2(%f,%f,%f) v3(%f,%f,%f)",tr->v1[0],tr->v1[1],tr->v1[2]
+                   ,tr->v2[0],tr->v2[1],tr->v2[2]
+                   ,tr->v3[0],tr->v3[1],tr->v3[2]);
+            */
+        }
+    }
+
+
+
+    while(points->count>0)
+    {
+        List* sl;
+        sl=list_get(points,0);
+        list_delete(sl,TRUE);
+        list_remove(points,0,FALSE);
+    }
 
     Translate(center,sphere);
     return sphere;

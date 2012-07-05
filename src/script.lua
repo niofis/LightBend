@@ -47,7 +47,7 @@ scene.camera.lb.x=-3.2
 scene.camera.lb.y=-2.4
 scene.camera.lb.z=-50.0
 
-local m=prm.Material:new{ color=prm.ColorF:new{a=1,r=0.811764,g=0.709803,b=0.231372},reflextion=0,refraction=0,specular=1}
+local m=prm.Material:new{ color=prm.ColorF:new{a=1,r=0.811764,g=0.709803,b=0.231372},reflextion=0,refraction=0,specular=0}
 tb.insert(scene.materials,m)
 
 local g=prm.Group:new{material=m}
@@ -127,19 +127,31 @@ function addLevel(parent,level)
 end
 
 
-local o=prm.Sphere:new{radius=2, center=prm.Vector3:new{x=0,y=0,z=0}, sections=10, resolution=10, group=g}
+local o=prm.Sphere:new{radius=0.5, center=prm.Vector3:new{x=0,y=0,z=0}, slices=10, resolution=10, group=g}
 --o.bottom=1
 tb.insert(scene.objects,o)
 --addLevel(o,1)
 
 
-local l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=0,y=2,z=-50}}
+local l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=0,y=0,z=50}}
 tb.insert(scene.lights,l)
 
-l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=2,y=2,z=-2}}
+l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=0,y=0,z=-50}}
 tb.insert(scene.lights,l)
 
+--[[
+l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=-50,y=0,z=0}}
+tb.insert(scene.lights,l)
 
+l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=50,y=0,z=0}}
+tb.insert(scene.lights,l)
+
+l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=0,y=50,z=0}}
+tb.insert(scene.lights,l)
+
+l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=0,y=-50,z=0}}
+tb.insert(scene.lights,l)
+]]
 --tb.insert(scene.models,"/home/niofis/Raytracing/models/tree.ms3d")
 --tb.insert(scene.models,"D:/Enrique/Raytracing/models/cubo.blend")
 

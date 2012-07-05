@@ -5,4 +5,5 @@ List* CreateSphere(float* center, float radious, int num_slices, int slice_resol
 
 void Translate(float* offset, List* triangles);
 
+
 #endif // SOLIDS_H

@@ -14,7 +14,8 @@ SOURCES += \
     ../src/demos.c \
     ../src/bvh.c \
     ../src/models.c \
-    ../src/solids.c
+    ../src/solids.c \
+    ../src/primitives.c
 
 HEADERS += \
     ../src/utils.h \
@@ -29,7 +30,8 @@ HEADERS += \
     ../src/demos.h \
     ../src/bvh.h \
     ../src/models.h \
-    ../src/solids.h
+    ../src/solids.h \
+    ../src/primitives.h
 
 LIBS += -L/usr/lib -lSDL -lSDL_gfx -llua -lm -lpng -z muldefs -pthread --openmp -lassimp
 
