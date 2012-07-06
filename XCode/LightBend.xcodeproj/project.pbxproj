@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		121A38D115A6731300D15F77 /* primitives.c in Sources */ = {isa = PBXBuildFile; fileRef = 121A38CF15A6731300D15F77 /* primitives.c */; };
 		12394985159708FF000DD02A /* solids.c in Sources */ = {isa = PBXBuildFile; fileRef = 12394983159708FF000DD02A /* solids.c */; };
 		12BC319314F982A900F4D3F9 /* libSDL_gfx.13.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319214F982A900F4D3F9 /* libSDL_gfx.13.dylib */; };
 		12BC319614F9836300F4D3F9 /* liblua.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319514F9836300F4D3F9 /* liblua.dylib */; };
@@ -45,6 +46,8 @@
 
 /* Begin PBXFileReference section */
 		1203B7BF14D911FD00319C07 /* LightBend */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LightBend; sourceTree = BUILT_PRODUCTS_DIR; };
+		121A38CF15A6731300D15F77 /* primitives.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = primitives.c; sourceTree = "<group>"; };
+		121A38D015A6731300D15F77 /* primitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitives.h; sourceTree = "<group>"; };
 		122D5D5614F980AB009DC738 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = Library/Frameworks/SDL.framework; sourceTree = SDKROOT; };
 		12394983159708FF000DD02A /* solids.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = solids.c; sourceTree = "<group>"; };
 		12394984159708FF000DD02A /* solids.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = solids.h; sourceTree = "<group>"; };
@@ -136,6 +139,8 @@
 		1203B7D214D912FC00319C07 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				121A38CF15A6731300D15F77 /* primitives.c */,
+				121A38D015A6731300D15F77 /* primitives.h */,
 				12394983159708FF000DD02A /* solids.c */,
 				12394984159708FF000DD02A /* solids.h */,
 				12F3C4FE15774A9F001E004D /* image.c */,
@@ -228,6 +233,7 @@
 				12F3C50515774A9F001E004D /* list.c in Sources */,
 				12F3C50615774A9F001E004D /* models.c in Sources */,
 				12394985159708FF000DD02A /* solids.c in Sources */,
+				121A38D115A6731300D15F77 /* primitives.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

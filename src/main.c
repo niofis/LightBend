@@ -170,8 +170,8 @@ int interactive_mode()
 	SDL_Surface* surface;
 	SDL_Event event;
 	int done = 0;
-	long long freq;
-	long long  i,f,q;
+    double start;
+    double finish;
 	int mouse_y;
 	const SDL_VideoInfo *info;
 	Uint8 * keys;
@@ -179,8 +179,6 @@ int interactive_mode()
 	int showhelp=0;
 	int continuous=0;
 	int render_next=1;
-
-	q=freq=CLOCKS_PER_SEC;
 
 
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -377,19 +375,17 @@ int interactive_mode()
 
 		if(continuous || render_next)
 		{
-			i=clock();
-
+            start=omp_get_wtime();
 			SDL_LockSurface(surface);
 			RenderFrame((int*)surface->pixels,job.threads);
 			SDL_UnlockSurface(surface);
-
-			f=clock();
+            finish=omp_get_wtime();
 			render_next=0;
 			frame_count++;
 		}
 
 		SDL_BlitSurface(surface, NULL, screen, NULL);
-		stats(screen,(double)((double)(f-i)/(double)q),showhelp);
+        stats(screen,finish-start,showhelp);
 
 		SDL_Flip(screen);
 

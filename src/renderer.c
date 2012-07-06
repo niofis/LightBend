@@ -599,7 +599,8 @@ THREAD Render(int param)
 		//InterlockedIncrement(&done_threads);
 		done_threads++;
 	#else
-		__sync_fetch_and_add(&done_threads,1);
+        done_threads++;
+		//__sync_fetch_and_add(&done_threads,1);
 	#endif
 
 	return 0;
@@ -621,6 +622,7 @@ void RenderFrame(int* pixels, int threads)
 	}
 	else
 	{
+        
 		for(x=0;x<threads-1;x++)
 		{
 			param=(threads<<16) | x; //step,start
@@ -628,7 +630,7 @@ void RenderFrame(int* pixels, int threads)
 		}
 
 		param=(threads<<16) | x; //step,start
-			CreateThread(Render,param);
+			Render(param);
 
 		while(done_threads<threads)
 			Sleep(1);
