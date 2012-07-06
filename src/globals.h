@@ -43,6 +43,7 @@
 		#define max(x,y) (x>y)?x:y
 	#endif
 
+/*
 void debug(char* msg)
 {
     int c;
@@ -50,5 +51,5 @@ void debug(char* msg)
     fflush( stdout );
     do c = getchar(); while ((c != '\n') && (c != EOF));
 }
-
+*/
 #endif
