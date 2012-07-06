@@ -401,19 +401,19 @@ int interactive_mode()
 
 void offline_mode()
 {
-	long long  i,f,q;
+	double start;
+	double finish;
     int* buffer=(int*) aligned_malloc16(job.width*job.height*4);
-	q=CLOCKS_PER_SEC;
 	
     runluascript(job.lua_script);
 	
     printf("Rendering...\n\r");
 
-	i=clock();
+	start=omp_get_wtime();
     RenderFrame(buffer,job.threads);
-	f=clock();
+	finish=omp_get_wtime();
 	
-	printf("Done in %8.4f s\n\r",(double)((double)(f-i)/(double)q));
+	printf("Done in %8.4f s\n\r",finish-start);
 		
     save_image(job.img_file,job.width,job.height,(unsigned char*)buffer);
 
