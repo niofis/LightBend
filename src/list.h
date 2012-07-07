@@ -20,7 +20,7 @@ typedef struct
 	struct ListElement* tail;
 } List;
 
-List* list_create();
+List* list_new();
 void list_add(List* list,void* aligned_data);
 void list_remove(List* list,int index,bool delete_data);
 void* list_get(List* list,int index);

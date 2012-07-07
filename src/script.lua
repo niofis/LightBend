@@ -47,7 +47,7 @@ scene.camera.lb.x=-3.2
 scene.camera.lb.y=-2.4
 scene.camera.lb.z=-50.0
 
-local m=prm.Material:new{ color=prm.ColorF:new{a=1,r=0.811764,g=0.709803,b=0.231372},reflextion=0,refraction=0,specular=0}
+local m=prm.Material:new{ color=prm.ColorF:new{a=1,r=0.811764,g=0.709803,b=0.231372},reflextion=0,refraction=0,specular=1}
 tb.insert(scene.materials,m)
 
 local g=prm.Group:new{material=m}
@@ -127,7 +127,7 @@ function addLevel(parent,level)
 end
 
 
-local o=prm.Sphere:new{radius=0.5, center=prm.Vector3:new{x=0,y=0,z=0}, slices=10, resolution=10, group=g}
+		local o=prm.Sphere:new{radius=0.5, center=prm.Vector3:new{x=0,y=0,z=0}, slices=200, resolution=400, group=g}
 --o.bottom=1
 tb.insert(scene.objects,o)
 --addLevel(o,1)

@@ -200,11 +200,11 @@ static int setTriangle(lua_State *L)
 //lua: initScene(num_cameras,num_lights,num_materials,num_groups,num_objects)
 static int initScene(lua_State *L)
 {
-    lua_scene.cameras=list_create();
-    lua_scene.groups=list_create();
-    lua_scene.lights=list_create();
-    lua_scene.materials=list_create();
-    lua_scene.objects=list_create();
+    lua_scene.cameras=list_new();
+    lua_scene.groups=list_new();
+    lua_scene.lights=list_new();
+    lua_scene.materials=list_new();
+    lua_scene.objects=list_new();
 	return 0;
 }
 

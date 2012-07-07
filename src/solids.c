@@ -12,6 +12,19 @@ float* point(float x, float y, float z)
     return pt;
 }
 
+void Translate(float* offset, List* triangles)
+{
+    int i;
+    Triangle* tr;
+    for(i=0;i<triangles->count;++i)
+    {
+        tr=(Triangle*)list_get(triangles,i);
+        V_ADD(tr->v1,tr->v1,offset);
+        V_ADD(tr->v2,tr->v2,offset);
+        V_ADD(tr->v3,tr->v3,offset);
+    }
+}
+
 //Name: rotate
 //Function: rotates a point the specified rads, on the axis especified (0:x, 1:y, 2:z)
 //Conditions: point must be a 3 elements array, rads must be radians and 0<=axis<=2
@@ -86,12 +99,12 @@ List* CreateSphere(float* center, float radious, int num_slices, int slice_resol
     x_rads=PI/num_slices;
     y_rads=2*PI/slice_resolution;
 
-    sphere=list_create();
+    sphere=list_new();
 
-    points=list_create();
+    points=list_new();
 
     //first point, on top
-    list_add(points,list_create());
+    list_add(points,list_new());
     pt=point(0,0,0);
     V_COPY(pt,center);
     pt[1]=pt[1]+radious;
@@ -105,7 +118,7 @@ List* CreateSphere(float* center, float radious, int num_slices, int slice_resol
         rotate(npt,x_rads*slice,0);
 
 
-        list_add(points,list_create());
+        list_add(points,list_new());
 
         for(section=0;section<slice_resolution;++section)
         {
@@ -230,15 +243,19 @@ List* CreateSphere(float* center, float radious, int num_slices, int slice_resol
     return sphere;
 }
 
-void Translate(float* offset, List* triangles)
+
+List* CreateBox(float* center, float* dims, int group_id)
 {
-    int i;
-    Triangle* tr;
-    for(i=0;i<triangles->count;++i)
-    {
-        tr=(Triangle*)list_get(triangles,i);
-        V_ADD(tr->v1,tr->v1,offset);
-        V_ADD(tr->v2,tr->v2,offset);
-        V_ADD(tr->v3,tr->v3,offset);
-    }
+    List* box;
+    List* points;
+    float* pt;
+    
+    box=list_new();
+    points=list_new();
+    
+    
+    
+    
+    Translate(center,box);
+    return box;
 }

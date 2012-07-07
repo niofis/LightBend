@@ -1,6 +1,6 @@
 #include "list.h"
 
-List* list_create()
+List* list_new()
 {
 	List* list;
 	list=(List*)aligned_malloc(ALIGMENT,sizeof(List));
