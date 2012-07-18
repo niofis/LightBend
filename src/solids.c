@@ -243,7 +243,7 @@ List* CreateSphere(float* center, float radious, int num_slices, int slice_resol
     return sphere;
 }
 
-Triangle* create_triangle(float* pt1, float* pt2, float* pt3, int group_id)
+Triangle* box_create_triangle(float* pt1, float* pt2, float* pt3, int group_id)
 {
     Triangle* tr;
     tr=triangle_new();
@@ -254,17 +254,17 @@ Triangle* create_triangle(float* pt1, float* pt2, float* pt3, int group_id)
     return tr;
 }
 
-void box_add_face(List* box, List*points, int pa, int pb, int pc, int pd)
+void box_add_face(List* box, List*points, int pa, int pb, int pc, int pd, int group_id)
 {
-    list_add(sphere,create_triangle(list_get(points,pa),list_get(points,pb),list_get(points,pc),group_id));
-    list_add(sphere,create_triangle(list_get(points,pa),list_get(points,pc),list_get(points,pd),group_id));
+    list_add(box,box_create_triangle(list_get(points,pa),list_get(points,pc),list_get(points,pb),group_id));
+    list_add(box,box_create_triangle(list_get(points,pa),list_get(points,pd),list_get(points,pc),group_id));
 }
 
 List* CreateBox(float* center, float* dims, int group_id)
 {
     List* box;
     List* points;
-    float[3] pt;
+    float pt[3];
     
     box=list_new();
     points=list_new();
@@ -285,17 +285,17 @@ List* CreateBox(float* center, float* dims, int group_id)
     
 
     //front
-    box_add_face(box,points,0,1,2,3);
+    box_add_face(box,points,0,1,2,3,group_id);
     //top
-    box_add_face(box,points,4,5,1,0);
+    box_add_face(box,points,4,5,1,0,group_id);
     //left
-    box_add_face(box,points,4,0,3,7);
+    box_add_face(box,points,4,0,3,7,group_id);
     //right
-    box_add_face(box,points,1,5,6,2);
+    box_add_face(box,points,1,5,6,2,group_id);
     //bottom
-    box_add_face(box,points,3,2,6,7);
+    box_add_face(box,points,3,2,6,7,group_id);
     //back
-    box_add_face(box,points,5,4,7,6);
+    box_add_face(box,points,5,4,7,6,group_id);
 
     list_delete(points,TRUE);
 

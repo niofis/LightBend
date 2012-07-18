@@ -200,21 +200,25 @@ static int setTriangle(lua_State *L)
 static int setBox(lua_State *L)
 {
     int i=lua_tonumber(L,1)-1;
+    float group_id=lua_tonumber(L, 2)-1;
     float center[3];
     float dims[3];
-    float group_id=lua_tonumber(L, 3);
-
     List* box;
 
-    center[0]=lua_tonumber(L,4);
-    center[1]=lua_tonumber(L,5);
-    center[2]=lua_tonumber(L,6);
+    center[0]=lua_tonumber(L,3);
+    center[1]=lua_tonumber(L,4);
+    center[2]=lua_tonumber(L,5);
 
-    sphere=CreateBox(&center,&dims,group_id);
+    dims[0]=lua_tonumber(L,6);
+    dims[1]=lua_tonumber(L,7);
+    dims[2]=lua_tonumber(L,8);
 
-    list_append(lua_scene.objects,sphere);
 
-    list_delete(sphere,FALSE);
+    box=CreateBox(&center,&dims,group_id);
+
+    list_append(lua_scene.objects,box);
+
+    list_delete(box,FALSE);
     return 0;
 }
 
@@ -329,6 +333,7 @@ static const luaL_reg lightbendlib[] = {
 {"setLight",   setLight},
 {"setMaterial",   setMaterial},
 {"setGroup",   setGroup},
+{"setBox", setBox},
 {"loadModel",loadModel},
 {"doneLoading",doneLoading},
 {NULL, NULL}

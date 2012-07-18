@@ -61,13 +61,16 @@ end
 --lua: lb.setTriangle(id_object,id_group,radio,x1,y1,z1,x2,y2,z2,x3,y3,z3)
 for i,v in base.pairs(scene.objects) do
 	if v.issphere then
-		lb.setSphere(i,
-					v.group.idx, v.radius,
-					v.center.x,v.center.y,v.center.z, v.slices, v.resolution)
+	    lb.setSphere(i,
+		v.group.idx, v.radius,
+		v.center.x,v.center.y,v.center.z, v.slices, v.resolution)
 	elseif v.istriangle then
-	
+	    lb.setTriangle(i,v.group.idx,
+		v.p1.x,v.p1.y,v.p1.z,
+		v.p2.x,v.p2.y,v.p2.z,
+		v.p3.x,v.p3.y,v.p3.z)
 	elseif v.isbox then
-	    lb.setBox(i,v.group.idx,v.
+	    lb.setBox(i,v.group.idx,v.center.x,v.center.y,v.center.z,v.width,v.height,v.length)
 
 	end
 end

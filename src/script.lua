@@ -132,7 +132,7 @@ end
 --tb.insert(scene.objects,o)
 --addLevel(o,1)
 
-local b=prm.Box:new{center=prm.Vector3:new{x=0,y=0,z=0},width=1,height=1,length=1,group=g}
+local o=prm.Box:new{center=prm.Vector3:new{x=0,y=0,z=0},width=1,height=1,length=1,group=g}
 tb.insert(scene.objects,o)
 
 

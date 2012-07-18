@@ -342,6 +342,6 @@ function Box:new(o)
     
     o.group=o.group
     
-    o:init()
     
     return o
+end
