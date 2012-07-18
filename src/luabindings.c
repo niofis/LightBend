@@ -197,6 +197,27 @@ static int setTriangle(lua_State *L)
 	return 0;
 }
 
+static int setBox(lua_State *L)
+{
+    int i=lua_tonumber(L,1)-1;
+    float center[3];
+    float dims[3];
+    float group_id=lua_tonumber(L, 3);
+
+    List* box;
+
+    center[0]=lua_tonumber(L,4);
+    center[1]=lua_tonumber(L,5);
+    center[2]=lua_tonumber(L,6);
+
+    sphere=CreateBox(&center,&dims,group_id);
+
+    list_append(lua_scene.objects,sphere);
+
+    list_delete(sphere,FALSE);
+    return 0;
+}
+
 //lua: initScene(num_cameras,num_lights,num_materials,num_groups,num_objects)
 static int initScene(lua_State *L)
 {

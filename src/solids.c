@@ -243,19 +243,62 @@ List* CreateSphere(float* center, float radious, int num_slices, int slice_resol
     return sphere;
 }
 
+Triangle* create_triangle(float* pt1, float* pt2, float* pt3, int group_id)
+{
+    Triangle* tr;
+    tr=triangle_new();
+    V_COPY(tr->v1,pt1);
+    V_COPY(tr->v2,pt2);
+    V_COPY(tr->v3,pt3);
+    tr->group_id=group_id;
+    return tr;
+}
+
+void box_add_face(List* box, List*points, int pa, int pb, int pc, int pd)
+{
+    list_add(sphere,create_triangle(list_get(points,pa),list_get(points,pb),list_get(points,pc),group_id));
+    list_add(sphere,create_triangle(list_get(points,pa),list_get(points,pc),list_get(points,pd),group_id));
+}
 
 List* CreateBox(float* center, float* dims, int group_id)
 {
     List* box;
     List* points;
-    float* pt;
+    float[3] pt;
     
     box=list_new();
     points=list_new();
     
+    pt[0]=dims[0]/2;
+    pt[1]=dims[1]/2;
+    pt[2]=dims[2]/2;
+
+    list_add(points,point(-pt[0], pt[1],-pt[2]));
+    list_add(points,point( pt[0], pt[1],-pt[2]));
+    list_add(points,point( pt[0],-pt[1],-pt[2]));
+    list_add(points,point(-pt[0],-pt[1],-pt[2]));
     
+    list_add(points,point(-pt[0], pt[1], pt[2]));
+    list_add(points,point( pt[0], pt[1], pt[2]));
+    list_add(points,point( pt[0],-pt[1], pt[2]));
+    list_add(points,point(-pt[0],-pt[1], pt[2]));
     
-    
+
+    //front
+    box_add_face(box,points,0,1,2,3);
+    //top
+    box_add_face(box,points,4,5,1,0);
+    //left
+    box_add_face(box,points,4,0,3,7);
+    //right
+    box_add_face(box,points,1,5,6,2);
+    //bottom
+    box_add_face(box,points,3,2,6,7);
+    //back
+    box_add_face(box,points,5,4,7,6);
+
+    list_delete(points,TRUE);
+
     Translate(center,box);
     return box;
 }

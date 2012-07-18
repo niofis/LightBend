@@ -325,3 +325,23 @@ end
 function Triangle:normal(pt)
 	return self.n
 end
+
+
+Box={}
+function Box:new(o)
+    o=o or {}
+    base.setmetatable(o,self)
+    self.__index=self
+    
+    o.isbox=1
+    
+    o.center=o.center or Vector3:new{}
+    o.width=o.width or 1
+    o.height=o.height or 1
+    o.length=o.length or 1
+    
+    o.group=o.group
+    
+    o:init()
+    
+    return o

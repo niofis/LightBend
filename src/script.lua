@@ -127,10 +127,13 @@ function addLevel(parent,level)
 end
 
 
-		local o=prm.Sphere:new{radius=0.5, center=prm.Vector3:new{x=0,y=0,z=0}, slices=200, resolution=400, group=g}
+--local o=prm.Sphere:new{radius=0.5, center=prm.Vector3:new{x=0,y=0,z=0}, slices=10, resolution=10, group=g}
 --o.bottom=1
-tb.insert(scene.objects,o)
+--tb.insert(scene.objects,o)
 --addLevel(o,1)
+
+local b=prm.Box:new{center=prm.Vector3:new{x=0,y=0,z=0},width=1,height=1,length=1,group=g}
+tb.insert(scene.objects,o)
 
 
 local l=prm.Light:new{intensity=100,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=0,y=0,z=50}}

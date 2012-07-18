@@ -65,6 +65,9 @@ for i,v in base.pairs(scene.objects) do
 					v.group.idx, v.radius,
 					v.center.x,v.center.y,v.center.z, v.slices, v.resolution)
 	elseif v.istriangle then
+	
+	elseif v.isbox then
+	    lb.setBox(i,v.group.idx,v.
 
 	end
 end

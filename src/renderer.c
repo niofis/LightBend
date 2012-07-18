@@ -541,12 +541,12 @@ THREAD Render(int param)
 		dx=(x+0.5f)/job.width;
 		dy=(y+0.5f)/job.height;
 
-		ray.origen[0]=(dt[0]*dx  + dl[0]*dy + escena.cameras[0].lefttop[0]);//escena.cameras[0].eye[0];//
-		ray.origen[1]=(dt[1]*dx  + dl[1]*dy + escena.cameras[0].lefttop[1]);//escena.cameras[0].eye[1];//
-		ray.origen[2]=(dt[2]*dx  + dl[2]*dy + escena.cameras[0].lefttop[2]);//escena.cameras[0].eye[2];//
-		ray.direccion[0]= ray.origen[0] - escena.cameras[0].eye[0];//ray.origen[0];
-		ray.direccion[1]= ray.origen[1] - escena.cameras[0].eye[1];//ray.origen[1];
-		ray.direccion[2]= ray.origen[2] - escena.cameras[0].eye[2];//ray.origen[2];
+        ray.origen[0]=escena.cameras[0].eye[0];//(dt[0]*dx  + dl[0]*dy + escena.cameras[0].lefttop[0]);//
+        ray.origen[1]=escena.cameras[0].eye[1];//(dt[1]*dx  + dl[1]*dy + escena.cameras[0].lefttop[1]);//
+        ray.origen[2]=escena.cameras[0].eye[2];//(dt[2]*dx  + dl[2]*dy + escena.cameras[0].lefttop[2]);//
+        ray.direccion[0]= (dt[0]*dx  + dl[0]*dy + escena.cameras[0].lefttop[0]- escena.cameras[0].eye[0]);//ray.origen[0] - escena.cameras[0].eye[0];//ray.origen[0];
+        ray.direccion[1]= (dt[1]*dx  + dl[1]*dy + escena.cameras[0].lefttop[1]- escena.cameras[0].eye[1]);//ray.origen[1] - escena.cameras[0].eye[1];//ray.origen[1];
+        ray.direccion[2]= (dt[2]*dx  + dl[2]*dy + escena.cameras[0].lefttop[2]- escena.cameras[0].eye[2]);//ray.origen[2] - escena.cameras[0].eye[2];//ray.origen[2];
 
 		norm=V_SIZE(ray.direccion);
 		V_DIV(ray.direccion,norm);
