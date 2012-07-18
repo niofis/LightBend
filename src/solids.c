@@ -93,9 +93,6 @@ List* CreateSphere(float* center, float radious, int num_slices, int slice_resol
         return NULL;
 
 
-     //printf("center(%f,%f,%f) radious(%f) slices(%d) res(%d) group(%d)\n",center[0],center[1],center[2],radious,num_slices,slice_resolution,group_id);
-
-
     x_rads=PI/num_slices;
     y_rads=2*PI/slice_resolution;
 
@@ -106,7 +103,6 @@ List* CreateSphere(float* center, float radious, int num_slices, int slice_resol
     //first point, on top
     list_add(points,list_new());
     pt=point(0,0,0);
-    V_COPY(pt,center);
     pt[1]=pt[1]+radious;
     list_add(list_get(points,0),pt);
 
@@ -133,7 +129,6 @@ List* CreateSphere(float* center, float radious, int num_slices, int slice_resol
 
     //last point, botton
     pt=point(0,0,0);
-    V_COPY(pt,center);
     pt[1]=pt[1]-radious;
     list_add(list_get(points,num_slices),pt);
 
@@ -218,14 +213,6 @@ List* CreateSphere(float* center, float radious, int num_slices, int slice_resol
                 tr->group_id=group_id;
                 list_add(sphere,tr);
             }
-
-
-
-            /*
-            printf("triangle v1(%f,%f,%f) v2(%f,%f,%f) v3(%f,%f,%f)",tr->v1[0],tr->v1[1],tr->v1[2]
-                   ,tr->v2[0],tr->v2[1],tr->v2[2]
-                   ,tr->v3[0],tr->v3[1],tr->v3[2]);
-            */
         }
     }
 
