@@ -1,8 +1,8 @@
 #ifndef MODELS_H
 #define MODELS_H
-#include <assimp/assimp.h>
-#include <assimp/aiScene.h>
-#include <assimp/aiPostProcess.h>
+#include <assimp/cimport.h>        // Plain-C interface
+#include <assimp/scene.h>          // Output data structure
+#include <assimp/postprocess.h>    // Post processing flags
 
 
 extern struct aiScene* importmodel(const char* file);

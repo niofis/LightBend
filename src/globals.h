@@ -1,12 +1,19 @@
 #if !defined(GLOBALS)
 #define GLOBALS
 
+#if defined(__APPLE__)
+    #define OSX
+#endif
+
 	#define USE_BVH
 	#include <time.h>	
 	#include <math.h>
-	#include <omp.h>
-
-        #include <stdio.h>
+#ifdef OSX
+	#include </usr/llvm-gcc-4.2/lib/gcc/i686-apple-darwin11/4.2.1/include/omp.h>
+#else
+    #include <omp.h>
+#endif
+    #include <stdio.h>
 
 	#include "memory.h"
 
@@ -30,6 +37,8 @@
 	#else
 			
 		#include <pthread.h>
+		pthread_attr_t gomp_thread_attr;
+
 		#define THREAD void*
         #define CreateThread(fc,pc) {pthread_t  handle; pthread_create(&handle,0,fc,pc); pthread_detach( handle );}
 		#define align(x) __attribute__((aligned(x)))

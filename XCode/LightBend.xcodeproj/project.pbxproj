@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		121A38D115A6731300D15F77 /* primitives.c in Sources */ = {isa = PBXBuildFile; fileRef = 121A38CF15A6731300D15F77 /* primitives.c */; };
+		1220DC8C160D47BE00DAC943 /* libpng15.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1220DC8A160D47BE00DAC943 /* libpng15.a */; };
+		1220DC8D160D47BE00DAC943 /* libpng15.la in Frameworks */ = {isa = PBXBuildFile; fileRef = 1220DC8B160D47BE00DAC943 /* libpng15.la */; };
 		12394985159708FF000DD02A /* solids.c in Sources */ = {isa = PBXBuildFile; fileRef = 12394983159708FF000DD02A /* solids.c */; };
+		128F586115D33D8900B3B3C8 /* libassimp.3.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 128F586015D33D8900B3B3C8 /* libassimp.3.0.0.dylib */; };
 		12BC319314F982A900F4D3F9 /* libSDL_gfx.13.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319214F982A900F4D3F9 /* libSDL_gfx.13.dylib */; };
 		12BC319614F9836300F4D3F9 /* liblua.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319514F9836300F4D3F9 /* liblua.dylib */; };
 		12BC319814F9885B00F4D3F9 /* libSDL-1.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319714F9885B00F4D3F9 /* libSDL-1.2.0.dylib */; };
@@ -26,10 +29,6 @@
 		12F3C50415774A9F001E004D /* image.c in Sources */ = {isa = PBXBuildFile; fileRef = 12F3C4FE15774A9F001E004D /* image.c */; };
 		12F3C50515774A9F001E004D /* list.c in Sources */ = {isa = PBXBuildFile; fileRef = 12F3C50015774A9F001E004D /* list.c */; };
 		12F3C50615774A9F001E004D /* models.c in Sources */ = {isa = PBXBuildFile; fileRef = 12F3C50215774A9F001E004D /* models.c */; };
-		12F3C50915774B03001E004D /* libpng14.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F3C50715774B03001E004D /* libpng14.a */; };
-		12F3C50A15774B03001E004D /* libpng14.la in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F3C50815774B03001E004D /* libpng14.la */; };
-		12F3C510157765F7001E004D /* libassimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F3C50F157765F7001E004D /* libassimp.a */; };
-		12F3C51215776624001E004D /* libgomp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F3C51115776624001E004D /* libgomp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,9 +47,11 @@
 		1203B7BF14D911FD00319C07 /* LightBend */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LightBend; sourceTree = BUILT_PRODUCTS_DIR; };
 		121A38CF15A6731300D15F77 /* primitives.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = primitives.c; sourceTree = "<group>"; };
 		121A38D015A6731300D15F77 /* primitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitives.h; sourceTree = "<group>"; };
-		122D5D5614F980AB009DC738 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = Library/Frameworks/SDL.framework; sourceTree = SDKROOT; };
+		1220DC8A160D47BE00DAC943 /* libpng15.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng15.a; path = ../../../../../../opt/local/lib/libpng15.a; sourceTree = "<group>"; };
+		1220DC8B160D47BE00DAC943 /* libpng15.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libpng15.la; path = ../../../../../../opt/local/lib/libpng15.la; sourceTree = "<group>"; };
 		12394983159708FF000DD02A /* solids.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = solids.c; sourceTree = "<group>"; };
 		12394984159708FF000DD02A /* solids.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = solids.h; sourceTree = "<group>"; };
+		128F586015D33D8900B3B3C8 /* libassimp.3.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.0.0.dylib; path = ../../../../../../opt/local/lib/libassimp.3.0.0.dylib; sourceTree = "<group>"; };
 		12BC319214F982A900F4D3F9 /* libSDL_gfx.13.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSDL_gfx.13.dylib; path = ../../../../../../opt/local/lib/libSDL_gfx.13.dylib; sourceTree = "<group>"; };
 		12BC319514F9836300F4D3F9 /* liblua.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblua.dylib; path = ../../../../../../opt/local/lib/liblua.dylib; sourceTree = "<group>"; };
 		12BC319714F9885B00F4D3F9 /* libSDL-1.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL-1.2.0.dylib"; path = "../../../../../../opt/local/lib/libSDL-1.2.0.dylib"; sourceTree = "<group>"; };
@@ -81,10 +82,6 @@
 		12F3C50115774A9F001E004D /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
 		12F3C50215774A9F001E004D /* models.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = models.c; sourceTree = "<group>"; };
 		12F3C50315774A9F001E004D /* models.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = models.h; sourceTree = "<group>"; };
-		12F3C50715774B03001E004D /* libpng14.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng14.a; path = ../../../../../../opt/local/lib/libpng14.a; sourceTree = "<group>"; };
-		12F3C50815774B03001E004D /* libpng14.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libpng14.la; path = ../../../../../../opt/local/lib/libpng14.la; sourceTree = "<group>"; };
-		12F3C50F157765F7001E004D /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = "../../../../Downloads/assimp--2.0.863-sdk/bin/assimp_Release_MacOSX/libassimp.a"; sourceTree = "<group>"; };
-		12F3C51115776624001E004D /* libgomp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgomp.a; path = ../../../../../../opt/local/lib/gcc47/libgomp.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,10 +89,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12F3C51215776624001E004D /* libgomp.a in Frameworks */,
-				12F3C510157765F7001E004D /* libassimp.a in Frameworks */,
-				12F3C50915774B03001E004D /* libpng14.a in Frameworks */,
-				12F3C50A15774B03001E004D /* libpng14.la in Frameworks */,
+				1220DC8C160D47BE00DAC943 /* libpng15.a in Frameworks */,
+				1220DC8D160D47BE00DAC943 /* libpng15.la in Frameworks */,
+				128F586115D33D8900B3B3C8 /* libassimp.3.0.0.dylib in Frameworks */,
 				12BC31A014F9891700F4D3F9 /* OpenGL.framework in Frameworks */,
 				12BC319E14F9890B00F4D3F9 /* Cocoa.framework in Frameworks */,
 				12BC319C14F988BC00F4D3F9 /* libSDLmain.a in Frameworks */,
@@ -111,10 +107,9 @@
 		1203B7B414D911FC00319C07 = {
 			isa = PBXGroup;
 			children = (
-				12F3C51115776624001E004D /* libgomp.a */,
-				12F3C50F157765F7001E004D /* libassimp.a */,
-				12F3C50715774B03001E004D /* libpng14.a */,
-				12F3C50815774B03001E004D /* libpng14.la */,
+				1220DC8A160D47BE00DAC943 /* libpng15.a */,
+				1220DC8B160D47BE00DAC943 /* libpng15.la */,
+				128F586015D33D8900B3B3C8 /* libassimp.3.0.0.dylib */,
 				12BC319F14F9891700F4D3F9 /* OpenGL.framework */,
 				12BC319D14F9890B00F4D3F9 /* Cocoa.framework */,
 				12BC319B14F988BC00F4D3F9 /* libSDLmain.a */,
@@ -122,7 +117,6 @@
 				12BC319714F9885B00F4D3F9 /* libSDL-1.2.0.dylib */,
 				12BC319514F9836300F4D3F9 /* liblua.dylib */,
 				12BC319214F982A900F4D3F9 /* libSDL_gfx.13.dylib */,
-				122D5D5614F980AB009DC738 /* SDL.framework */,
 				1203B7D214D912FC00319C07 /* src */,
 				1203B7C014D911FD00319C07 /* Products */,
 			);
@@ -197,7 +191,7 @@
 		1203B7B614D911FC00319C07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 			};
 			buildConfigurationList = 1203B7B914D911FC00319C07 /* Build configuration list for PBXProject "LightBend" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -260,9 +254,13 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /opt/local/include;
+				LIBRARY_SEARCH_PATHS = /opt/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-fopenmp";
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = /opt/local/include;
 			};
 			name = Debug;
 		};
@@ -280,8 +278,12 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /opt/local/include;
+				LIBRARY_SEARCH_PATHS = /opt/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "-fopenmp";
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = /opt/local/include;
 			};
 			name = Release;
 		};
@@ -290,8 +292,11 @@
 			buildSettings = {
 				ENABLE_OPENMP_SUPPORT = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SRCROOT)/../inc/\"";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					/opt/local/include,
+					"$(SRCROOT)/../inc",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Programacion/Lua/jit/src\"",
@@ -334,8 +339,11 @@
 				ENABLE_OPENMP_SUPPORT = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SRCROOT)/../inc/\"";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					/opt/local/include,
+					"$(SRCROOT)/../inc",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Programacion/Lua/jit/src\"",

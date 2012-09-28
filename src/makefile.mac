@@ -1,0 +1,36 @@
+.SUFFIXES: .o .c
+.c.o:
+	$(CC) -c $(CFLAGS) $<
+
+
+# Macros
+#sdl-config --libs --cflags
+SDL=-I/opt/local/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE -L/opt/local/lib -lSDLmain -lSDL -lSDL_gfx -Wl,-framework,Cocoa
+CC = icc
+CFLAGS = -g -Wall -O3 $(SDL) -lassimp -pthread --openmp -ffunction-sections -DLINUX -llua -lm -lpng -I /opt/local/include/ -L /opt/local/lib
+SRC = demos.c demos.h main.c renderer.c memory.c luabindings.c MS3DFile.c bvh.c image.c image.h bvh.h MS3DFile.h luabindings.h memory.h renderer.h utils.c utils.h globals.h list.c list.h solids.c solids.h models.c models.h primitives.c primitives.h
+OBJ = main.o demos.o renderer.o utils.o memory.o luabindings.o MS3DFile.o bvh.o image.o list.o solids.o models.o primitives.o
+
+
+# Reglas explicitas
+
+all: $(OBJ)
+	$(CC) $(CFLAGS) -o ../bin/ligthbend.run $(OBJ)
+
+clean:
+	$(RM) $(OBJ) crtu
+
+# Reglas implicitas
+primitives.o: primitives.c primitives.h globals.h list.h
+models.o: models.c models.h 
+solids.o: solids.c solids.c
+list.o: list.c globals.h memory.h
+bvh.o: bvh.c bvh.h globals.h 
+MS3DFile.o: MS3DFile.c MS3DFile.h
+luabindings.o: luabindings.c luabindings.h MS3DFile.h bvh.h
+memory.o: memory.c memory.h
+renderer.o: renderer.c renderer.h globals.h memory.h luabindings.h list.h
+demos.o: demos.c demos.h globals.h MS3DFile.h bvh.h
+utils.o: utils.c utils.h globals.h 
+image.o: image.c image.h
+main.o: main.c renderer.h demos.h utils.h globals.h memory.h luabindings.h MS3DFile.h bvh.h image.h

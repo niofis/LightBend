@@ -239,7 +239,6 @@ static int loadModel(lua_State *L)
     const char *file=lua_tostring(L,1);
     int i;
     int j;
-    int k;
     struct aiScene* model=importmodel(file);
     int group_offset=lua_scene.groups->count;
     int material_offset=lua_scene.materials->count;
@@ -251,6 +250,7 @@ static int loadModel(lua_State *L)
     {
         //printf("Num Meshes: %d\n",model->mNumMeshes);
 		//printf("Num Materials: %d\n",model->mNumMaterials);
+        printf("Loading materials: %d\n",model->mNumMaterials);
 		for(i=0;i<model->mNumMaterials;++i)
 		{
 			Material *m=(Material *) aligned_malloc(ALIGMENT,sizeof(Material));
@@ -276,14 +276,19 @@ static int loadModel(lua_State *L)
 			m->reflection=rfl;
 			m->specular=sp;
 
-			printf("refraction:%f reflection:%f color.a:%f\n",ref,rfl,color.a);
+			//printf("refraction:%f reflection:%f color.a:%f\n",ref,rfl,color.a);
 
 			list_add(lua_scene.materials,m);
 			//printf("Material %d (%f,%f,%f,%f)\n",m->id,m->color[0],m->color[1],m->color[2],m->color[3]);
 		}
+        printf("Loading meshes: %d (%d triangles)\n",model->mNumMeshes,0);
         for(i=0;i<model->mNumMeshes;++i)
         {
             struct aiMesh* m=model->mMeshes[i];
+            if(m->mPrimitiveTypes!=aiPrimitiveType_TRIANGLE)
+            {
+                continue;
+            }
             Group *g=(Group *) aligned_malloc(ALIGMENT,sizeof(Group));
             g->id=i+group_offset;
             g->material_id=m->mMaterialIndex+material_offset;
@@ -302,6 +307,9 @@ static int loadModel(lua_State *L)
                 V_INIT(obj->v3,m->mVertices[f.mIndices[2]].x,m->mVertices[f.mIndices[2]].y,m->mVertices[f.mIndices[2]].z);
                 //printf("Face %d Vertices: %d\n",j,f.mNumIndices);
 				list_add(lua_scene.objects,obj);
+                //printf("(%f,%f,%f)\n",obj->v1[0],obj->v1[1],obj->v1[2]);
+                //printf("(%f,%f,%f)\n",obj->v2[0],obj->v2[1],obj->v2[2]);
+                //printf("(%f,%f,%f)\n\n",obj->v3[0],obj->v3[1],obj->v3[2]);
 			}
         }
 		for(i=0;i<model->mNumLights;++i)
@@ -317,9 +325,6 @@ static int loadModel(lua_State *L)
 			list_add(lua_scene.lights,li);
 		}
     freemodel(model);
-
-
-
     }
 
     return 0;

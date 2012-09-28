@@ -14,6 +14,7 @@
 #include "luabindings.h"
 
 
+
 long long inicio;
 long long fin;
 
@@ -107,8 +108,8 @@ void process_args(int argc, char* args[])
 {
 	int i=0;
 
-	job.width=640;
-	job.height=480;
+	job.width=1280;
+	job.height=720;
 	job.sector_y=0;
 	job.sector_x=0;
 	job.sector_width=job.width;
@@ -172,7 +173,6 @@ int interactive_mode()
 	int done = 0;
     double start;
     double finish;
-	int mouse_y;
 	const SDL_VideoInfo *info;
 	Uint8 * keys;
 	Camera* cam;
@@ -397,6 +397,7 @@ int interactive_mode()
 
 	CleanBVH();
 	CleanRenderer();
+    return 0;
 }
 
 void offline_mode()

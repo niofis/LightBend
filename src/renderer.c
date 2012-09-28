@@ -24,12 +24,9 @@ int ShadowRay(Ray *ray,float max_dist)
 	int i,si;
 	int k,u,v;
     Triangle* objeto;
-	float edge[3]={0,0,0};
-	float normal[3]={0,0,0};
 	float temp[3]={0,0,0};
-	float edgeu,edgev,edgew;
-	float t0,t,ta,B,B2,C,I;
 	BoundingVolume *bv;
+    float B,B2,C,I,t;
 
 	//Recorrer el v_traverse, he ir checando con cada BoundingBox si tiene un hit
 	//Si no hace hit, saltar al nodo indicado en el skip_ptrs
@@ -59,76 +56,45 @@ int ShadowRay(Ray *ray,float max_dist)
 		for(i=0;i<bv->cant_objs;i++)
 		{
             objeto=&escena.objects[bv->objs[i]];
+            
+            //http://ompf.org/forum/viewtopic.php?f=4&t=1383
 
+            // calc edges and normal
+            //b = C-A; c = B-A;
+            //N = Cross(c,b);
+            //V_CROSS(normal,objeto->v3,objeto->v2);
 
-            /*
-            if(objeto->type==OBJ_SPHERE)
-			{
-				//Vector *c=sphere->center;
-				V_SUB(edge,ray->origen,objeto->v1);//Vector *f= (*e)-c;
-				B=-2.0f*V_DOT(edge,ray->direccion);//B=((*f) * d)*2;
-				B2=B*B;
-				C=(V_DOT(edge,edge)) - (objeto->radious*objeto->radious);// C=((*f) * f) - r2;
-				I=B2 - 4.0f*C;
+            // distance test
+            V_SUB(temp,ray->origen,objeto->v1);
+            B=V_DOT(temp,objeto->normal);
+            B2=V_DOT(ray->direccion,objeto->normal);
 
-				if(I<0)					//No hay interseccin
-					continue;
-
-				t0=sqrtf(I);		//Clculos para obtener el(los) punto(s) de interseccin
-
-				t=(B - t0)/2.0f;
-
-				if(t<0.01)
-					t=(B + t0)/2.0f;	
-
-				if(t<0.01)
-					continue;
-				if(t<=max_dist)
-					return 1;
-			}
-            else if(objeto->type==OBJ_TRIANGLE)
-			{
-            */
-				//http://ompf.org/forum/viewtopic.php?f=4&t=1383
-
-				// calc edges and normal
-				//b = C-A; c = B-A; 
-				//N = Cross(c,b);
-				//V_CROSS(normal,objeto->v3,objeto->v2);
-
-				// distance test
-				V_SUB(temp,ray->origen,objeto->v1);
-				B=V_DOT(temp,objeto->normal);
-				B2=V_DOT(ray->direccion,objeto->normal);
-
-				//t = - Dot((O-A),N) / Dot(D,N);
-				t=-B/B2;
-				if (t < EPSILON)
-					continue;
-				// determine projection dimensiondimensions
-
-				if (fabs(objeto->normal[0]) > fabs(objeto->normal[1]))
-				if (fabs(objeto->normal[0]) > fabs(objeto->normal[2])) k = 0; /* X */ else k=2; /* Z */
-				else
-				if (fabs(objeto->normal[1]) > fabs(objeto->normal[2])) k = 1; /* Y */ else k=2; /* Z */
-				u = (k+1) % 3; v = (k+2) % 3;
-				// calc hitpoint
-				temp[u] = ray->origen[u] + t * ray->direccion[u]-objeto->v1[u];
-				temp[v] = ray->origen[v] + t * ray->direccion[v]-objeto->v1[v];
-				
-				I=(objeto->v3[u] * objeto->v2[v] - objeto->v3[v] * objeto->v2[u]);
-
-				B = (objeto->v3[u] * temp[v] - objeto->v3[v] * temp[u]) / I;
-				if (B < 0)
-					continue;
-				C = (objeto->v2[v] * temp[u] - objeto->v2[u] * temp[v]) / I;
-				if (C < 0)
-					continue;
-				if (B+C > 1)
-					continue;
-				if(t<=max_dist)
-					return 1;
-            //}
+            //t = - Dot((O-A),N) / Dot(D,N);
+            t=-B/B2;
+            if (t < EPSILON)
+                continue;
+            // determine projection dimensiondimensions
+            if (fabs(objeto->normal[0]) > fabs(objeto->normal[1]))
+            if (fabs(objeto->normal[0]) > fabs(objeto->normal[2])) k = 0; /* X */ else k=2; /* Z */
+            else
+            if (fabs(objeto->normal[1]) > fabs(objeto->normal[2])) k = 1; /* Y */ else k=2; /* Z */
+            u = (k+1) % 3; v = (k+2) % 3;
+            // calc hitpoint
+            temp[u] = ray->origen[u] + t * ray->direccion[u]-objeto->v1[u];
+            temp[v] = ray->origen[v] + t * ray->direccion[v]-objeto->v1[v];
+            
+            I=(objeto->v3[u] * objeto->v2[v] - objeto->v3[v] * objeto->v2[u]);
+            
+            B = (objeto->v3[u] * temp[v] - objeto->v3[v] * temp[u]) / I;
+            if (B < 0)
+                continue;
+            C = (objeto->v2[v] * temp[u] - objeto->v2[u] * temp[v]) / I;
+            if (C < 0)
+                continue;
+            if (B+C > 1)
+                continue;
+			if(t<=max_dist)
+				return 1;
 		}
 
 	}
@@ -599,8 +565,8 @@ THREAD Render(int param)
 		//InterlockedIncrement(&done_threads);
 		done_threads++;
 	#else
-        done_threads++;
-		//__sync_fetch_and_add(&done_threads,1);
+        //done_threads++;
+		__sync_fetch_and_add(&done_threads,1);
 	#endif
 
 	return 0;
