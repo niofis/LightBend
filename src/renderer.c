@@ -462,32 +462,18 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 THREAD Render(int param)
 {
 
-	int i,x,y,z;
-	int si;
-	int total_pix,cant,ini,end;
+	int i,x,y;
 	int step;
-	float h,w;
 	int rgb;
 	float dx,dy;
 	float norm;
-	float t;
 
 	Ray ray={{0,0,0},{0,0,0}};
-
-	float dir_or[3];
-	float punto[3];
-	float normal[3];
 
 
 	float dt[3];
 	float dl[3];
 
-	float vr[3];
-
-	float color[4];
-
-    Triangle* objeto;
-	Material* material;
 
 	TraceResult result;
 
@@ -562,8 +548,8 @@ THREAD Render(int param)
 		
 	}
 	#if defined(WIN32)
-		//InterlockedIncrement(&done_threads);
-		done_threads++;
+		InterlockedIncrement(&done_threads);
+		//done_threads++;
 	#else
         //done_threads++;
 		__sync_fetch_and_add(&done_threads,1);
@@ -576,7 +562,6 @@ void RenderFrame(int* pixels, int threads)
 {
 	int x=0;
 	int param;
-	int sh;
 	buffer=pixels;
 	done_threads=0;
 
@@ -668,42 +653,6 @@ void convertscene(Scene *scene, Escena *nscene)
     printf("Objects: %d\n",scene->objects->count);
 
 	CleanRenderer();
-        /*
-	escena.num_cameras=1;
-	escena.cameras=(Camera*)aligned_malloc(ALIGMENT,sizeof(Camera)*escena.num_cameras);
-	i=0;
-	escena.cameras[0].eye[0]=0.0f;
-	escena.cameras[0].eye[1]=0.0f;
-	escena.cameras[0].eye[2]=-10.0f;
-
-	escena.cameras[0].lefttop[0]=-3.2f;
-	escena.cameras[0].lefttop[1]=2.4f;
-	escena.cameras[0].lefttop[2]=-5.0f;
-
-	escena.cameras[0].righttop[0]=3.2f;
-	escena.cameras[0].righttop[1]=2.4f;
-	escena.cameras[0].righttop[2]=-5.0f;
-
-	escena.cameras[0].leftbottom[0]=-3.2f;
-	escena.cameras[0].leftbottom[1]=-2.4f;
-	escena.cameras[0].leftbottom[2]=-5.0f;
-
-
-    //Crear Light
-
-	escena.num_lights=1;
-	escena.lights=(Light*)aligned_malloc(ALIGMENT,sizeof(Light)*escena.num_lights);
-	i=0;
-	escena.lights[i].color[0]=1.0f;
-	escena.lights[i].color[1]=1.0f;
-	escena.lights[i].color[2]=1.0f;
-	escena.lights[i].color[3]=1.0f;
-	escena.lights[i].intensity=1000.0f;
-	escena.lights[i].id=i;
-	escena.lights[i].position[0]=0.0f;
-	escena.lights[i].position[1]=2.0f;
-	escena.lights[i].position[2]=-5.0f;
-    */
 
     escena.num_cameras=scene->lights->count;
     escena.cameras=(Camera*)aligned_malloc(ALIGMENT,sizeof(Camera)*escena.num_cameras);

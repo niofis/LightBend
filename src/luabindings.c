@@ -108,7 +108,7 @@ static int setLight(lua_State *L)
 //lua: setCamera(id_camera,eye_x,eye_y,eye_z,lt_x,lt_y,lt_z,rt_x,rt_y,rt_z,lb_x,lb_y,lb_z)
 static int setCamera(lua_State *L)
 {
-	int i=lua_tonumber(L, 1)-1;
+	//int i=lua_tonumber(L, 1)-1;
     Camera *cam=(Camera *)aligned_malloc(ALIGMENT,sizeof(Camera));
     cam->eye[0]=lua_tonumber(L, 2);
     cam->eye[1]=lua_tonumber(L, 3);
@@ -182,7 +182,7 @@ static int setSphere(lua_State *L)
 //lua: setTriangle(id_object,id_group,radious,x1,y1,z1,x2,y2,z2,x3,y3,z3)
 static int setTriangle(lua_State *L)
 {
-	int i=lua_tonumber(L, 1)-1;
+	//int i=lua_tonumber(L, 1)-1;
     Triangle *obj=(Triangle *)aligned_malloc(ALIGMENT,sizeof(Triangle));
 
     obj->group_id=lua_tonumber(L, 2)-1;
@@ -199,7 +199,7 @@ static int setTriangle(lua_State *L)
 
 static int setBox(lua_State *L)
 {
-    int i=lua_tonumber(L,1)-1;
+    //int i=lua_tonumber(L,1)-1;
     float group_id=lua_tonumber(L, 2)-1;
     float center[3];
     float dims[3];
@@ -281,7 +281,7 @@ static int loadModel(lua_State *L)
 			list_add(lua_scene.materials,m);
 			//printf("Material %d (%f,%f,%f,%f)\n",m->id,m->color[0],m->color[1],m->color[2],m->color[3]);
 		}
-        printf("Loading meshes: %d (%d triangles)\n",model->mNumMeshes,0);
+        printf("Loading meshes: %d\n",model->mNumMeshes);
         for(i=0;i<model->mNumMeshes;++i)
         {
             struct aiMesh* m=model->mMeshes[i];

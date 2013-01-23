@@ -5,7 +5,6 @@
 
 int save_image(char* file_name,int width, int height, unsigned char* image)
 {
-		int bpp=32;
 		int Bpp=4;
 		int r=0;
 		png_structp png_ptr;
@@ -52,7 +51,7 @@ int save_image(char* file_name,int width, int height, unsigned char* image)
 
         //png_write_image(png_ptr, row_pointers);
 		for(r=0;r<height;r++)
-		png_write_row(png_ptr,(char*)(&image[r*width*Bpp]));
+		png_write_row(png_ptr,(const unsigned char*)(&image[r*width*Bpp]));
 
 
         /* end write */

@@ -84,6 +84,8 @@ typedef struct
 	float direccion[3];
 } Ray;
 
+
+
 align(ALIGMENT)
 typedef struct
 {
