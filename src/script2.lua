@@ -49,8 +49,8 @@ tb.insert(scene.groups,bg)
 local l=prm.Light:new{intensity=1000,color=prm.ColorF:new{a=1,r=1,g=1,b=1},position=prm.Vector3:new{x=0,y=0,z=-50}}
 tb.insert(scene.lights,l)
 
-local slices=200
-local resolution=200
+local slices=20
+local resolution=20
 
 local s= prm.Sphere:new{radius=1.0, center=prm.Vector3:new{x=-1.5}, group=rg, slices=slices, resolution=resolution}
 tb.insert(scene.objects,s)

@@ -9,7 +9,7 @@
 	#include <time.h>	
 	#include <math.h>
 #ifdef OSX
-	#include </usr/llvm-gcc-4.2/lib/gcc/i686-apple-darwin11/4.2.1/include/omp.h>
+	#include </opt/local/lib/gcc47/gcc/x86_64-apple-darwin12/4.7.3/include/omp.h>
 #else
     #include <omp.h>
 #endif

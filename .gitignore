@@ -160,3 +160,7 @@ Thumbs.db
 ############
 VS2010/Debug*
 VS2010/Release*
+
+*.xcuserstate
+
+*.xcuserstate

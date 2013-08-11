@@ -11,10 +11,10 @@
 		1220DC8C160D47BE00DAC943 /* libpng15.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1220DC8A160D47BE00DAC943 /* libpng15.a */; };
 		1220DC8D160D47BE00DAC943 /* libpng15.la in Frameworks */ = {isa = PBXBuildFile; fileRef = 1220DC8B160D47BE00DAC943 /* libpng15.la */; };
 		12394985159708FF000DD02A /* solids.c in Sources */ = {isa = PBXBuildFile; fileRef = 12394983159708FF000DD02A /* solids.c */; };
+		125D11EE17B780E100A94F99 /* liblua.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319514F9836300F4D3F9 /* liblua.dylib */; };
 		128EF88F175EB6E6007DF172 /* libSDL_gfx.14.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 128EF88D175EB6E6007DF172 /* libSDL_gfx.14.dylib */; };
 		128EF890175EB6E6007DF172 /* libSDL-1.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 128EF88E175EB6E6007DF172 /* libSDL-1.2.0.dylib */; };
 		128F586115D33D8900B3B3C8 /* libassimp.3.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 128F586015D33D8900B3B3C8 /* libassimp.3.0.0.dylib */; };
-		12BC319614F9836300F4D3F9 /* liblua.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319514F9836300F4D3F9 /* liblua.dylib */; };
 		12BC319C14F988BC00F4D3F9 /* libSDLmain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319B14F988BC00F4D3F9 /* libSDLmain.a */; };
 		12BC319E14F9890B00F4D3F9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319D14F9890B00F4D3F9 /* Cocoa.framework */; };
 		12BC31A014F9891700F4D3F9 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319F14F9891700F4D3F9 /* OpenGL.framework */; };
@@ -89,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				125D11EE17B780E100A94F99 /* liblua.dylib in Frameworks */,
 				128EF88F175EB6E6007DF172 /* libSDL_gfx.14.dylib in Frameworks */,
 				128EF890175EB6E6007DF172 /* libSDL-1.2.0.dylib in Frameworks */,
 				1220DC8C160D47BE00DAC943 /* libpng15.a in Frameworks */,
@@ -97,7 +98,6 @@
 				12BC31A014F9891700F4D3F9 /* OpenGL.framework in Frameworks */,
 				12BC319E14F9890B00F4D3F9 /* Cocoa.framework in Frameworks */,
 				12BC319C14F988BC00F4D3F9 /* libSDLmain.a in Frameworks */,
-				12BC319614F9836300F4D3F9 /* liblua.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,9 +256,13 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /opt/local/include;
 				LIBRARY_SEARCH_PATHS = /opt/local/lib;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-fopenmp";
+				OTHER_CFLAGS = "-llua";
+				OTHER_LDFLAGS = (
+					"-fopenmp",
+					"-llua",
+				);
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = /opt/local/include;
 			};
@@ -280,8 +284,13 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /opt/local/include;
 				LIBRARY_SEARCH_PATHS = /opt/local/lib;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				OTHER_LDFLAGS = "-fopenmp";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-llua";
+				OTHER_LDFLAGS = (
+					"-fopenmp",
+					"-llua",
+				);
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = /opt/local/include;
 			};
@@ -297,6 +306,7 @@
 					/opt/local/include,
 					"$(SRCROOT)/../inc",
 				);
+				LD_GENERATE_MAP_FILE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Programacion/Lua/jit/src\"",
@@ -328,6 +338,10 @@
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-fopenmp",
+					"-llua",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../inc/\" \"opt/local/lib/gcc47/gcc/x86_64-apple-darwin11/4.7.0/include/\"";
 			};
@@ -344,6 +358,7 @@
 					/opt/local/include,
 					"$(SRCROOT)/../inc",
 				);
+				LD_GENERATE_MAP_FILE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Programacion/Lua/jit/src\"",
@@ -375,6 +390,10 @@
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-fopenmp",
+					"-llua",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../inc/\" \"opt/local/lib/gcc47/gcc/x86_64-apple-darwin11/4.7.0/include/\"";
 			};

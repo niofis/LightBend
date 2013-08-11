@@ -9,9 +9,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "lua.h"
-#include "lauxlib.h"
-#include "lualib.h"
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
 //#include "luajit.h"
 #ifdef __cplusplus
 }
@@ -330,7 +330,7 @@ static int loadModel(lua_State *L)
     return 0;
 }
 
-static const luaL_reg lightbendlib[] = {
+static const luaL_Reg lightbendlib[] = {
 {"initScene",   initScene},
 {"setTriangle",   setTriangle},
 {"setSphere",   setSphere},
@@ -344,15 +344,20 @@ static const luaL_reg lightbendlib[] = {
 {NULL, NULL}
 };
 
+int luaopen_tlib ( lua_State * L )
+{
+    luaL_newlib(L, lightbendlib);
+    return 1;
+}
 
 void runluascript(char* script_file)
 {
-	lua_State *L = lua_open();
+	lua_State *L = luaL_newstate();
 
     // load the libs
     luaL_openlibs(L);
-    luaL_register(L, "lightbend", lightbendlib);
-
+    luaL_requiref(L, "lightbend", luaopen_tlib, 1);
+    
     //run a Lua scrip here
     if(luaL_dofile(L,script_file))
 	{
