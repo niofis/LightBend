@@ -11,10 +11,10 @@
 		1220DC8C160D47BE00DAC943 /* libpng15.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1220DC8A160D47BE00DAC943 /* libpng15.a */; };
 		1220DC8D160D47BE00DAC943 /* libpng15.la in Frameworks */ = {isa = PBXBuildFile; fileRef = 1220DC8B160D47BE00DAC943 /* libpng15.la */; };
 		12394985159708FF000DD02A /* solids.c in Sources */ = {isa = PBXBuildFile; fileRef = 12394983159708FF000DD02A /* solids.c */; };
+		128EF88F175EB6E6007DF172 /* libSDL_gfx.14.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 128EF88D175EB6E6007DF172 /* libSDL_gfx.14.dylib */; };
+		128EF890175EB6E6007DF172 /* libSDL-1.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 128EF88E175EB6E6007DF172 /* libSDL-1.2.0.dylib */; };
 		128F586115D33D8900B3B3C8 /* libassimp.3.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 128F586015D33D8900B3B3C8 /* libassimp.3.0.0.dylib */; };
-		12BC319314F982A900F4D3F9 /* libSDL_gfx.13.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319214F982A900F4D3F9 /* libSDL_gfx.13.dylib */; };
 		12BC319614F9836300F4D3F9 /* liblua.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319514F9836300F4D3F9 /* liblua.dylib */; };
-		12BC319814F9885B00F4D3F9 /* libSDL-1.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319714F9885B00F4D3F9 /* libSDL-1.2.0.dylib */; };
 		12BC319C14F988BC00F4D3F9 /* libSDLmain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319B14F988BC00F4D3F9 /* libSDLmain.a */; };
 		12BC319E14F9890B00F4D3F9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319D14F9890B00F4D3F9 /* Cocoa.framework */; };
 		12BC31A014F9891700F4D3F9 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BC319F14F9891700F4D3F9 /* OpenGL.framework */; };
@@ -51,10 +51,10 @@
 		1220DC8B160D47BE00DAC943 /* libpng15.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libpng15.la; path = ../../../../../../opt/local/lib/libpng15.la; sourceTree = "<group>"; };
 		12394983159708FF000DD02A /* solids.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = solids.c; sourceTree = "<group>"; };
 		12394984159708FF000DD02A /* solids.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = solids.h; sourceTree = "<group>"; };
+		128EF88D175EB6E6007DF172 /* libSDL_gfx.14.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSDL_gfx.14.dylib; path = ../../../../../../opt/local/lib/libSDL_gfx.14.dylib; sourceTree = "<group>"; };
+		128EF88E175EB6E6007DF172 /* libSDL-1.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL-1.2.0.dylib"; path = "../../../../../../opt/local/lib/libSDL-1.2.0.dylib"; sourceTree = "<group>"; };
 		128F586015D33D8900B3B3C8 /* libassimp.3.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.0.0.dylib; path = ../../../../../../opt/local/lib/libassimp.3.0.0.dylib; sourceTree = "<group>"; };
-		12BC319214F982A900F4D3F9 /* libSDL_gfx.13.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSDL_gfx.13.dylib; path = ../../../../../../opt/local/lib/libSDL_gfx.13.dylib; sourceTree = "<group>"; };
 		12BC319514F9836300F4D3F9 /* liblua.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblua.dylib; path = ../../../../../../opt/local/lib/liblua.dylib; sourceTree = "<group>"; };
-		12BC319714F9885B00F4D3F9 /* libSDL-1.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL-1.2.0.dylib"; path = "../../../../../../opt/local/lib/libSDL-1.2.0.dylib"; sourceTree = "<group>"; };
 		12BC319914F988A600F4D3F9 /* libSDLmain.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libSDLmain.la; path = ../../../../../../opt/local/lib/libSDLmain.la; sourceTree = "<group>"; };
 		12BC319B14F988BC00F4D3F9 /* libSDLmain.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDLmain.a; path = ../../../../../../opt/local/lib/libSDLmain.a; sourceTree = "<group>"; };
 		12BC319D14F9890B00F4D3F9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -89,15 +89,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				128EF88F175EB6E6007DF172 /* libSDL_gfx.14.dylib in Frameworks */,
+				128EF890175EB6E6007DF172 /* libSDL-1.2.0.dylib in Frameworks */,
 				1220DC8C160D47BE00DAC943 /* libpng15.a in Frameworks */,
 				1220DC8D160D47BE00DAC943 /* libpng15.la in Frameworks */,
 				128F586115D33D8900B3B3C8 /* libassimp.3.0.0.dylib in Frameworks */,
 				12BC31A014F9891700F4D3F9 /* OpenGL.framework in Frameworks */,
 				12BC319E14F9890B00F4D3F9 /* Cocoa.framework in Frameworks */,
 				12BC319C14F988BC00F4D3F9 /* libSDLmain.a in Frameworks */,
-				12BC319814F9885B00F4D3F9 /* libSDL-1.2.0.dylib in Frameworks */,
 				12BC319614F9836300F4D3F9 /* liblua.dylib in Frameworks */,
-				12BC319314F982A900F4D3F9 /* libSDL_gfx.13.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +107,8 @@
 		1203B7B414D911FC00319C07 = {
 			isa = PBXGroup;
 			children = (
+				128EF88D175EB6E6007DF172 /* libSDL_gfx.14.dylib */,
+				128EF88E175EB6E6007DF172 /* libSDL-1.2.0.dylib */,
 				1220DC8A160D47BE00DAC943 /* libpng15.a */,
 				1220DC8B160D47BE00DAC943 /* libpng15.la */,
 				128F586015D33D8900B3B3C8 /* libassimp.3.0.0.dylib */,
@@ -114,9 +116,7 @@
 				12BC319D14F9890B00F4D3F9 /* Cocoa.framework */,
 				12BC319B14F988BC00F4D3F9 /* libSDLmain.a */,
 				12BC319914F988A600F4D3F9 /* libSDLmain.la */,
-				12BC319714F9885B00F4D3F9 /* libSDL-1.2.0.dylib */,
 				12BC319514F9836300F4D3F9 /* liblua.dylib */,
-				12BC319214F982A900F4D3F9 /* libSDL_gfx.13.dylib */,
 				1203B7D214D912FC00319C07 /* src */,
 				1203B7C014D911FD00319C07 /* Products */,
 			);
