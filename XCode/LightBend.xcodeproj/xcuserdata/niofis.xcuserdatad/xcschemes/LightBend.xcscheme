@@ -64,7 +64,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-script script.lua"
+            argument = "-script script2.lua"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
