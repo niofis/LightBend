@@ -347,13 +347,13 @@ int interactive_mode()
 			cam = &escena.cameras[0];
 			//scene.cameras[0]->Rotate(0.017452 * 2.5,2);
 			if(keys[SDLK_UP])
-				RotateCamera(cam,0.017452 * 2.5,1);
+				RotateCamera(cam,0.017452 * 5,1);
 			if(keys[SDLK_DOWN])
-				RotateCamera(cam,0.017452 * -2.5,1);
+				RotateCamera(cam,0.017452 * -5,1);
 			if(keys[SDLK_LEFT])
-				RotateCamera(cam,0.017452 * -2.5,2);
+				RotateCamera(cam,0.017452 * -5,2);
 			if(keys[SDLK_RIGHT])
-				RotateCamera(cam,0.017452 * 2.5,2);
+				RotateCamera(cam,0.017452 * 5,2);
 
 			if(keys[SDLK_w])
 				MoveCamera(cam,0.0f,0.0f,1.0f);
