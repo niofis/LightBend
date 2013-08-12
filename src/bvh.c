@@ -3,9 +3,22 @@
 #include "renderer.h"
 #include "bvh.h"
 
+align(ALIGMENT)
+typedef struct
+{
+    float* min_x;
+    float* min_y;
+    float* min_z;
+    float* max_x;
+    float* max_y;
+    float* max_z;
+    int count;
+} BoxData;
+
 int next_node;
 int node_stop;
 int stop;
+BoxData boxdata;
 
 int BoxHit(int box_id,Ray *ray)
 {
@@ -21,10 +34,10 @@ int BoxHit(int box_id,Ray *ray)
 	int signo[4];
 	float tmin, tmax, tymin, tymax, tzmin, tzmax;
 	float* parameters[2];
-	Caja *caja=&cajas[box_id];
+	Box *box=&boxes[box_id];
 
-	parameters[0]=caja->min;
-	parameters[1]=caja->max;
+	parameters[0]=box->min;
+	parameters[1]=box->max;
 
 	V_REC(inv_direccion,ray->direccion);
     signo[0] = (inv_direccion[0] < 0);
@@ -66,9 +79,9 @@ void BuildTraverseVector(int node)
 	v_traverse[idx_traverse]=node;
 	idx_traverse++;
 
-	if(l<num_cajas && hierarchy[l].type!=NODO_INVALIDO)
+	if(l<boxes_num && hierarchy[l].type!=NULL_NODE)
 		BuildTraverseVector(l);
-	if(r<num_cajas && hierarchy[r].type!=NODO_INVALIDO)
+	if(r<boxes_num && hierarchy[r].type!=NULL_NODE)
 		BuildTraverseVector(r);	
 }
 
@@ -85,9 +98,9 @@ void TraverseStop(int node)
 
 	if(!stop)
 	{
-		if(l<num_cajas && hierarchy[l].type!=NODO_INVALIDO)
+		if(l<boxes_num && hierarchy[l].type!=NULL_NODE)
 			TraverseStop(l);
-		if(r<num_cajas && hierarchy[r].type!=NODO_INVALIDO)
+		if(r<boxes_num && hierarchy[r].type!=NULL_NODE)
 			TraverseStop(r);	
 	}
 	else
@@ -189,28 +202,28 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 		{
 			//si ya no hay objects para las cajas, se deshabilita para que no 
 			//se gaste tiempo revisando un hit en ella
-			hierarchy[l_id].type=NODO_INVALIDO;
+			hierarchy[l_id].type=NULL_NODE;
 			l_id++;
 			continue;
 		}
-		hierarchy[l_id].type=NODO_HOJA;
+		hierarchy[l_id].type=LEAF_NODE;
 		for(i=0;i<3;i++)
-			cajas[l_id].min[i]=cajas[l_id].max[i]=escena.objects[obj_id].v1[i];
+			boxes[l_id].min[i]=boxes[l_id].max[i]=escena.objects[obj_id].v1[i];
 
-		for(y=0;y<CANT_OBJ_CAJA && obj_id<escena.num_objects;y++)
+		for(y=0;y<BOX_OBJ_CAP && obj_id<escena.num_objects;y++)
 		{
 			for(i=0;i<3;i++){
 				objeto=&escena.objects[obj_id];
                 //if(objeto->type==OBJ_TRIANGLE)
                 //{
-					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v1[i]);
-					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v1[i]);
+					boxes[l_id].min[i]=min(boxes[l_id].min[i],objeto->v1[i]);
+					boxes[l_id].max[i]=max(boxes[l_id].max[i],objeto->v1[i]);
 
-					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v2[i]);
-					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v2[i]);
+					boxes[l_id].min[i]=min(boxes[l_id].min[i],objeto->v2[i]);
+					boxes[l_id].max[i]=max(boxes[l_id].max[i],objeto->v2[i]);
 
-					cajas[l_id].min[i]=min(cajas[l_id].min[i],objeto->v3[i]);
-					cajas[l_id].max[i]=max(cajas[l_id].max[i],objeto->v3[i]);
+					boxes[l_id].min[i]=min(boxes[l_id].min[i],objeto->v3[i]);
+					boxes[l_id].max[i]=max(boxes[l_id].max[i],objeto->v3[i]);
                 //}
                 /*
                 else if(objeto->type==OBJ_SPHERE)
@@ -230,7 +243,7 @@ void GenerateLeaves(int num_leaves,int num_boxes)
 			hierarchy[l_id].objs[y]=obj_id;
 			obj_id++;
 		}
-		hierarchy[l_id].cant_objs=y;
+		hierarchy[l_id].objs_num=y;
 		l_id++;
 	}
 }
@@ -243,7 +256,7 @@ void GrowHierarchy(int node_id)
 	int l,r;
 
 	//Si no es un nodo raiz, no hay que crecerlo
-	if(hierarchy[node_id].type!=NODO_RAIZ)
+	if(hierarchy[node_id].type!=ROOT_NODE)
 		return;
 
 	l=LEFT(node_id);
@@ -254,37 +267,42 @@ void GrowHierarchy(int node_id)
 	//Revisa si alguno de los nodos hijos esta deshabilitado
 	//si es el caso, utiliza las dimensiones del nodo que si esta habilitado
 	//si ambos estan deshabilitados, deshabilita el nodo actual
-	if(hierarchy[l].type!=NODO_INVALIDO && hierarchy[r].type==NODO_INVALIDO)
+	if(hierarchy[l].type!=NULL_NODE && hierarchy[r].type==NULL_NODE)
 	{
-		cajas[node_id].min[0]=cajas[l].min[0];
-		cajas[node_id].min[1]=cajas[l].min[1];
-		cajas[node_id].min[2]=cajas[l].min[2];
-		cajas[node_id].max[0]=cajas[l].max[0];
-		cajas[node_id].max[1]=cajas[l].max[1];
-		cajas[node_id].max[2]=cajas[l].max[2];
+		boxes[node_id].min[0]=boxes[l].min[0];
+		boxes[node_id].min[1]=boxes[l].min[1];
+		boxes[node_id].min[2]=boxes[l].min[2];
+		boxes[node_id].max[0]=boxes[l].max[0];
+		boxes[node_id].max[1]=boxes[l].max[1];
+		boxes[node_id].max[2]=boxes[l].max[2];
 	}
-	else if(hierarchy[l].type==NODO_INVALIDO && hierarchy[r].type!=NODO_INVALIDO)
+	else if(hierarchy[l].type==NULL_NODE && hierarchy[r].type!=NULL_NODE)
 	{
-		cajas[node_id].min[0]=cajas[r].min[0];
-		cajas[node_id].min[1]=cajas[r].min[1];
-		cajas[node_id].min[2]=cajas[r].min[2];
-		cajas[node_id].max[0]=cajas[r].max[0];
-		cajas[node_id].max[1]=cajas[r].max[1];
-		cajas[node_id].max[2]=cajas[r].max[2];
+		boxes[node_id].min[0]=boxes[r].min[0];
+		boxes[node_id].min[1]=boxes[r].min[1];
+		boxes[node_id].min[2]=boxes[r].min[2];
+		boxes[node_id].max[0]=boxes[r].max[0];
+		boxes[node_id].max[1]=boxes[r].max[1];
+		boxes[node_id].max[2]=boxes[r].max[2];
 	}
-	else if(hierarchy[l].type!=NODO_INVALIDO && hierarchy[r].type!=NODO_INVALIDO)
+	else if(hierarchy[l].type!=NULL_NODE && hierarchy[r].type!=NULL_NODE)
 	{
-		cajas[node_id].min[0]=min(cajas[l].min[0],cajas[r].min[0]);
-		cajas[node_id].min[1]=min(cajas[l].min[1],cajas[r].min[1]);
-		cajas[node_id].min[2]=min(cajas[l].min[2],cajas[r].min[2]);
+		boxes[node_id].min[0]=min(boxes[l].min[0],boxes[r].min[0]);
+		boxes[node_id].min[1]=min(boxes[l].min[1],boxes[r].min[1]);
+		boxes[node_id].min[2]=min(boxes[l].min[2],boxes[r].min[2]);
 
-		cajas[node_id].max[0]=max(cajas[l].max[0],cajas[r].max[0]);
-		cajas[node_id].max[1]=max(cajas[l].max[1],cajas[r].max[1]);
-		cajas[node_id].max[2]=max(cajas[l].max[2],cajas[r].max[2]);
+		boxes[node_id].max[0]=max(boxes[l].max[0],boxes[r].max[0]);
+		boxes[node_id].max[1]=max(boxes[l].max[1],boxes[r].max[1]);
+		boxes[node_id].max[2]=max(boxes[l].max[2],boxes[r].max[2]);
 	}
 	else
-		hierarchy[node_id].type=NODO_INVALIDO;
+		hierarchy[node_id].type=NULL_NODE;
 
+}
+
+void OptimizeBVH()
+{
+    
 }
 
 void BuildBVH()
@@ -302,8 +320,8 @@ void BuildBVH()
 
 	CleanBVH();
 
-	num_hojas=escena.num_objects/CANT_OBJ_CAJA;
-	if(escena.num_objects%CANT_OBJ_CAJA)
+	num_hojas=escena.num_objects/BOX_OBJ_CAP;
+	if(escena.num_objects%BOX_OBJ_CAP)
 		num_hojas++;
 	
 	a=log((float)num_hojas);
@@ -312,24 +330,24 @@ void BuildBVH()
 	if((a/b)-(float)depth)
 		depth++;
 	depth++;
-	num_cajas=pow((float)2,depth)-1;
+	boxes_num=pow((float)2,depth)-1;
 	num_hojas=pow((float)2,depth-1);
 
 	//se obtiene el espacio de memoria y se inicializa a ceros
 
-	hierarchy=(BoundingVolume*)aligned_malloc(ALIGMENT,num_cajas*sizeof(BoundingVolume));
-	cajas=(Caja*)aligned_malloc(ALIGMENT,num_cajas*sizeof(Caja));
-	v_traverse=(int*)aligned_malloc(ALIGMENT,num_cajas*sizeof(int));
-	skip_ptrs=(int*)aligned_malloc(ALIGMENT,num_cajas*sizeof(int));
+	hierarchy=(BoundingVolume*)aligned_malloc(ALIGMENT,boxes_num*sizeof(BoundingVolume));
+	boxes=(Box*)aligned_malloc(ALIGMENT,boxes_num*sizeof(Box));
+	v_traverse=(int*)aligned_malloc(ALIGMENT,boxes_num*sizeof(int));
+	skip_ptrs=(int*)aligned_malloc(ALIGMENT,boxes_num*sizeof(int));
 
-	memset(hierarchy,0,num_cajas*sizeof(BoundingVolume));
-	memset(cajas,0,num_cajas*sizeof(Caja));
-	memset(v_traverse,0,num_cajas*sizeof(int));
-	memset(skip_ptrs,-1,num_cajas*sizeof(int));
+	memset(hierarchy,0,boxes_num*sizeof(BoundingVolume));
+	memset(boxes,0,boxes_num*sizeof(Box));
+	memset(v_traverse,0,boxes_num*sizeof(int));
+	memset(skip_ptrs,-1,boxes_num*sizeof(int));
 
 	//se genera la gerarquia comenzando en el nodo primero
 	//Primero generando las hojs y despues aumentando los contenedores
-	GenerateLeaves(num_hojas,num_cajas);
+	GenerateLeaves(num_hojas,boxes_num);
 	GrowHierarchy(0);
 
 	//generar la lista de indices de recorrido, para no estar dando lata con en TraverseBVH
@@ -338,7 +356,7 @@ void BuildBVH()
 
 	//Generar la lista de saltos
 	skip_ptrs[0]=-1;
-	for(i=1;i<num_cajas;i++)
+	for(i=1;i<boxes_num;i++)
 	{
 		node_stop=v_traverse[i];
 		stop=0;
@@ -346,7 +364,7 @@ void BuildBVH()
 		TraverseStop(0);
 		if(next_node!=-1)
 		{
-			for(j=0;j<num_cajas;j++)
+			for(j=0;j<boxes_num;j++)
 				if(v_traverse[j]==next_node)
 				{
 					skip_ptrs[i]=j;
@@ -370,15 +388,15 @@ void CleanBVH()
 	if(hierarchy!=NULL)
 		aligned_free(hierarchy);
 
-	if(cajas!=NULL)
-		aligned_free(cajas);
+	if(boxes!=NULL)
+		aligned_free(boxes);
 
 	if(v_traverse!=NULL)
 		aligned_free(v_traverse);
 
 	if(skip_ptrs!=NULL)
-		aligned_free(skip_ptrs);
-
+	aligned_free(skip_ptrs);
+/*
 	if(cajas_min_x!=NULL)
 		aligned_free(cajas_min_x);
 	if(cajas_min_y!=NULL)
@@ -392,4 +410,5 @@ void CleanBVH()
 		aligned_free(cajas_max_y);
 	if(cajas_max_z!=NULL)
 		aligned_free(cajas_max_z);
+ */
 }

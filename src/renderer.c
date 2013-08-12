@@ -34,16 +34,16 @@ int ShadowRay(Ray *ray,float max_dist)
     //recorrido, si es hoja, probar algun hit con los objects contenidos
 	//Continua el recorrido hasta que el skip_ptrs nos indique un-1
 	
-	for(si=0;si<num_cajas && si!=-1 ;si++) //si se llego al final del vector traverse o se encontro con un nodo terminal, cancela el ciclo
+	for(si=0;si<boxes_num && si!=-1 ;si++) //si se llego al final del vector traverse o se encontro con un nodo terminal, cancela el ciclo
 	{
 		bv=&hierarchy[v_traverse[si]];
-		if(bv->type==NODO_INVALIDO)	//no debe pasar, pero lo dejo igual
+		if(bv->type==NULL_NODE)	//no debe pasar, pero lo dejo igual
 			continue;
 
 		if(BoxHit(v_traverse[si],ray))
 		{
 			//Si el rayo toca la caja, y es raiz, se pasa a la siguiente caja
-			if(bv->type==NODO_RAIZ)
+			if(bv->type==ROOT_NODE)
 				continue;
 		}
 		else
@@ -53,7 +53,7 @@ int ShadowRay(Ray *ray,float max_dist)
 			continue;
 		}
 
-		for(i=0;i<bv->cant_objs;i++)
+		for(i=0;i<bv->objs_num;i++)
 		{
             objeto=&escena.objects[bv->objs[i]];
             
@@ -231,16 +231,16 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
     //recorrido, si es hoja, probar algun hit con los objects contenidos
 	//Continua el recorrido hasta que el skip_ptrs nos indique un-1
 	
-	for(si=0;si<num_cajas && si!=-1 ;si++) //si se llego al final del vector traverse o se encontro con un nodo terminal, cancela el ciclo
+	for(si=0;si<boxes_num && si!=-1 ;si++) //si se llego al final del vector traverse o se encontro con un nodo terminal, cancela el ciclo
 	{
 
 		bv=&hierarchy[v_traverse[si]];
-		if(bv->type==NODO_INVALIDO)	//no debe pasar, pero lo dejo igual
+		if(bv->type==NULL_NODE)	//no debe pasar, pero lo dejo igual
 			continue;
 		if(BoxHit(v_traverse[si],ray))
 		{
 			//Si el rayo toca la caja, y es raiz, se pasa a la siguiente caja
-			if(bv->type==NODO_RAIZ)
+			if(bv->type==ROOT_NODE)
 				continue;
 		}
 		else
@@ -249,7 +249,7 @@ void TraceRay(Ray *ray, TraceResult *result, float* rf_stack,int depth)
 			si=skip_ptrs[si]-1;
 			continue;
 		}
-		for(i=0;i<bv->cant_objs;i++)
+		for(i=0;i<bv->objs_num;i++)
 		{
             objeto=&escena.objects[bv->objs[i]];
             /*
