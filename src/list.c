@@ -37,7 +37,7 @@ void list_add(List* list,void* aligned_data)
 	}
 }
 
-void list_remove(List* list,int index, bool delete_data)
+void list_remove(List* list,int index, int delete_data)
 {
 	int i;
 	struct ListElement* el;
@@ -103,7 +103,7 @@ void* list_get(List* list,int index)
 	return NULL;
 }
 
-void list_delete(List* list,bool delete_data)
+void list_delete(List* list,int delete_data)
 {
 	struct ListElement* el;
 	if(list!=NULL)

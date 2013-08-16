@@ -23,7 +23,7 @@
 
 	#define FALSE 0
 	#define TRUE ~FALSE
-    #define bool int
+    //#define int int	
     #define PI 3.14159
 	
 
@@ -37,7 +37,7 @@
 		#define CreateThread(f,p) CreateThread(NULL,0,f,p,0,NULL)
 		#define align(x) __declspec(align(x))
 	#else
-			
+
 		#include <pthread.h>
 		pthread_attr_t gomp_thread_attr;
 

@@ -285,32 +285,31 @@ static int loadModel(lua_State *L)
         for(i=0;i<model->mNumMeshes;++i)
         {
             struct aiMesh* m=model->mMeshes[i];
-            if(m->mPrimitiveTypes!=aiPrimitiveType_TRIANGLE)
+            if(m->mPrimitiveTypes == aiPrimitiveType_TRIANGLE)
             {
-                continue;
-            }
-            Group *g=(Group *) aligned_malloc(ALIGMENT,sizeof(Group));
-            g->id=i+group_offset;
-            g->material_id=m->mMaterialIndex+material_offset;
-            list_add(lua_scene.groups,g);
+				Group *g=(Group *) aligned_malloc(ALIGMENT,sizeof(Group));
+				g->id=i+group_offset;
+				g->material_id=m->mMaterialIndex+material_offset;
+				list_add(lua_scene.groups,g);
 
-            //printf("Mesh %d Faces: %d\n",i,m->mNumFaces );
-            for(j=0;j<m->mNumFaces;++j)
-            {
-                struct aiFace f=m->mFaces[j];
-                Triangle *obj=(Triangle *)aligned_malloc(ALIGMENT,sizeof(Triangle));
-                obj->group_id=i+group_offset;
-                //obj->id=j;
-                //obj->type=OBJ_TRIANGLE;
-                V_INIT(obj->v1,m->mVertices[f.mIndices[0]].x,m->mVertices[f.mIndices[0]].y,m->mVertices[f.mIndices[0]].z);
-                V_INIT(obj->v2,m->mVertices[f.mIndices[1]].x,m->mVertices[f.mIndices[1]].y,m->mVertices[f.mIndices[1]].z);
-                V_INIT(obj->v3,m->mVertices[f.mIndices[2]].x,m->mVertices[f.mIndices[2]].y,m->mVertices[f.mIndices[2]].z);
-                //printf("Face %d Vertices: %d\n",j,f.mNumIndices);
-				list_add(lua_scene.objects,obj);
-                //printf("(%f,%f,%f)\n",obj->v1[0],obj->v1[1],obj->v1[2]);
-                //printf("(%f,%f,%f)\n",obj->v2[0],obj->v2[1],obj->v2[2]);
-                //printf("(%f,%f,%f)\n\n",obj->v3[0],obj->v3[1],obj->v3[2]);
-			}
+				//printf("Mesh %d Faces: %d\n",i,m->mNumFaces );
+				for(j=0;j<m->mNumFaces;++j)
+				{
+					struct aiFace f=m->mFaces[j];
+					Triangle *obj=(Triangle *)aligned_malloc(ALIGMENT,sizeof(Triangle));
+					obj->group_id=i+group_offset;
+					//obj->id=j;
+					//obj->type=OBJ_TRIANGLE;
+					V_INIT(obj->v1,m->mVertices[f.mIndices[0]].x,m->mVertices[f.mIndices[0]].y,m->mVertices[f.mIndices[0]].z);
+					V_INIT(obj->v2,m->mVertices[f.mIndices[1]].x,m->mVertices[f.mIndices[1]].y,m->mVertices[f.mIndices[1]].z);
+					V_INIT(obj->v3,m->mVertices[f.mIndices[2]].x,m->mVertices[f.mIndices[2]].y,m->mVertices[f.mIndices[2]].z);
+					//printf("Face %d Vertices: %d\n",j,f.mNumIndices);
+					list_add(lua_scene.objects,obj);
+					//printf("(%f,%f,%f)\n",obj->v1[0],obj->v1[1],obj->v1[2]);
+					//printf("(%f,%f,%f)\n",obj->v2[0],obj->v2[1],obj->v2[2]);
+					//printf("(%f,%f,%f)\n\n",obj->v3[0],obj->v3[1],obj->v3[2]);
+				}
+            }
         }
 		for(i=0;i<model->mNumLights;++i)
 		{
@@ -330,7 +329,7 @@ static int loadModel(lua_State *L)
     return 0;
 }
 
-static const luaL_Reg lightbendlib[] = {
+static const luaL_Reg lightbendlib[11] = {
 {"initScene",   initScene},
 {"setTriangle",   setTriangle},
 {"setSphere",   setSphere},
